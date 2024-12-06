@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Kinklist</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous">
+        </script>
+        <script src="script.js"></script>
+        <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTAvMjEvMTV5ehY1AAAAZElEQVQ4jaWTwQ3AIAwDbcT+I9f9hjYQA/mAkO7igKAACWdFAF0A2gb0hP0uCyTATyAJSoaK5xGyEmTC9lktmORUdAQvBQ5cJshktoDk0HkmKRNUEmuE6ztYVXe7bT+jW7z9zi8qYiodCjCHKgAAAABJRU5ErkJggg==">
+        <link rel="stylesheet" href="2025.css">
+    </head>
+    <body>
+        <div class="widthWrapper">
+            <button id="Edit"></button>
+            <h1>Sexe Liste 2025</h1>
+            <button onclick="window.location.href = '../';">Retour accueil</button>
+            <div class="legend">
+                <div><span data-color="#FFFFFF" class="choice sansAvis"></span> <span class="legend-text">Sans Avis</span></div>
+                <div><span data-color="#6DB5FE" class="choice kiffAbsolu"></span> <span class="legend-text">Kiff absolu</span></div>
+                <div><span data-color="#23FD22" class="choice aime"></span> <span class="legend-text">Aime</span></div>
+                <div><span data-color="#FDFD6B" class="choice okay"></span> <span class="legend-text">Okay</span></div>
+                <div><span data-color="#CC99CC" class="choice jeVeuxTester"></span> <span class="legend-text">Je veux tester</span></div>
+                <div><span data-color="#920000" class="choice non"></span> <span class="legend-text">Non</span></div>
+            </div>
+            <div id="ExportWrapper">
+                <input type="text" id="URL">
+                <button id="Export">Export</button>
+                <div id="Loading">Loading</div>
+            </div>
+            <button id="StartBtn"></button>
+            <div id="InputList"></div>
+        </div>
+        <div id="EditOverlay" class="overlay">
+            <textarea id="Kinks">
+#Groupe
+(General)
+* Toi et un homme
+* Toi et une femme
+* Toi et une femme transgenre
+* Toi et un homme transgenre
+* Toi et un homme, une femme
+* Toi et deux hommes
+* Toi et deux femmes
+* Orgie
+? Plusieurs hommes et plusieurs femmes
+
+#Fantasme à realiser en 2025
+(General)
+* Plan cocu
+* Plan en exterieur
+* Avec un inconnu
+* Faire l’amour contre une baie vitrée
+* Allez en club Libertin / Echangiste
+
+#Lieux
+(General)
+* Cabine d'essayage
+* Ascenseur
+* Cinéma
+* Parking
+* Sous-Sol
+* Forêt
+* Plage
+* AirBnB
+
+#Accessoire
+(General)
+* 
+*
+*
+*
+
+
+#Positions
+(General)
+* Levrette
+* Missionaire
+* Enclume
+                
+
+            </textarea>
+            <button id="KinksOK">Accept</button>
+        </div>
+        <div id="InputOverlay" class="overlay">
+            <div class="widthWrapper">
+                <div id="InputPrevious"></div>
+                <div id="InputCurrent">
+                    <h2 id="InputCategory"></h2>
+                    <h3 id="InputField"></h3>
+                    <button class="closePopup">×</button>
+                    <div id="InputValues"></div>
+                </div>
+                <div id="InputNext"></div>
+            </div>
+        </div>
+		<div id="DescriptionOverlay" class="overlay">
+			<div id="Description"></div>
+		</div>
+    </body>
+</html>
