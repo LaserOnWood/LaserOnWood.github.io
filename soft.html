@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <title>Kinklist</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script
+            src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous">
+        </script>
+        <script src="script.js"></script>
+        <link rel="icon" type="image/x-icon" href="data:image/x-icon;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAAWdEVYdENyZWF0aW9uIFRpbWUAMTAvMjEvMTV5ehY1AAAAZElEQVQ4jaWTwQ3AIAwDbcT+I9f9hjYQA/mAkO7igKAACWdFAF0A2gb0hP0uCyTATyAJSoaK5xGyEmTC9lktmORUdAQvBQ5cJshktoDk0HkmKRNUEmuE6ztYVXe7bT+jW7z9zi8qYiodCjCHKgAAAABJRU5ErkJggg==">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="widthWrapper">
+            <button id="Edit"></button>
+            <h1>Kinklist</h1>
+            <button onclick="window.location.href = '../';">Retour accueil</button>
+            <div class="legend">
+                <div><span data-color="#FFFFFF" class="choice sansAvis"></span> <span class="legend-text">Sans Avis</span></div>
+                <div><span data-color="#6DB5FE" class="choice kiffAbsolu"></span> <span class="legend-text">Kiff absolu</span></div>
+                <div><span data-color="#23FD22" class="choice aime"></span> <span class="legend-text">Aime</span></div>
+                <div><span data-color="#FDFD6B" class="choice okay"></span> <span class="legend-text">Okay</span></div>
+                <div><span data-color="#CC99CC" class="choice jeVeuxTester"></span> <span class="legend-text">Je veux tester</span></div>
+                <div><span data-color="#920000" class="choice non"></span> <span class="legend-text">Non</span></div>
+            </div>
+            <div id="ExportWrapper">
+                <input type="text" id="URL">
+                <button id="Export">Export</button>
+                <div id="Loading">Loading</div>
+            </div>
+            <button id="StartBtn"></button>
+            <div id="InputList"></div>
+        </div>
+        <div id="EditOverlay" class="overlay">
+            <textarea id="Kinks">
+#Mes préférences
+(Préférences)
+* Plutôt maigre
+? pas grosse
+* Plutôt en chair
+* Petits seins
+* Gros seins
+* Petit pénis
+* Gros pénis
+* Avec poils
+* Totalement épilé
+
+#Habillement
+(Moi, Mon partenaire)
+* Sexe habillé
+* Totalement nu
+* Caleçon
+* String
+* Lingerie sexy
+* Filet
+* Bas & Jarretelles
+* Talons hauts
+? Exprime un intérêt pour l'inclusion de chaussures à talons hauts dans le contexte sexuel d'un RP, ou un intérêt pour les personnages qui en portent.
+* Cuir
+* Latex
+* Vinyle
+* Wet look
+? Effet mouiller
+* Robes libertines
+* Uniforme & cosplay
+* Travestissement
+
+#Préférences Sexuelles
+(Mes préférences)
+* Vous et un homme
+* Vous et une femme
+* Vous et un homme transgenre
+* Vous et une femme transgenre
+* Vous, un homme et une femme
+* Vous et deux hommes
+* Vous et deux femmes
+* activité à quatre
+* Orgie
+
+#Pratiques sexuelles
+(Donner, Recevoir)
+* Caresses corporelles
+* French kiss
+* Teasing
+* Stimulation des tétons
+* Masturbation
+* Fellation
+* Pénétration vaginale
+* Stimulation des bourses
+* Gorge profonde
+* Cunnilingus
+* Edger
+* JOI Masturbation guidée
+* Slow sex
+* Sexe Intense
+* Massages
+* Tantra
+* Tribadisme
+
+#Pratiques anales
+(Donner, Recevoir)
+* Pénétration anale
+* Sextoys
+* Sodomie (par un homme)
+* Gode ceinture
+* Anulingus
+* Double pénétration
+* Fisting
+* Massage de la prostate
+* Dilatation anale
+
+#Sextoys
+(Donner, Recevoir)
+* Godemichet
+* Vibromasseur
+* Plug anal
+* Oeuf Vibrant
+* Stimulateur clitoridien
+* Masseur prostatique
+* Cockring
+* Gaine pénienne
+* Sextoy connecté
+* Gode ceinture
+* Masturbateur
+
+#Bondage & restrictions
+(Donner, Recevoir)
+* Collier
+* Laisse
+* Bandeau
+* Menottes légère
+* Menottes en métal
+* Bondage léger
+* Bondage lourd
+* Cordes (Kinbaku)
+* Armbinders
+* Harnais
+* Camisole de force
+* Barres d'écartement
+* Bâillon
+* Cagoule intégrale
+
+#Bondage & pratiques
+(Donner, Recevoir)
+* Mains attachées (dos)
+* Mains attachées (devant)
+* Pieds attachés
+* Attaché(e) sur lit
+* Attaché(e) sur banc de fessée
+* Attaché(e) sur chaise
+* Suspension
+* Croix de St. André
+* Pilori
+* Momification
+* Enfermement
+* Vacbed
+* Film alimentaire
+* Dormir attachée
+* Tenue en laisse
+
+#Domination & soumission
+(Donner, Recevoir)
+* Domination
+* Soumission
+* Servitude domestique
+* Esclavage sexuel
+* Regression (Age Play)
+* Discipline
+* Contrôle des orgasmes
+* Déni d'orgasme
+* Traite de sperme
+* Echange de pouvoir
+* Bijoux symboliques
+* Masturbation forcée
+* Orgasmes forcés
+
+#Hypnose Érotique
+(Donner, Recevoir)
+* Hypnose légère
+* Hypnose profonde
+* Orgasmes hypnotiques
+* Implantation de triggers
+* Soumission
+* Devotion
+* Conditionnement
+* Dronification
+* Chasteté
+* Masturbation & JOI
+
+#Non-consentement consenti
+(Donner, Recevoir)
+* Simulation de viol
+* Coercission
+* Kidnapping
+* Alcool
+* Drogues & Somnifères
+* Sexe pendant le sommeil
+* Orgasmes forcés
+
+#Fantasmes Surréalistes
+(Donner, Recevoir)
+* Futanari
+* Furry
+* Gigantisme
+* Transformation
+* Tentacules
+* Monstres & Aliens
+
+#Jeux de fluides
+(Donner, Recevoir)
+* Cyprine
+* Liquide séminal
+* Avaler le sperme
+* Felching
+* Éjaculation faciale
+* Éjaculation sur le corps
+* Éjaculation féminine
+* Bukkake
+* Douche dorée
+* Lactation
+* Sang
+
+#Dégradation
+(Donner, Recevoir)
+* Glory hole
+* Table de traite
+* Soumission en public
+* Humiliation
+* Contrôle utilisation WC
+* Transformation en objet
+
+#Préférences de stimulation
+(Donner, Recevoir)
+* Stimulation génitale
+* Stimulation des fesses
+* Stimulation des pieds
+* Chatouilles
+* Sensation play
+* Electro stimulation
+* Privation sensorielle
+
+#Autres fétichismes
+(Donner, Recevoir)
+* Fister
+* Gangbang
+* Contrôle de la respiration
+* Ejaculation interne
+* Enceinte
+* Féminisation
+* Cuckold / Cuckquean
+* Jeux de rôles
+* Chasteté
+* Rituels et mantras
+* Pony Play
+* Pet Play
+* Exhibitionisme
+* Voyeurisme
+* Sexe en extérieur
+
+#Douleur
+(Donner, Recevoir)
+* Douleur légère
+* Douleur importante
+* Pinces à seins
+* Pinces à Linge
+* Aiguilles
+* Cane / badine
+* Martinet
+* Paddles
+* Cravache
+* Fouet
+* Fessée
+* Gifles
+* Gifles sur Pénis/Vulve
+* Torture de Pénis/Vulve
+* Cire & bougies
+* Griffures
+* Cut play
+* Morsure
+
+            </textarea>
+            <button id="KinksOK">Accept</button>
+        </div>
+        <div id="InputOverlay" class="overlay">
+            <div class="widthWrapper">
+                <div id="InputPrevious"></div>
+                <div id="InputCurrent">
+                    <h2 id="InputCategory"></h2>
+                    <h3 id="InputField"></h3>
+                    <button class="closePopup">×</button>
+                    <div id="InputValues"></div>
+                </div>
+                <div id="InputNext"></div>
+            </div>
+        </div>
+		<div id="DescriptionOverlay" class="overlay">
+			<div id="Description"></div>
+		</div>
+    </body>
+</html>
