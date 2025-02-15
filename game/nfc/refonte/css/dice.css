@@ -1,0 +1,157 @@
+ #app {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+  
+  #table-top {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    min-height: 120px;
+    max-width: calc(100vw - 80px);
+  }
+  
+  dice-object {
+    .die {
+      aspect-ratio: 1;
+      color: #fff;
+      display: grid;
+      font-size: 40px;
+      font-weight: bold;
+      place-content: center;
+      position: relative;
+      text-shadow: 0 0 16px #1d2842;
+      user-select: none;
+      width: 120px;
+    }
+    
+    svg {
+      fill: none;
+      position: absolute;
+      width: 100%;
+      z-index: -1;
+    }
+    
+    &[sides="20"] svg,
+    &[sides="8"] svg,
+    &[sides="6"] svg {
+      left: 8px;
+    }
+    
+    &[sides="12"] svg {
+      left: 4px;
+    }
+  }
+  
+  #controls {
+    display: flex;
+    gap: 16px;
+  }
+  
+  dice-icon {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    
+    button {
+      appearance: none;
+      aspect-ratio: 1;
+      background-color: #171e2b;
+      border: none;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      user-select: none;
+      width: 24px;
+      
+      &:hover {
+        outline: 1px solid #fff;
+      }
+      
+      &[disabled] {
+        background-color: transparent;
+        border: 1px solid #171e2b;
+        color: #171e2b;
+        outline: none;
+        pointer-events: none;
+      }
+    }
+    
+    .increment {
+      order: 0;
+    }
+    
+    .decrement {
+      order: 2;
+    }
+    
+    .icon {
+      aspect-ratio: 1;
+      color: #a74c4c;
+      font-weight: bold;
+      display: grid;
+      padding: 8px 0;
+      place-content: center;
+      position: relative;
+      user-select: none;
+      width: 40px;
+    }
+    
+    svg {
+      position: absolute;
+      top: 8px;
+      width: 40px;
+      z-index: -1;
+    }
+    
+    &[sides="20"] svg,
+    &[sides="8"] svg,
+    &[sides="6"] svg{
+      left: 2px;
+    }
+    
+    &[sides="12"] svg {
+      left: 1px;
+    }
+    
+    &[sides="4"] {
+      .icon {
+        padding-bottom: 7px;
+        padding-top: 9px;
+      }
+      
+      svg {
+        top: 9px;
+      }
+    }
+  }
+  
+  #roll {
+    appearance: none;
+    background-color: #7cc584;
+    border: none;
+    border-bottom: 2px solid #3d6a70;
+    border-top: 1px solid #abe0bf;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 8px 24px;
+    user-select: none;
+    
+    &:hover {
+      outline: 1px solid #fff;
+    }
+    
+    &[disabled] {
+      background-color: #e7e7e7;
+      border-bottom-color: #aaa;
+      border-top-color: #f9f9f9;
+      outline: none;
+      pointer-events: none;
+    }
+  }
