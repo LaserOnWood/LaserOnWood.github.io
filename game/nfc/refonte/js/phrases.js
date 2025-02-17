@@ -12,9 +12,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Variable pour garder trace des indices déjà affichés pour chaque catégorie
 const affichagePhrases = {
-    soft: [],
-    medium: [],
-    hard: [],
+    actionSoft: [],
+    veriteSoft: [],
+    actionMedium: [],
+    veriteMedium: [],
+    actionHard: [],
+    veriteHard: [],
+    gageSoft: [], gageMedium: [], gageHard: [],
     habit: []
 };
 
@@ -49,7 +53,7 @@ async function afficherPhraseAleatoire(category) {
 
 // Charger toutes les phrases au début
 async function afficherPhrasesAleatoires() {
-    const categories = ["soft", "medium", "hard", "habit"];
+    const categories = ["actionSoft", "veriteSoft", "actionMedium", "veriteMedium", "actionHard", "veriteHard", "habit", "gageSoft", "gageMedium", "gageHard"];
     for (const categorie of categories) {
         await afficherPhraseAleatoire(categorie); // Attend que chaque phrase soit chargée avant de passer à la suivante
     }
@@ -62,6 +66,6 @@ async function chargerPhrases() {
         return await response.json();
     } catch (error) {
         console.error(error);
-        return { habit: [], medium: [], hard: [], soft: [] };
+        return { habit: [], actionMedium: [], actionHard: [], actionSoft: [], veriteMedium: [], veriteHard: [], veriteSoft: [], gageSoft: [], gageMedium: [], gageHard: []};
     }
 }
