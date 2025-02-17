@@ -1,5 +1,11 @@
 {
-    "soft": [
+    "actionSoft": [
+        "test action soft",
+        "test action soft2",
+        "test action soft3"
+    ],
+
+    "veriteSoft": [
         "Une chose que tu voudrais changer chez toi physiquement et mentalement ?",
         "Quel a été le rencard le plus nul de ta vie ?",
         "As-tu déjà envoyé un sexto et à qui en dernier ?",
@@ -31,7 +37,14 @@
         "Quelle est la meilleure surprise que l’on t’ait faite ?",
         "Si tu devais écrire un livre, quel serait son sujet ?"
     ],
-    "medium": [
+
+    "actionMedium": [
+        "test action medium",
+        "test action medium2",
+        "test action medium3"
+    ],
+
+    "veriteMedium": [
         "Avoue ton plus gros vice.",
         "As-tu déjà trompé un(e) de tes ex ?",
         "As-tu déjà regardé un porno ? Si oui, seul(e) ou avec quelqu'un ?",
@@ -62,7 +75,14 @@
         "As-tu déjà espionné quelqu’un sur les réseaux sociaux ? Pourquoi ?",
         "Quelle est la chose la plus stupide que tu aies faite par amour ?"
     ],
-    "hard": [
+
+    "actionHard": [
+        "test action hard",
+        "test action hard2",
+        "test action hard3"
+    ],
+
+    "veriteHard": [
         "As-tu déjà fait l'amour au téléphone ?",
         "Pour combien pourrais-tu refaire l'amour avec ton ex ?",
         "Avoue ta zone érogène la plus sensible.",
@@ -105,6 +125,18 @@
         "Retire ta culotte",
         "Retire ton soutiengorge",
         "Mets toi nu pendant trois tours"
+    ],
+    "gageSoft": [
+        "Gage soft 1",
+        "Gage soft 2"
+    ],
+    "gageMedium": [
+        "Gage moyen 1",
+        "Gage moyen 2"
+    ],
+    "gageHard": [
+        "Gage hard 1",
+        "Gage hard 2"
     ],
     "Trier": [
         "Quel est le plus beau cadeau que tu aies offert ?",
