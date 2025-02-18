@@ -16,6 +16,7 @@
     <!-- Core theme CSS (includes Bootstrap)-->
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/dice.css">
+    <link rel="stylesheet" href="css/spin.css">
 
 </head>
 <body id="page-top">
@@ -102,7 +103,7 @@
                     <br><br><br>
             </div>
             <div class="row">
-                <div class="col-lg-3 col-sm-6 mb-6">
+                <div class="col-lg-4 col-sm-6 mb-6">
                     <!-- gamecard item 1-->
                     <div class="gamecard-item">
                         <a class="gamecard-link" data-bs-toggle="modal" href="#gamecardModal1">
@@ -117,7 +118,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6 mb-6">
+                <div class="col-lg-4 col-sm-6 mb-6">
                     <!-- gamecard item 2-->
                     <div class="gamecard-item">
                         <a class="gamecard-link" data-bs-toggle="modal" href="#gamecardModal2">
@@ -132,7 +133,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-3 col-sm-6 mb-6">
+                <div class="col-lg-4 col-sm-6 mb-6">
                     <!-- gamecard item 3-->
                     <div class="gamecard-item">
                         <a class="gamecard-link" data-bs-toggle="modal" href="#gamecardModal3">
@@ -148,7 +149,7 @@
                     </div>
                 </div>
                 
-                <div class="col-lg-3 col-sm-6 mb-6">
+                <div class="col-lg-4 col-sm-6 mb-6">
                     <!-- gamecard item 4-->
                     <div class="gamecard-item">
                         <a class="gamecard-link" data-bs-toggle="modal" href="#gamecardModal4">
@@ -159,6 +160,21 @@
                         </a>
                         <div class="gamecard-caption">
                             <div class="gamecard-caption-heading">🎁</div>
+                            <div class="gamecard-caption-subheading text-muted">🥵🥵🥵🥵🥵</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-6 mb-6">
+                    <!-- gamecard item 5-->
+                    <div class="gamecard-item">
+                        <a class="gamecard-link" data-bs-toggle="modal" href="#gamecardModal5">
+                            <div class="gamecard-hover">
+                                <div class="gamecard-hover-content"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="assets/img/gamecard/cardSpeak.png" alt="..." />
+                        </a>
+                        <div class="gamecard-caption">
+                            <div class="gamecard-caption-heading">Gage</div>
                             <div class="gamecard-caption-subheading text-muted">🥵🥵🥵🥵🥵</div>
                         </div>
                     </div>
@@ -216,7 +232,7 @@
                             <div class="modal-body">
                                 <!-- Game Card details-->
                                 <h2 class="text-uppercase">Facile</h2>
-                                <div class="container ">
+                                <div class="container">
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="card">
@@ -403,6 +419,29 @@
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- gamecard item modal 5 popup-->
+    <div class="gamecard-modal modal fade" id="gamecardModal5" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="close-modal" data-bs-dismiss="modal"><img src="assets/img/close-icon.svg" alt="Close modal" /></div>
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-8">
+                            <div class="modal-body">
+                                <!-- Game Card details-->
+                                <h2 class="text-uppercase">Gage</h2>
+                                <div class="container">
+                                    <div class="row justify-content-center">
                                         <div class="col-md-6">
                                             <div class="card">
                                                 <img src="assets/img/gamecard/cardCherry.png" class="card-img-top" alt="...">
@@ -413,19 +452,49 @@
                                                       <div class="collapse" id="collapseGage">
                                                         <div class="card card-body">
                                                             <p class="card-text" id="quoteText-gageSoft">Chargement.</p>
-                                                            <p class="card-text" id="quoteText-gageMedium">Chargement.</p>
-                                                            <p class="card-text" id="quoteText-gageHard">Chargement.</p>
                                                         </div>
                                                       </div>
                                                     </div>
                                                     <a class="btn btn-success" id="refreshQuotesBtn-gageSoft" data-category="gageSoft"><i class="fa-solid fa-rotate"></i> Relance un gage soft</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <img src="assets/img/gamecard/cardCherry.png" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Gage</h5>
+                                                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGage" aria-expanded="false" aria-controls="collapseGage">Révéler le gage</button>
+                                                    <div style="min-height: 10px;">
+                                                      <div class="collapse" id="collapseGage">
+                                                        <div class="card card-body">
+                                                            <p class="card-text" id="quoteText-gageMedium">Chargement.</p>
+                                                        </div>
+                                                      </div>
+                                                    </div>
                                                     <a class="btn btn-success" id="refreshQuotesBtn-gageMedium" data-category="gageMedium"><i class="fa-solid fa-rotate"></i> Relance un gage moyen</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="card">
+                                                <img src="assets/img/gamecard/cardCherry.png" class="card-img-top" alt="...">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Gage</h5>
+                                                    <button class="btn btn-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseGage" aria-expanded="false" aria-controls="collapseGage">Révéler le gage</button>
+                                                    <div style="min-height: 10px;">
+                                                      <div class="collapse" id="collapseGage">
+                                                        <div class="card card-body">
+                                                            <p class="card-text" id="quoteText-gageHard">Chargement.</p>
+                                                        </div>
+                                                      </div>
+                                                    </div>
                                                     <a class="btn btn-success" id="refreshQuotesBtn-gageHard" data-category="gageHard"><i class="fa-solid fa-rotate"></i> Relance un gage hard</a>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>                               
                             </div>
                         </div>
                     </div>
@@ -559,6 +628,7 @@
     <!-- Core theme JS-->
     <script src="js/scripts.js"></script>
     <script src="js/dice.js"></script>
+    <script src="js/spin.js"></script>
     <script src="js/phrases.js"></script>
 </body>
 </html>
