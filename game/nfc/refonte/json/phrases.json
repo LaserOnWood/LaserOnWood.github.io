@@ -184,7 +184,7 @@
         "10 - Mets toi nu pendant trois tours"
     ],
     "gageSoft": [
-        "01 - ",
+        "01 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage soft supplémentaire.",
         "02 - Gage soft 2",
         "03 - Obei à 1 ordre donner par les autres joueurs",
         "04 - ",
@@ -199,7 +199,7 @@
         "01 - Prend une carte Action en difficulté Medium",
         "02 - Gage moyen 2",
         "03 - Obei à 3 ordres donner par les autres joueurs",
-        "04 - ",
+        "04 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage moyen supplémentaire.",
         "05 - ",
         "06 - Tu as les yeux bandés pendant 3 tours.",
         "07 - ",
@@ -211,25 +211,25 @@
         "01 - Obei à 5 ordres donner par les autres joueurs",
         "02 - Mets toi nu dehors durant 30 secondes",
         "03 - Prend une carte Action en difficulté Hard",
-        "04 - ",
+        "04 - Laisse un joueur te donner une fessée sensuelle (doucement ou plus fort selon ton envie).",
         "05 - ",
         "06 - Tu as les yeux bandés pendant 5 tours, les autres joueurs ont carte blanche sur toi.",
         "07 - ",
-        "08 - ",
+        "08 - Laisse un joueur choisir un objet et l’utiliser sur toi de manière sensuelle.",
         "09 - Prend un objet et suce le durant 30 secondes, les autres joueurs doivent noter la prestation",
-        "10 - "
+        "10 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage hard supplémentaire."
     ],
     "extreme": [
-        "01 - ",
-        "02 - ",
-        "03 - ",
-        "04 - ",
-        "05 - ",
-        "06 - ",
-        "07 - ",
-        "08 - ",
-        "09 - ",
-        "10 - "
+        "01 - Ferme les yeux et laisse un joueur te surprendre avec une action torride.",
+        "02 - Utilise ta langue pour récupérer un bonbon placé sur le corps d’un joueur.",
+        "03 - Mets un bandeau sur tes yeux et laisse un joueur t’embrasser à un endroit aléatoire.",
+        "04 - Laisse un joueur te toucher pendant 10 secondes où il veut (consentement nécessaire).",
+        "05 - Laisse un joueur choisir un vêtement que tu dois retirer et NE PAS remettre jusqu’à la fin du jeu.",
+        "06 - Murmure à l’oreille d’un joueur une pensée très torride que tu as sur lui/elle.",
+        "07 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage extreme supplémentaire.",
+        "08 - Laisse un joueur attacher tes mains et faire ce qu’il veut de toi pendant 2 minutes.",
+        "09 - Laisse un joueur te chuchoter une envie interdite à l’oreille, et exécute-la si tu en as le cran…",
+        "10 - Laisse un joueur te donner une fessée intense, le joueur peut dire quelque chose de torride."
     ],
     "Trier": [
         "Quel est le plus beau cadeau que tu aies offert ?",
