@@ -19,8 +19,7 @@ const affichagePhrases = {
     actionHard: [],
     veriteHard: [],
     gageSoft: [], gageMedium: [], gageHard: [],
-    habit: [],
-    extreme: []
+    gageExtreme: []
 };
 
 // Fonction améliorée pour afficher une phrase spécifique selon la catégorie
@@ -54,7 +53,7 @@ async function afficherPhraseAleatoire(category) {
 
 // Charger toutes les phrases au début
 async function afficherPhrasesAleatoires() {
-    const categories = ["actionSoft", "veriteSoft", "actionMedium", "veriteMedium", "actionHard", "veriteHard", "habit", "gageSoft", "gageMedium", "gageHard", "extreme"];
+    const categories = ["actionSoft", "veriteSoft", "actionMedium", "veriteMedium", "actionHard", "veriteHard", "gageSoft", "gageMedium", "gageHard", "gageExtreme"];
     for (const categorie of categories) {
         await afficherPhraseAleatoire(categorie); // Attend que chaque phrase soit chargée avant de passer à la suivante
     }
@@ -67,6 +66,6 @@ async function chargerPhrases() {
         return await response.json();
     } catch (error) {
         console.error(error);
-        return { habit: [], actionMedium: [], actionHard: [], actionSoft: [], veriteMedium: [], veriteHard: [], veriteSoft: [], gageSoft: [], gageMedium: [], gageHard: [], extreme: []};
+        return { actionMedium: [], actionHard: [], actionSoft: [], veriteMedium: [], veriteHard: [], veriteSoft: [], gageSoft: [], gageMedium: [], gageHard: [], gageExtreme: []};
     }
 }
