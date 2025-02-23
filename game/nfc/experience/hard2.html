@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte aléatoire avec effet</title>
+    <link rel="stylesheet" href="css/card.css">
+</head>
+<body>
+
+    <div id="cardContainer" class="card">
+        <div class="card-front">
+            <h3 id="categoryTitle">Facile</h3> <!-- Titre de catégorie -->
+            <p id="quoteText">Chargement...</p> <!-- Texte de la citation -->
+        </div>
+        <div class="card-back">
+            <p>Retour de la carte</p> <!-- Contenu de l'autre côté de la carte -->
+        </div>
+    </div>
+    
+    <footer>
+        <button onclick="changerDifficulte('facile')">Facile</button>
+        <button onclick="changerDifficulte('moyen')">Moyen</button>
+        <button onclick="changerDifficulte('difficile')">Difficile</button>
+        <button onclick="changerDifficulte('random')">Aléatoire</button> <!-- Mode aléatoire -->
+    </footer>
+    
+    <script src="js/emojiRain.js"></script>
+    <script src="js/script.js"></script>
+
+</body>
+</html>
