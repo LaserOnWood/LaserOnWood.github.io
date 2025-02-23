@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte aléatoire</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            overflow: hidden;
+            perspective: 1000px;
+        }
+
+        .card-container {
+            width: 500px;
+            height: 700px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.6s;
+        }
+
+        .choiceDifficult {
+            margin-bottom: 95%;
+            position: absolute;
+        }
+
+        .card-container.flipped {
+            transform: rotateY(180deg);
+        }
+
+        .card {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            backface-visibility: hidden;
+            border-radius: 20px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .card-front {
+            background-image: linear-gradient(to bottom right, red, yellow);
+        }
+
+        .card-back {
+            background-color: white;
+            transform: rotateY(180deg);
+            flex-direction: column;
+        }
+
+        #quoteText {
+            font-size: 50px;
+            font-weight: bold;
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+            padding: 20px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Adaptation mobile */
+        @media (max-width: 500px) {
+            .card-container {
+                width: 80%;
+                height: 50%;
+            }
+            #quoteText {
+                font-size: 25px;
+            }
+            button {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card-container" id="cardContainer">
+        <!-- Face avant (dos de la carte) -->
+        <div class="card card-front">
+            <h1>🌶️</h1>
+        </div>
+        <!-- Face arrière (phrase + bouton) -->
+        <div class="card card-back">
+            <p id="quoteText">Chargement...</p>
+            <button id="newQuoteBtn">Nouvelle phrase</button>
+        </div>
+    </div>
+    <div class="choiceDifficult">
+        <a href="soft.html"><button>Soft</button></a>
+        <a href="meduim.html"><button>Meduim</button></a>
+        <a href="hard.html"><button>Hard</button></a>
+        <a href="habits.html"><button>Habit</button></a>
+    </div>
+
+    <script>
+        async function chargerPhrases() {
+            try {
+                const response = await fetch("json/phrases.json");
+                if (!response.ok) throw new Error("Erreur lors du chargement des phrases.");
+                const data = await response.json();
+                return data.soft;
+            } catch (error) {
+                console.error(error);
+                return ["Erreur de chargement des phrases."];
+            }
+        }
+
+        async function afficherPhraseAleatoire() {
+            const phrases = await chargerPhrases();
+            const quoteText = document.getElementById("quoteText");
+
+            // Animation de sortie
+            quoteText.style.opacity = 0;
+
+            setTimeout(() => {
+                const randomIndex = Math.floor(Math.random() * phrases.length);
+                quoteText.textContent = phrases[randomIndex];
+
+                // Animation d'entrée
+                quoteText.style.opacity = 1;
+            }, 500);
+        }
+
+        const cardContainer = document.getElementById("cardContainer");
+
+        // Retourner la carte en cliquant dessus
+        cardContainer.addEventListener("click", () => {
+            cardContainer.classList.toggle("flipped");
+        });
+
+        // Changer la phrase en cliquant sur le bouton
+        document.getElementById("newQuoteBtn").addEventListener("click", (event) => {
+            event.stopPropagation(); // Empêche la carte de se retourner en cliquant sur le bouton
+            afficherPhraseAleatoire();
+        });
+
+        // Charger une phrase au démarrage
+        afficherPhraseAleatoire();
+    </script>
+
+</body>
+</html>

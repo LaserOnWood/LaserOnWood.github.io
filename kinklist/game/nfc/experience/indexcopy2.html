@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte aléatoire</title>
+    <style>
+        .card {
+            width: 70%;
+            padding: 20px;
+            margin: 50px auto;
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            background-color: #f8f9fa;
+        }
+        button {
+            margin-top: 10px;
+            padding: 10px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <p id="quoteText">Chargement...</p>
+        <button id="newQuoteBtn">Nouvelle phrase</button>
+    </div>
+
+    <script>
+        async function chargerPhrases() {
+            try {
+                const response = await fetch("json/cardsoft.json");
+                if (!response.ok) throw new Error("Erreur lors du chargement des phrases.");
+                const data = await response.json();
+                return data.phrases;
+            } catch (error) {
+                console.error(error);
+                return ["Erreur de chargement des phrases."];
+            }
+        }
+
+        async function afficherPhraseAleatoire() {
+            const phrases = await chargerPhrases();
+            const randomIndex = Math.floor(Math.random() * phrases.length);
+            document.getElementById("quoteText").textContent = phrases[randomIndex];
+        }
+
+        // Changer la phrase en cliquant sur le bouton
+        document.getElementById("newQuoteBtn").addEventListener("click", afficherPhraseAleatoire);
+
+        // Charger une phrase au démarrage
+        afficherPhraseAleatoire();
+    </script>
+
+</body>
+</html>
