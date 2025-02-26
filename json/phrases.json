@@ -18,7 +18,7 @@
         "16 - ",
         "17 - ",
         "18 - ",
-        "19 - ",
+        "19 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage facile supplémentaire.",
         "20 - "
 
     ],
@@ -76,7 +76,7 @@
         "16 - Mets-toi à genoux devant un joueur et regarde-le/la avec un regard intense pendant 15 secondes.",
         "17 - ",
         "18 - Pas de chance, tire un gage Medium",
-        "19 - ",
+        "19 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage moyen supplémentaire.",
         "20 - "
 
 
@@ -112,7 +112,7 @@
         "27 - Quelle est la pire excuse que tu as déjà donnée pour éviter un rendez-vous ?",
         "28 - As-tu déjà espionné quelqu’un sur les réseaux sociaux ? Pourquoi ?",
         "29 - Quelle est la chose la plus stupide que tu aies faite par amour ?",
-        "30 "
+        "30 - "
     ],
 
     "actionHard": [
@@ -191,8 +191,8 @@
         "05 - Tu as les yeux bandés pendant 2 tours.",
         "06 - Prend une carte Action en difficulté Soft",
         "07 - Fais 10 pompes , abdos ou squats en regardant un joueur dans les yeux.",
-        "08 - ",
-        "09 - ",
+        "08 - Lèche doucement le bout de ton doigt en regardant un joueur dans les yeux.",
+        "09 - Tu as les yeux bandés pendant 1 tours les autres joueurs ont carte blanche sur toi.",
         "10 - "
     ],
     "gageMedium": [
@@ -200,11 +200,11 @@
         "02 - Gage moyen 2",
         "03 - Obei à 3 ordres donner par les autres joueurs",
         "04 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage moyen supplémentaire.",
-        "05 - Retire un sous vetement.",
-        "06 - Tu as les yeux bandés pendant 3 tours.",
+        "05 - Lèche doucement le bout de ton doigt en regardant un joueur dans les yeux.",
+        "06 - Tu as les yeux bandés pendant 3 tours les autres joueurs ont carte blanche sur toi.",
         "07 - Retire un habit.",
-        "08 - ",
-        "09 - ",
+        "08 - .",
+        "09 - Laisse un joueur écrire un mot coquin sur ton bras ou ta cuisse avec un feutre.",
         "10 - "
     ],
     "gageHard": [
@@ -212,12 +212,13 @@
         "02 - Mets toi nu dehors durant 30 secondes",
         "03 - Prend une carte Action en difficulté Hard",
         "04 - Laisse un joueur te donner une fessée sensuelle (doucement ou plus fort selon ton envie).",
-        "05 - ",
+        "05 - Retire un sous-vetement",
         "06 - Tu as les yeux bandés pendant 5 tours, les autres joueurs ont carte blanche sur toi.",
         "10 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage hard supplémentaire.",
         "08 - Laisse un joueur choisir un objet et l’utiliser sur toi de manière sensuelle.",
         "09 - Prend un objet et suce le durant 30 secondes, les autres joueurs doivent noter la prestation",
-        "10 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage hard supplémentaire."
+        "10 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage hard supplémentaire.",
+        "11 - Laisse un joueur écrire un mot coquin sur tes fesse ou ton torse avec un feutre."
     ],
     "gageExtreme": [
         "01 - Ferme les yeux et laisse un joueur te surprendre avec une action torride.",
@@ -229,7 +230,8 @@
         "07 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage extreme supplémentaire.",
         "08 - Laisse un joueur attacher tes mains et faire ce qu’il veut de toi pendant 2 minutes.",
         "09 - Laisse un joueur te chuchoter une envie interdite à l’oreille, et exécute-la si tu en as le cran…",
-        "10 - Laisse un joueur te donner une fessée intense, le joueur peut dire quelque chose de torride."
+        "10 - Laisse un joueur te donner une fessée intense, le joueur peut dire quelque chose de torride.",
+        "11 - Laisse un joueur écrire un mot coquin ou il souhaite avec un feutre"
     ],
     "Trier": [
         "Quel est le plus beau cadeau que tu aies offert ?",
