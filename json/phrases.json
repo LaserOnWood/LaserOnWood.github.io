@@ -224,7 +224,7 @@
         "01 - Ferme les yeux et laisse un joueur te surprendre avec une action torride.",
         "02 - Utilise ta langue pour récupérer un bonbon placé sur le corps d’un joueur.",
         "03 - Mets un bandeau sur tes yeux et laisse un joueur t’embrasser à un endroit aléatoire.",
-        "04 - Laisse un joueur te toucher pendant 10 secondes où il veut (consentement nécessaire).",
+        "04 - Laisse un joueur te toucher pendant 30 secondes où il veut (consentement nécessaire).",
         "05 - Laisse un joueur choisir un vêtement que tu dois retirer et NE PAS remettre jusqu’à la fin du jeu.",
         "06 - Murmure à l’oreille d’un joueur une pensée très torride que tu as sur lui/elle.",
         "07 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage extreme supplémentaire.",
@@ -232,6 +232,10 @@
         "09 - Laisse un joueur te chuchoter une envie interdite à l’oreille, et exécute-la si tu en as le cran…",
         "10 - Laisse un joueur te donner une fessée intense, le joueur peut dire quelque chose de torride.",
         "11 - Laisse un joueur écrire un mot coquin ou il souhaite avec un feutre"
+    ],
+    "Secret": [
+        "01 - Change de tenu.",
+        "02 - "
     ],
     "Trier": [
         "Quel est le plus beau cadeau que tu aies offert ?",
