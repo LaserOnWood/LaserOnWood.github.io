@@ -72,12 +72,12 @@
         "12 - Décris ce que tu aimerais faire au joueur de ton choix, si vous étiez seuls dans une pièce.",
         "13 - Isole toi dans une piece pendant une minute avec un autre joueur et tu as carte blanche",
         "14 - Laisse un joueur choisir un endroit sur ton corps où il/elle pourra poser sa main pendant 5 secondes.",
-        "15 - ",
+        "15 - Laisse un joueur dessiner un petit symbole sur ton cou ou ton poignet avec un doigt.",
         "16 - Mets-toi à genoux devant un joueur et regarde-le/la avec un regard intense pendant 15 secondes.",
-        "17 - ",
+        "17 - Laisse un joueur poser ses mains sur toi où il veut pendant 15 secondes.",
         "18 - Pas de chance, tire un gage Medium",
         "19 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage moyen supplémentaire.",
-        "20 - "
+        "20 - Mime une de tes positions préférées, avec l'aide d'un ou plusieurs joueurs si nécessaire."
 
 
     ],
@@ -112,11 +112,11 @@
         "27 - Quelle est la pire excuse que tu as déjà donnée pour éviter un rendez-vous ?",
         "28 - As-tu déjà espionné quelqu’un sur les réseaux sociaux ? Pourquoi ?",
         "29 - Quelle est la chose la plus stupide que tu aies faite par amour ?",
-        "30 - "
+        "30 - Réalise une danse suggestive ou sexy."
     ],
 
     "actionHard": [
-        "01 - Laisse un joueur dessiner un petit symbole sur ton cou ou ton poignet avec un doigt.",
+        "01 - Laisse un joueur dessiner un petit symbole sur tes fesses ou ton ventre avec un doigt.",
         "02 - Fais glisser doucement tes doigts sur la nuque du joueur de ton choix.",
         "03 - Demande au joueur de ton choix de te donner un gage hard que tu devras accomplir dans la prochaine minute.",
         "04 - Décris ce que tu aimerais faire sexuellement au joueur de ton choix, si vous étiez seuls dans une pièce.",
@@ -132,7 +132,7 @@
         "14 - Regarde un joueur et décris avec des détails très chauds comment tu lui ferais l’amour.",
         "15 - Mords doucement un joueur où tu veux.",
         "16 - Chuchote une phrase cochonne à l’oreille du joueur de ton choix",
-        "17 - ",
+        "17 - Prodigue une gâterie au joueur de ton choix pendant 30 secondes.",
         "18 - Mets tes mains derrière ton dos et laisse un joueur te donner à manger avec sa bouche.",
         "19 - Pas de chance, tire un gage Hard",
         "20 - Embrasse la main ou le cou d’un joueur avec passion."
@@ -185,40 +185,42 @@
     ],
     "gageSoft": [
         "01 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage soft supplémentaire.",
-        "02 - Gage soft 2",
+        "02 - Murmure à l’oreille d’un joueur une phrase légèrement osée.",
         "03 - Obei à 1 ordre donner par les autres joueurs",
-        "04 - ",
+        "04 - Laisse un joueur écrire un mot coquin sur ton bras ou ta cuisse avec un feutre.",
         "05 - Tu as les yeux bandés pendant 2 tours.",
         "06 - Prend une carte Action en difficulté Soft",
         "07 - Fais 10 pompes , abdos ou squats en regardant un joueur dans les yeux.",
         "08 - Lèche doucement le bout de ton doigt en regardant un joueur dans les yeux.",
-        "09 - Tu as les yeux bandés pendant 1 tours les autres joueurs ont carte blanche sur toi.",
-        "10 - "
+        "09 - Tu as les yeux bandés pendant 1 tours, les autres joueurs ont carte blanche sur toi.",
+        "10 - Décris la partie du corps que tu trouves la plus attirante chez le joueur de ton choix."
     ],
     "gageMedium": [
         "01 - Prend une carte Action en difficulté Medium",
-        "02 - Gage moyen 2",
+        "02 - Décris en détail ton dernier rêve érotique à voix haute.",
         "03 - Obei à 3 ordres donner par les autres joueurs",
         "04 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage moyen supplémentaire.",
         "05 - Lèche doucement le bout de ton doigt en regardant un joueur dans les yeux.",
-        "06 - Tu as les yeux bandés pendant 3 tours les autres joueurs ont carte blanche sur toi.",
+        "06 - Tu as les yeux bandés pendant 3 tours, les autres joueurs ont carte blanche sur toi.",
         "07 - Retire un habit.",
-        "08 - .",
-        "09 - Laisse un joueur écrire un mot coquin sur ton bras ou ta cuisse avec un feutre.",
-        "10 - "
+        "08 - Passe ta langue sur les lèvres du joueur à ta gauche ou à ta droite, juste un instant.",
+        "09 - Laisse un joueur écrire un mot coquin sur ton dos ou un pec/seins avec un feutre.",
+        "10 - Chuchote à l’oreille du joueur de ton choix un fantasme que tu aimerais réaliser."
     ],
     "gageHard": [
         "01 - Obei à 5 ordres donner par les autres joueurs",
         "02 - Mets toi nu dehors durant 30 secondes",
         "03 - Prend une carte Action en difficulté Hard",
-        "04 - Laisse un joueur te donner une fessée sensuelle (doucement ou plus fort selon ton envie).",
+        "04 - Laisse un joueur te donner 5 fessée sensuelle (doucement ou plus fort selon ton envie).",
         "05 - Retire un sous-vetement",
         "06 - Tu as les yeux bandés pendant 5 tours, les autres joueurs ont carte blanche sur toi.",
         "10 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage hard supplémentaire.",
         "08 - Laisse un joueur choisir un objet et l’utiliser sur toi de manière sensuelle.",
         "09 - Prend un objet et suce le durant 30 secondes, les autres joueurs doivent noter la prestation",
         "10 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage hard supplémentaire.",
-        "11 - Laisse un joueur écrire un mot coquin sur tes fesse ou ton torse avec un feutre."
+        "11 - Laisse un joueur écrire un mot coquin sur tes fesses ou ton pubis avec un feutre.",
+        "12 - Chuchote à l’oreille du joueur de ton choix un fantasme honteux que tu aimerais réaliser.",
+        "13 - Mets toi nu pendant 3 tours."
     ],
     "gageExtreme": [
         "01 - Ferme les yeux et laisse un joueur te surprendre avec une action torride.",
@@ -231,7 +233,8 @@
         "08 - Laisse un joueur attacher tes mains et faire ce qu’il veut de toi pendant 2 minutes.",
         "09 - Laisse un joueur te chuchoter une envie interdite à l’oreille, et exécute-la si tu en as le cran…",
         "10 - Laisse un joueur te donner une fessée intense, le joueur peut dire quelque chose de torride.",
-        "11 - Laisse un joueur écrire un mot coquin ou il souhaite avec un feutre"
+        "11 - Laisse un joueur écrire un mot coquin ou il souhaite avec un feutre",
+        "12 - Mets toi nu jusqu'à la fin du jeu"
     ],
     "Secret": [
         "01 - Change de tenu.",
