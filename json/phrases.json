@@ -19,7 +19,7 @@
         "17 - ",
         "18 - ",
         "19 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage facile supplémentaire.",
-        "20 - "
+        "20 - Fait un massage des epaules pendant 1 minute au joueur de ton choix"
 
     ],
 
@@ -77,7 +77,9 @@
         "17 - Laisse un joueur poser ses mains sur toi où il veut pendant 15 secondes.",
         "18 - Pas de chance, tire un gage Medium",
         "19 - Fais un duel de regards avec un joueur, le premier qui détourne les yeux subit un gage moyen supplémentaire.",
-        "20 - Mime une de tes positions préférées, avec l'aide d'un ou plusieurs joueurs si nécessaire."
+        "20 - Mime une de tes positions préférées, avec l'aide d'un ou plusieurs joueurs si nécessaire.",
+        "21 - Réalise une danse suggestive ou sexy.",
+        "22 - Fait un massage du dos pendant 1 minute au joueur de ton choix"
 
 
     ],
@@ -112,7 +114,7 @@
         "27 - Quelle est la pire excuse que tu as déjà donnée pour éviter un rendez-vous ?",
         "28 - As-tu déjà espionné quelqu’un sur les réseaux sociaux ? Pourquoi ?",
         "29 - Quelle est la chose la plus stupide que tu aies faite par amour ?",
-        "30 - Réalise une danse suggestive ou sexy."
+        "30 - Quel est ton hobbie ou ta passion du moment ?"
     ],
 
     "actionHard": [
@@ -135,7 +137,8 @@
         "17 - Prodigue une gâterie au joueur de ton choix pendant 30 secondes.",
         "18 - Mets tes mains derrière ton dos et laisse un joueur te donner à manger avec sa bouche.",
         "19 - Pas de chance, tire un gage Hard",
-        "20 - Embrasse la main ou le cou d’un joueur avec passion."
+        "20 - Embrasse la main ou le cou d’un joueur avec passion.",
+        "21 - Fait un massage de 1 minute au joueur de ton choix"
     ],
 
 
