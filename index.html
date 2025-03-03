@@ -490,7 +490,11 @@
                             <div class="modal-body">
                                 <!-- Game Card details-->
                                 <h2 class="text-uppercase">Spin</h2>
-                                
+                                <div id="wheel" class="wheel-container">
+                                    <canvas id="wheelCanvas" width="450" height="450"></canvas>
+                                    <h3 id="resultat"></h3>
+                                    <button id="spinBtn" class="btn btn-success mt-3">Tourner la roue</button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -649,5 +653,6 @@
     <script src="js/scripts.js"></script>
     <script src="js/dice.js"></script>
     <script src="js/phrases.js"></script>
+    <script src="js/spin.js"></script>
 </body>
 </html>
