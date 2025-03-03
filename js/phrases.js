@@ -1,72 +1,79 @@
-document.addEventListener("DOMContentLoaded", () => {
-    afficherPhrasesAleatoires();
+document.addEventListener("DOMContentLoaded", async () => {
+    await afficherPhrasesAleatoires();
 
-    // Sélectionne tous les boutons de rafraîchissement
+    // Bouton pour rafraîchir manuellement la phrase
     document.querySelectorAll("[id^='refreshQuotesBtn-']").forEach(button => {
         button.addEventListener("click", () => {
-            const category = button.dataset.category; // Récupère la catégorie depuis l'attribut data-category
+            const category = button.dataset.category;
+            console.log("🔄 Bouton cliqué pour la catégorie :", category);
+            afficherPhraseAleatoire(category);
+        });
+    });
+
+    // Détection de l'ouverture du collapse pour afficher une nouvelle phrase
+    document.querySelectorAll(".collapse").forEach(collapse => {
+        collapse.addEventListener("shown.bs.collapse", (event) => {
+            const category = event.target.id.replace("collapse", ""); // 🔥 On ne met PAS en minuscules
+            console.log("📌 Collapse ouvert :", category);
             afficherPhraseAleatoire(category);
         });
     });
 });
 
-// Variable pour garder trace des indices déjà affichés pour chaque catégorie
-const affichagePhrases = {
-    actionSoft: [],
-    veriteSoft: [],
-    actionMedium: [],
-    veriteMedium: [],
-    actionHard: [],
-    veriteHard: [],
-    gageSoft: [], gageMedium: [], gageHard: [],
-    gageExtreme: [],
-    Secret: []
-};
-
-// Fonction améliorée pour afficher une phrase spécifique selon la catégorie
+// Fonction pour afficher une phrase aléatoire
 async function afficherPhraseAleatoire(category) {
+    console.log(`🔄 Chargement d'une nouvelle phrase pour : ${category}`);
+
     const data = await chargerPhrases();
+    if (!data[category] || data[category].length === 0) {
+        console.warn(`⚠ Aucune phrase trouvée pour ${category}`);
+        return;
+    }
+
     const phraseElement = document.getElementById(`quoteText-${category}`);
 
-    if (phraseElement && data[category] && data[category].length > 0) {
-        // Récupère l'index aléatoire en s'assurant qu'il n'a pas déjà été affiché
-        let randomIndex;
-
-        if (affichagePhrases[category].length === data[category].length) {
-            // Si toutes les phrases ont été affichées, réinitialise la liste
-            affichagePhrases[category] = [];
-        }
-
-        // Choisit un index aléatoire qui n'a pas encore été utilisé
-        do {
-            randomIndex = Math.floor(Math.random() * data[category].length);
-        } while (affichagePhrases[category].includes(randomIndex));
-
-        // Affiche la phrase et ajoute l'index à la liste des affichages
-        phraseElement.textContent = data[category][randomIndex];
-        affichagePhrases[category].push(randomIndex);
-    } else if (phraseElement) {
-        phraseElement.textContent = "Aucune phrase disponible.";
-    } else {
-        console.warn(`⚠ Élément non trouvé : quoteText-${category}`);
+    if (!phraseElement) {
+        console.warn(`⚠ Élément non trouvé pour la catégorie ${category}`);
+        return;
     }
+
+    // 🔥 Génére un index aléatoire à chaque fois
+    const randomIndex = Math.floor(Math.random() * data[category].length);
+
+    // 🎯 Met à jour immédiatement la phrase
+    phraseElement.textContent = data[category][randomIndex];
+
+    console.log(`✅ Nouvelle phrase affichée pour ${category} :`, data[category][randomIndex]);
 }
 
-// Charger toutes les phrases au début
+// Fonction pour charger toutes les phrases au début
 async function afficherPhrasesAleatoires() {
-    const categories = ["actionSoft", "veriteSoft", "actionMedium", "veriteMedium", "actionHard", "veriteHard", "gageSoft", "gageMedium", "gageHard", "gageExtreme", "Secret"];
-    for (const categorie of categories) {
-        await afficherPhraseAleatoire(categorie); // Attend que chaque phrase soit chargée avant de passer à la suivante
+    const categories = [
+        "ActionSoft", "veriteSoft", "actionMedium", "veriteMedium",
+        "actionHard", "veriteHard", "gageSoft", "gageMedium",
+        "gageHard", "gageExtreme", "Secret"
+    ];
+    
+    for (const category of categories) {
+        await afficherPhraseAleatoire(category);
     }
 }
 
+// Fonction pour charger les phrases depuis le fichier JSON
 async function chargerPhrases() {
     try {
         const response = await fetch("json/phrases.json");
         if (!response.ok) throw new Error("Erreur lors du chargement des phrases.");
-        return await response.json();
+
+        const jsonData = await response.json();
+        console.log("📂 Phrases chargées avec succès :", jsonData);
+        return jsonData;
     } catch (error) {
-        console.error(error);
-        return { actionMedium: [], actionHard: [], actionSoft: [], veriteMedium: [], veriteHard: [], veriteSoft: [], gageSoft: [], gageMedium: [], gageHard: [], gageExtreme: [], Secret: []};
+        console.error("🚨 Erreur de chargement du JSON :", error);
+        return {
+            actionMedium: [], actionHard: [], ActionSoft: [], veriteMedium: [],
+            veriteHard: [], veriteSoft: [], gageSoft: [], gageMedium: [],
+            gageHard: [], gageExtreme: [], Secret: []
+        };
     }
 }
