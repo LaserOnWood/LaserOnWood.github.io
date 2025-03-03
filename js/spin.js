@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const selectedIndex = Math.floor((rotation / (Math.PI * 2)) * numOptions) % numOptions;
   
           // Afficher le résultat
-          resultDiv.innerText = "La roue a choisi : " + options[selectedIndex];
+          resultDiv.innerText = options[selectedIndex];
         }
       }
   
