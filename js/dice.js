@@ -1,88 +1,50 @@
-// Custom Components
+// Récupérer les éléments HTML
+const rollDiceButton = document.getElementById("rollDiceButton");
+const diceResults = document.getElementById("diceResults");
+const resultsList = document.getElementById("resultsList");
+const diceSpinner = document.getElementById("diceSpinner");
 
-class DiceObject extends HTMLElement {
-	constructor() {
-		super();
-		const template = document.getElementById('dice-object');
-		const templateContent = template.content;
-		this.appendChild(templateContent.cloneNode(true));
-		let sides = this.getAttribute('sides');
-		this.innerHTML += `
-			<div class="die">
-				<div class="value">${sides}</div>
-				<svg viewBox="0 0 33 33">
-  					<use xlink:href="#d${sides}"></use>
-				</svg>
-			</div>
-		`;
-	}
+// Fonction pour lancer un dé
+function rollSingleDice(sides) {
+  return Math.floor(Math.random() * sides) + 1; // Retourne un nombre aléatoire entre 1 et "sides"
 }
 
-customElements.define('dice-object', DiceObject);
+// Fonction pour gérer le lancer des dés
+function rollDice() {
+  resultsList.innerHTML = ''; // Réinitialiser la liste des résultats
+  diceResults.style.display = 'none'; // Cacher les résultats avant de lancer les dés
 
-class DiceIcon extends HTMLElement {
-	constructor() {
-		super();
-		const template = document.getElementById('dice-icon');
-		const templateContent = template.content;
-		this.appendChild(templateContent.cloneNode(true));
-		let sides = this.getAttribute('sides');
-		this.innerHTML += `
-			<div class="icon">${sides}
-				<svg viewBox="0 0 12 12">
-  					<use xlink:href="#d${sides}-icon"></use>
-				</svg>
-			</div>
-		`;
-	}
-	
-	connectedCallback() {
-		this.querySelector('.increment').addEventListener('click', function(e) {
-			let sides = e.target.parentElement.getAttribute('sides');
-			
-			// add corresponding dice
-			let dice = `<dice-object sides="${sides}"></dice-object>`;
-			document.getElementById('table-top').insertAdjacentHTML('beforeend', dice);
-			
-			// enable decrement
-			e.target.parentElement.querySelector('.decrement').removeAttribute('disabled');
-			
-			// enable roll
-			document.getElementById('roll').removeAttribute('disabled');
-		});
-		
-		this.querySelector('.decrement').addEventListener('click', function(e) {
-			let sides = e.target.parentElement.getAttribute('sides');
-			
-			// remove corresponding dice
-			let correspondingDice = document.querySelectorAll(`dice-object[sides="${sides}"]`);
-			correspondingDice[0].remove();
-			
-			// disable decrement if no more
-			if (correspondingDice.length === 1) {
-				e.target.setAttribute('disabled', '');
-			}
-			
-			// disable roll if no more
-			let dice = document.querySelectorAll('dice-object');
-			if (dice.length < 1) {
-				document.getElementById('roll').setAttribute('disabled', '');
-			}
-		});
-	}
+  // Afficher l'animation
+  diceSpinner.style.display = 'block';
+
+  // Vérifier les cases à cocher et lancer les dés correspondants
+  const selectedDice = [];
+  
+  if (document.getElementById("dice6").checked) selectedDice.push(6);
+  if (document.getElementById("dice10").checked) selectedDice.push(10);
+  if (document.getElementById("dice20").checked) selectedDice.push(20);
+
+  if (selectedDice.length === 0) {
+    alert("Veuillez sélectionner au moins un dé !");
+    diceSpinner.style.display = 'none'; // Cacher l'animation si aucun dé n'est sélectionné
+    return;
+  }
+
+  // Après l'animation, on arrête et on affiche les résultats
+  setTimeout(() => {
+    selectedDice.forEach(sides => {
+      const result = rollSingleDice(sides);
+      const listItem = document.createElement("li");
+      listItem.textContent = `Dé à ${sides} faces : ${result}`;
+      resultsList.appendChild(listItem);
+    });
+
+    diceResults.style.display = 'block'; // Afficher les résultats
+    diceSpinner.style.display = 'none'; // Cacher l'animation
+  }, 2000); // L'animation dure 2 secondes
 }
 
-customElements.define('dice-icon', DiceIcon);
-
-
-// Roll the dice
-
-document.getElementById('roll').addEventListener('click', function() {
-	let dice = document.querySelectorAll('dice-object');
-	
-	dice.forEach((die) => {
-		let sides = die.getAttribute('sides');
-		let roll = Math.floor(Math.random() * sides + 1);
-		die.querySelector('.value').innerText = roll;
-	});
+// Lancer les dés lorsque le bouton est cliqué
+rollDiceButton.addEventListener("click", () => {
+  rollDice();
 });
