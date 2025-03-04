@@ -49,9 +49,9 @@ async function afficherPhraseAleatoire(category) {
 // Fonction pour charger toutes les phrases au début
 async function afficherPhrasesAleatoires() {
     const categories = [
-        "ActionSoft", "veriteSoft", "actionMedium", "veriteMedium",
-        "actionHard", "veriteHard", "gageSoft", "gageMedium",
-        "gageHard", "gageExtreme", "Secret"
+        "ActionSoft", "VeriteSoft", "ActionMedium", "VeriteMedium",
+        "ActionHard", "VeriteHard", "GageSoft", "GageMedium",
+        "GageHard", "GageExtreme", "Secret"
     ];
     
     for (const category of categories) {
@@ -71,9 +71,9 @@ async function chargerPhrases() {
     } catch (error) {
         console.error("🚨 Erreur de chargement du JSON :", error);
         return {
-            actionMedium: [], actionHard: [], ActionSoft: [], veriteMedium: [],
-            veriteHard: [], veriteSoft: [], gageSoft: [], gageMedium: [],
-            gageHard: [], gageExtreme: [], Secret: []
+            ActionMedium: [], ActionHard: [], ActionSoft: [], VeriteMedium: [],
+            VeriteHard: [], VeriteSoft: [], GageSoft: [], GageMedium: [],
+            GageHard: [], GageExtreme: [], Secret: []
         };
     }
 }
