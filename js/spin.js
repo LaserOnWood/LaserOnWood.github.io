@@ -59,7 +59,6 @@ function drawWheel() {
     }
 
     ctx.resetTransform();
-    drawPointer(); // 🔴 Ajoute le pointeur après avoir dessiné la roue
 }
 
 
