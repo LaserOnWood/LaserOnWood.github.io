@@ -51,7 +51,7 @@ async function afficherPhrasesAleatoires() {
     const categories = [
         "ActionSoft", "VeriteSoft", "ActionMedium", "VeriteMedium",
         "ActionHard", "VeriteHard", "GageSoft", "GageMedium",
-        "GageHard", "GageExtreme", "Secret"
+        "GageHard", "GageExtreme", "GageSecret"
     ];
     
     for (const category of categories) {
@@ -73,7 +73,7 @@ async function chargerPhrases() {
         return {
             ActionMedium: [], ActionHard: [], ActionSoft: [], VeriteMedium: [],
             VeriteHard: [], VeriteSoft: [], GageSoft: [], GageMedium: [],
-            GageHard: [], GageExtreme: [], Secret: []
+            GageHard: [], GageExtreme: [], GageSecret: []
         };
     }
 }
