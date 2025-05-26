@@ -172,19 +172,19 @@
                     <div class="items-grid">
                         <div class="item" data-item="Douleur légère">Douleur légère</div>
                         <div class="item" data-item="Douleur importante">Douleur importante</div>
-                        <div class="item" data-item="Item">Pinces à seins</div>
-                        <div class="item" data-item="Item">Aiguilles</div>
-                        <div class="item" data-item="Item">Martinet</div>
-                        <div class="item" data-item="Item">Paddles</div>
-                        <div class="item" data-item="Item">Cravache</div>
-                        <div class="item" data-item="Item">Cane / badine</div>
-                        <div class="item" data-item="Item">Fessée</div>
-                        <div class="item" data-item="Item">Fouet</div>
-                        <div class="item" data-item="Item">Gifles</div>
-                        <div class="item" data-item="Item">Cire & bougies</div>
-                        <div class="item" data-item="Item">Griffures</div>
-                        <div class="item" data-item="Item">Gifles sur Pénis/Vulve</div>
-                        <div class="item" data-item="Item">Torture de Pénis/Vulve</div>
+                        <div class="item" data-item="Pinces à seins">Pinces à seins</div>
+                        <div class="item" data-item="Aiguilles">Aiguilles</div>
+                        <div class="item" data-item="Martinet">Martinet</div>
+                        <div class="item" data-item="Paddles">Paddles</div>
+                        <div class="item" data-item="Cravache">Cravache</div>
+                        <div class="item" data-item="Cane / badine">Cane / badine</div>
+                        <div class="item" data-item="Fessée">Fessée</div>
+                        <div class="item" data-item="Fouet">Fouet</div>
+                        <div class="item" data-item="Gifles">Gifles</div>
+                        <div class="item" data-item="Cire & bougies">Cire & bougies</div>
+                        <div class="item" data-item="Griffures">Griffures</div>
+                        <div class="item" data-item="Gifles sur Pénis/Vulve">Gifles sur Pénis/Vulve</div>
+                        <div class="item" data-item="Torture de Pénis/Vulve">Torture de Pénis/Vulve</div>
                         <div class="item" data-item="Morsure">Morsure</div>
 
                     </div>
@@ -197,6 +197,7 @@
                     </div>
                     <div class="items-grid">
                         <div class="item" data-item="Simulation de viol">Simulation de viol</div>
+                        <div class="item" data-item="Chantage">Chantage</div>
                         <div class="item" data-item="Coercission">Coercission</div>
                         <div class="item" data-item="Kidnapping">Kidnapping</div>
                         <div class="item" data-item="Alcool">Alcool</div>
@@ -219,9 +220,15 @@
                 -->
                 
                 <div class="text-center mt-4">
-                    <button class="btn export-btn" onclick="exportResults()">
-                        <i class="fas fa-download"></i> Exporter mes préférences
-                    </button>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap">
+                        <button class="btn export-btn" onclick="exportResults()">
+                            <i class="fas fa-download"></i> Exporter mes préférences
+                        </button>
+                        <button class="btn export-btn" onclick="document.getElementById('importFile').click()">
+                            <i class="fas fa-upload"></i> Importer mes préférences
+                        </button>
+                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importResults(this)">
+                    </div>
                 </div>
             </div>
         </div>
@@ -229,5 +236,6 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
     <script src="javascript/script.js"></script>
+    <script src="javascript/import.js"></script>
 </body>
 </html>
