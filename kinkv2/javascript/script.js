@@ -7,25 +7,25 @@ document.querySelectorAll('.item').forEach(item => {
         const itemName = this.dataset.item;
         const currentState = preferences[itemName] || 'none';
         
-        // Cycle through states: none -> adore -> love -> curious -> dislike -> no -> none
+        // Cycle through states: none -> adore -> aime -> curieux -> peu interesse -> non strict -> none
         let newState;
         switch(currentState) {
             case 'none':
                 newState = 'adore';
                 break;
             case 'adore':
-                newState = 'love';
+                newState = 'aime';
                 break;
-            case 'love':
-                newState = 'curious';
+            case 'aime':
+                newState = 'curiosité';
                 break;
-            case 'curious':
+            case 'curiosité':
                 newState = 'dislike';
                 break;
             case 'dislike':
-                newState = 'no';
+                newState = 'non_strict';
                 break;
-            case 'no':
+            case 'non_strict':
                 newState = 'none';
                 break;
         }
@@ -48,10 +48,10 @@ document.querySelectorAll('.item').forEach(item => {
 function updateStats() {
     const stats = {
         adore: 0,
-        love: 0,
-        curious: 0,
+        aime: 0,
+        curiosité: 0,
         dislike: 0,
-        no: 0,
+        non_strict: 0,
         none: 0
     };
     
@@ -61,13 +61,13 @@ function updateStats() {
         stats[pref]++;
     });
     
-    stats.none = totalItems - stats.adore - stats.love - stats.curious - stats.dislike - stats.no;
+    stats.none = totalItems - stats.adore - stats.aime - stats.curiosité - stats.dislike - stats.non_strict;
     
     document.getElementById('adore-count').textContent = stats.adore;
-    document.getElementById('love-count').textContent = stats.love;
-    document.getElementById('curious-count').textContent = stats.curious;
+    document.getElementById('aime-count').textContent = stats.aime;
+    document.getElementById('curiosité-count').textContent = stats.curiosité;
     document.getElementById('dislike-count').textContent = stats.dislike;
-    document.getElementById('no-count').textContent = stats.no;
+    document.getElementById('non_strict-count').textContent = stats.non_strict;
     document.getElementById('unselected-count').textContent = stats.none;
 }
 
@@ -79,10 +79,11 @@ function exportResults() {
         summary: {
             total: Object.keys(preferences).length,
             adore: Object.values(preferences).filter(p => p === 'adore').length,
-            love: Object.values(preferences).filter(p => p === 'love').length,
-            curious: Object.values(preferences).filter(p => p === 'curious').length,
+            aime: Object.values(preferences).filter(p => p === 'aime').length,
+            curiosité: Object.values(preferences).filter(p => p === 'curiosité').length,
             dislike: Object.values(preferences).filter(p => p === 'dislike').length,
-            no: Object.values(preferences).filter(p => p === 'no').length
+            non_strict: Object.values(preferences).filter(p => p === 'non_strict').length,
+            unselected: Object.values(preferences).filter(p => p === 'unselected').length
         }
     };
     
