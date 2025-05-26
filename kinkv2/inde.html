@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liste des Préférences / KinkList</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="main-container">
+            <div class="header">
+                <h1><i class="fas fa-heart"></i> Liste Interactive des Préférences</h1>
+                <p class="mb-0">Cliquez sur chaque élément pour exprimer votre niveau d'intérêt</p>
+            </div>
+            
+            <div class="container-fluid p-4">
+                <div class="legend">
+                    <h5 class="mb-3"><i class="fas fa-info-circle"></i> Légende</h5>
+                    <div class="row">
+                        <div class="col-md-2 col-6 mb-2">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #7d2e79;"></div>
+                                <span>J'adore</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-6 mb-2">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #4CAF50;"></div>
+                                <span>J'aime</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-6 mb-2">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #FF9800;"></div>
+                                <span>Curieux</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-6 mb-2">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #FF5722;"></div>
+                                <span>Peu intéressé</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-6 mb-2">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #f44336;"></div>
+                                <span>Pas du tout</span>
+                            </div>
+                        </div>
+                        <div class="col-md-2 col-6 mb-2">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #9E9E9E;"></div>
+                                <span>Non sélectionné</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stats">
+                    <h5 class="mb-3"><i class="fas fa-chart-bar"></i> Statistiques</h5>
+                    <div class="row">
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="stat-item">
+                                <span class="stat-badge" style="background: #7d2e79;" id="adore-count">0</span>
+                                <span>J'adore</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="stat-item">
+                                <span class="stat-badge" style="background: #4CAF50;" id="love-count">0</span>
+                                <span>J'aime</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="stat-item">
+                                <span class="stat-badge" style="background: #FF9800;" id="curious-count">0</span>
+                                <span>Curieux</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="stat-item">
+                                <span class="stat-badge" style="background: #FF5722;" id="dislike-count">0</span>
+                                <span>Peu intéressé</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="stat-item">
+                                <span class="stat-badge" style="background: #f44336;" id="no-count">0</span>
+                                <span>Pas du tout</span>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-md-4 col-6">
+                            <div class="stat-item">
+                                <span class="stat-badge" style="background: #6c757d;" id="unselected-count">0</span>
+                                <span>Non sélectionné</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <div class="category-header">
+                        <i class="fas fa-kiss"></i>
+                        <span>Romantique & Tendresse</span>
+                    </div>
+                    <div class="items-grid">
+                        <div class="item" data-item="Baisers passionnés">Baisers passionnés</div>
+                        <div class="item" data-item="Câlins prolongés">Câlins prolongés</div>
+                        <div class="item" data-item="Massages sensuel">Massages sensuels</div>
+                        <div class="item" data-item="Dîner aux chandelles">Dîner aux chandelles</div>
+                        <div class="item" data-item="Bain romantique">Bain romantique</div>
+                        <div class="item" data-item="Musique douce">Musique douce</div>
+                        <div class="item" data-item="Netflix & Chill">Netflix & Chill</div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <div class="category-header">
+                        <i class="fas fa-fire"></i>
+                        <span>Aventure & Exploration</span>
+                    </div>
+                    <div class="items-grid">
+                        <div class="item" data-item="Voyages surprise">Voyages surprise</div>
+                        <div class="item" data-item="Randonnées">Randonnées</div>
+                        <div class="item" data-item="Sports extrêmes">Sports extrêmes</div>
+                        <div class="item" data-item="Exploration urbaine">Exploration urbaine</div>
+                        <div class="item" data-item="Camping sauvage">Camping sauvage</div>
+                        <div class="item" data-item="Plongée sous-marine">Plongée sous-marine</div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <div class="category-header">
+                        <i class="fas fa-palette"></i>
+                        <span>Créativité & Arts</span>
+                    </div>
+                    <div class="items-grid">
+                        <div class="item" data-item="Peinture ensemble">Peinture ensemble</div>
+                        <div class="item" data-item="Cours de danse">Cours de danse</div>
+                        <div class="item" data-item="Photographie">Photographie</div>
+                        <div class="item" data-item="Cuisine créative">Cuisine créative</div>
+                        <div class="item" data-item="Écriture commune">Écriture commune</div>
+                        <div class="item" data-item="Musique ensemble">Musique ensemble</div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <div class="category-header">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Jeux & Divertissement</span>
+                    </div>
+                    <div class="items-grid">
+                        <div class="item" data-item="Jeux de société">Jeux de société</div>
+                        <div class="item" data-item="Jeux vidéo coopératifs">Jeux vidéo coopératifs</div>
+                        <div class="item" data-item="Escape games">Escape games</div>
+                        <div class="item" data-item="Karaoké">Karaoké</div>
+                        <div class="item" data-item="Soirées quiz">Soirées quiz</div>
+                        <div class="item" data-item="Cinéma maison">Cinéma maison</div>
+                    </div>
+                </div>
+                
+                <div class="category">
+                    <div class="category-header">
+                        <i class="fas fa-leaf"></i>
+                        <span>Nature & Bien-être</span>
+                    </div>
+                    <div class="items-grid">
+                        <div class="item" data-item="Méditation ensemble">Méditation ensemble</div>
+                        <div class="item" data-item="Yoga de couple">Yoga de couple</div>
+                        <div class="item" data-item="Jardinage">Jardinage</div>
+                        <div class="item" data-item="Observation des étoiles">Observation des étoiles</div>
+                        <div class="item" data-item="Spa naturel">Spa naturel</div>
+                        <div class="item" data-item="Pique-niques">Pique-niques</div>
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">
+                        <i class="fas fa-bandage"></i>
+                        <span>Douleur</span>
+                    </div>
+                    <div class="items-grid">
+                        <div class="item" data-item="Douleur légère">Douleur légère</div>
+                        <div class="item" data-item="Douleur importante">Douleur importante</div>
+                        <div class="item" data-item="Nom de l'item">Pinces à seins</div>
+                        <div class="item" data-item="Nom de l'item">Aiguilles</div>
+                        <div class="item" data-item="Nom de l'item">Martinet</div>
+                        <div class="item" data-item="Nom de l'item">Paddles</div>
+                        <div class="item" data-item="Nom de l'item">Cravache</div>
+                        <div class="item" data-item="Nom de l'item">Cane / badine</div>
+                        <div class="item" data-item="Nom de l'item">Fessée</div>
+                        <div class="item" data-item="Nom de l'item">Fouet</div>
+                        <div class="item" data-item="Nom de l'item">Gifles</div>
+                        <div class="item" data-item="Nom de l'item">Cire & bougies</div>
+                        <div class="item" data-item="Nom de l'item">Griffures</div>
+                        <div class="item" data-item="Nom de l'item">Gifles sur Pénis/Vulve</div>
+                        <div class="item" data-item="Nom de l'item">Torture de Pénis/Vulve</div>
+                        <div class="item" data-item="Nom de l'item">Morsure</div>
+
+                    </div>
+                </div>
+
+                <div class="category">
+                    <div class="category-header">
+                        <i class="fas fa-lock"></i>
+                        <span>CNC</span>
+                    </div>
+                    <div class="items-grid">
+                        <div class="item" data-item="Nom de l'item">Simulation de viol</div>
+                        <div class="item" data-item="Nom de l'item">Coercission</div>
+                        <div class="item" data-item="Nom de l'item">Kidnapping</div>
+                        <div class="item" data-item="Nom de l'item">Alcool</div>
+                        <div class="item" data-item="Nom de l'item">Drogues & Somnifères</div>
+                        <div class="item" data-item="Nom de l'item">Sexe pendant le sommeil</div>
+                        <div class="item" data-item="Nom de l'item">Orgasmes forcés</div>
+                    </div>
+                </div>
+
+                <!--
+                <div class="category">
+                    <div class="category-header">
+                        <i class="fas fa-kiss"></i>
+                        <span>Nom de la categorie</span>
+                    </div>
+                    <div class="items-grid">
+                        <div class="item" data-item="Nom de l'item">Item</div>
+                    </div>
+                </div>
+                -->
+                
+                <div class="text-center mt-4">
+                    <button class="btn export-btn" onclick="exportResults()">
+                        <i class="fas fa-download"></i> Exporter mes préférences
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="javascript/script.js"></script>
+</body>
+</html>
