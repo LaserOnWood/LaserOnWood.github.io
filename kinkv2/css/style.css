@@ -98,13 +98,13 @@ body {
     border-color: #7d2e79;
 }
 
-.item.love {
+.item.aime {
     background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
     border-color: #4CAF50;
 }
 
-.item.curious {
+.item.curiosité {
     background: linear-gradient(135deg, #FF9800, #f57c00);
     color: white;
     border-color: #FF9800;
@@ -116,7 +116,7 @@ body {
     border-color: #FF5722;
 }
 
-.item.no {
+.item.non_strict {
     background: linear-gradient(135deg, #f44336, #d32f2f);
     color: white;
     border-color: #f44336;
