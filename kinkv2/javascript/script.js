@@ -1,6 +1,24 @@
 // État des préférences
 let preferences = {};
+
+// Fonction pour mettre à jour les badges des catégories
+function updateCategoryBadges() {
+    const categories = ['aspect-physique', 'jouets', 'bondage', 'douleur', 'cnc'];
+    
+    categories.forEach(category => {
+        const items = document.querySelectorAll(`[data-category="${category}"]`);
+        const selectedItems = Array.from(items).filter(item => {
+            const itemName = item.dataset.item;
+            return preferences[itemName] && preferences[itemName] !== 'none';
+        });
         
+        const badge = document.getElementById(`badge-${category}`);
+        if (badge) {
+            badge.textContent = `${selectedItems.length}/${items.length}`;
+        }
+    });
+}
+
 // Gestion des clics sur les items
 document.querySelectorAll('.item').forEach(item => {
     item.addEventListener('click', function() {
