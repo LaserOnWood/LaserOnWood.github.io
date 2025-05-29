@@ -52,26 +52,40 @@ body {
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
-.stat-item {
+.stats-badges {
     display: flex;
-    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    justify-content: center;
     align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-.stat-item:last-child {
-    border-bottom: none;
 }
 
 .stat-badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 0.75rem 1.25rem;
+    border-radius: 25px;
     color: white;
     font-weight: bold;
-    min-width: 40px;
-    text-align: center;
-    margin-right: 10px;
+    font-size: 0.95rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: all 0.3s ease;
+    min-width: 120px;
+    justify-content: center;
+}
+
+.stat-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.stat-badge .count {
+    background: rgba(255,255,255,0.25);
+    padding: 0.25rem 0.75rem;
+    border-radius: 15px;
+    margin-left: 8px;
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
 /* Styles pour l'accordéon personnalisé */
@@ -212,5 +226,14 @@ body {
     .header {
         border-radius: 15px 15px 0 0;
         padding: 1.5rem;
+    }
+
+    .stats-badges {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .stat-badge {
+        min-width: 200px;
     }
 }
