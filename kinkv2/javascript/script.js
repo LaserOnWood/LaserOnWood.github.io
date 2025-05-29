@@ -201,7 +201,7 @@ function exportResults() {
     
     const link = document.createElement('a');
     link.href = URL.createObjectURL(dataBlob);
-    link.download = `preferences_${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `Mes preferences_${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     
     showToast(`${selectedPreferences.length} préférences exportées avec succès !`, 'success');
