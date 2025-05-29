@@ -74,7 +74,7 @@ function updateStats() {
 
 // Mise à jour des compteurs par catégorie
 function updateCategoryCounters() {
-    const categories = ['aspectPhysique', 'jouets', 'bondage', 'douleur', 'cnc'];
+    const categories = ['aspectPhysique', 'habitTenue', 'jouets', 'bondage', 'douleur', 'cnc'];
     
     categories.forEach(category => {
         const items = document.querySelectorAll(`[data-category="${category}"]`);
