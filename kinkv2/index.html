@@ -15,276 +15,226 @@
                 <h1><i class="fas fa-heart"></i> Liste Interactive des Préférences</h1>
                 <p class="mb-0">Cliquez sur chaque élément pour exprimer votre niveau d'intérêt</p>
             </div>
+            <div class="stats">
+                <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Statistiques</h5>
+                <div class="stats-badges">
+                    <div class="stat-badge" style="background: linear-gradient(135deg, #7d2e79, #7a3077);">
+                        <span>J'adore</span>
+                        <span class="count" id="adore-count">0</span>
+                    </div>
+                    <div class="stat-badge" style="background: linear-gradient(135deg, #4CAF50, #45a049);">
+                        <span>J'aime</span>
+                        <span class="count" id="aime-count">0</span>
+                    </div>
+                    <div class="stat-badge" style="background: linear-gradient(135deg, #FF9800, #f57c00);">
+                        <span>Curieux</span>
+                        <span class="count" id="curiosité-count">0</span>
+                    </div>
+                    <div class="stat-badge" style="background: linear-gradient(135deg, #FF5722, #d84315);">
+                        <span>Peu intéressé</span>
+                        <span class="count" id="dislike-count">0</span>
+                    </div>
+                    <div class="stat-badge" style="background: linear-gradient(135deg, #f44336, #d32f2f);">
+                        <span>Non Strict</span>
+                        <span class="count" id="non_strict-count">0</span>
+                    </div>
+                    <div class="stat-badge" style="background: linear-gradient(135deg, #6c757d, #5a6268);">
+                        <span>Non sélectionné</span>
+                        <span class="count" id="unselected-count">0</span>
+                    </div>
+                </div>
+            </div>
             
-            <div class="container-fluid p-4">
-                <div class="legend">
-                    <h5 class="mb-3"><i class="fas fa-info-circle"></i> Légende</h5>
-                    <div class="row">
-                        <div class="col-md-2 col-6 mb-2">
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #7d2e79;"></div>
-                                <span>J'adore</span>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-6 mb-2">
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #4CAF50;"></div>
-                                <span>J'aime</span>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-6 mb-2">
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #FF9800;"></div>
-                                <span>Curieux</span>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-6 mb-2">
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #FF5722;"></div>
-                                <span>Peu intéressé</span>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-6 mb-2">
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #f44336;"></div>
-                                <span>Non Strict</span>
-                            </div>
-                        </div>
-                        <div class="col-md-2 col-6 mb-2">
-                            <div class="legend-item">
-                                <div class="legend-color" style="background: #9E9E9E;"></div>
-                                <span>Non sélectionné</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stats">
-                    <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Statistiques</h5>
-                    <div class="stats-badges">
-                        <div class="stat-badge" style="background: linear-gradient(135deg, #7d2e79, #7a3077);">
-                            <span>J'adore</span>
-                            <span class="count" id="adore-count">0</span>
-                        </div>
-                        <div class="stat-badge" style="background: linear-gradient(135deg, #4CAF50, #45a049);">
-                            <span>J'aime</span>
-                            <span class="count" id="aime-count">0</span>
-                        </div>
-                        <div class="stat-badge" style="background: linear-gradient(135deg, #FF9800, #f57c00);">
-                            <span>Curieux</span>
-                            <span class="count" id="curiosité-count">0</span>
-                        </div>
-                        <div class="stat-badge" style="background: linear-gradient(135deg, #FF5722, #d84315);">
-                            <span>Peu intéressé</span>
-                            <span class="count" id="dislike-count">0</span>
-                        </div>
-                        <div class="stat-badge" style="background: linear-gradient(135deg, #f44336, #d32f2f);">
-                            <span>Non Strict</span>
-                            <span class="count" id="non_strict-count">0</span>
-                        </div>
-                        <div class="stat-badge" style="background: linear-gradient(135deg, #6c757d, #5a6268);">
-                            <span>Non sélectionné</span>
-                            <span class="count" id="unselected-count">0</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Accordéon des catégories -->
-                <div class="accordion" id="categoriesAccordion">
-                    
-                <!--
-                    
-                                    
-                -->
-                    <!-- Aspect physique -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aspectPhysique" aria-expanded="false">
-                                <i class="fas fa-user me-2"></i>
-                                <span>Aspect physique</span>
-                                <span class="category-counter" id="counter-aspectPhysique"></span>
-                            </button>
-                        </h2>
-                        <div id="aspectPhysique" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
-                            <div class="accordion-body">
-                                <div class="items-grid">
-                                    <div class="item" data-item="Plutôt maigre" data-category="aspectPhysique">Plutôt maigre</div>
-                                    <div class="item" data-item="Plutôt en chair" data-category="aspectPhysique">Plutôt en chair</div>
-                                    <div class="item" data-item="Petits seins" data-category="aspectPhysique">Petits seins</div>
-                                    <div class="item" data-item="Gros seins" data-category="aspectPhysique">Gros seins</div>
-                                    <div class="item" data-item="Petit pénis" data-category="aspectPhysique">Petit pénis</div>
-                                    <div class="item" data-item="Gros pénis" data-category="aspectPhysique">Gros pénis</div>
-                                    <div class="item" data-item="Avec poils" data-category="aspectPhysique">Avec poils</div>
-                                    <div class="item" data-item="Peu de poils" data-category="aspectPhysique">Peu de poils</div>
-                                    <div class="item" data-item="Totalement épilé" data-category="aspectPhysique">Totalement épilé</div>
-                                    <div class="item" data-item="Percing" data-category="aspectPhysique">Percing</div>
-                                    <div class="item" data-item="Tatouage" data-category="aspectPhysique">Tatouage</div>
-                                    <div class="item" data-item="Peu musclé" data-category="aspectPhysique">Peu Musclé</div>
-                                    <div class="item" data-item="Musclé" data-category="aspectPhysique">Musclé</div>
-                                    <div class="item" data-item="Tres musclé" data-category="aspectPhysique">Tres Musclé</div>
-                                    <div class="item" data-item="Moins agé" data-category="aspectPhysique">Moins agé</div>
-                                    <div class="item" data-item="Plus agé" data-category="aspectPhysique">Plus agé</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Jouets -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#jouets" aria-expanded="false">
-                                <i class="fas fa-wand-magic-sparkles me-2"></i>
-                                <span>Jouets</span>
-                                <span class="category-counter" id="counter-jouets"></span>
-                            </button>
-                        </h2>
-                        <div id="jouets" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
-                            <div class="accordion-body">
-                                <div class="items-grid">
-                                    <div class="item" data-item="Gode ventouse" data-category="jouets">Gode ventouse</div>
-                                    <div class="item" data-item="Gode vibrant" data-category="jouets">Gode vibrant</div>
-                                    <div class="item" data-item="Gode giclant" data-category="jouets">Gode giclant</div>
-                                    <div class="item" data-item="Gode en bois" data-category="jouets">Gode en bois</div>
-                                    <div class="item" data-item="Gode en metal" data-category="jouets">Gode en metal</div>
-                                    <div class="item" data-item="Gode en verre" data-category="jouets">Gode en verre</div>
-                                    <div class="item" data-item="Stimulateur clitoridien" data-category="jouets">Stimulateur clitoridien</div>
-                                    <div class="item" data-item="Plug anal plastique" data-category="jouets">Plug anal plastique</div>
-                                    <div class="item" data-item="Plug anal en verre" data-category="jouets">Plug anal en verre</div>
-                                    <div class="item" data-item="Plug anal en métal" data-category="jouets">Plug anal en métal</div>
-                                    <div class="item" data-item="Oeuf Vibrant" data-category="jouets">Oeuf Vibrant</div>
-                                    <div class="item" data-item="Masseur prostatique" data-category="jouets">Masseur prostatique</div>
-                                    <div class="item" data-item="Cockring" data-category="jouets">Cockring</div>
-                                    <div class="item" data-item="Gaine pénienne" data-category="jouets">Gaine pénienne</div>
-                                    <div class="item" data-item="Gode ceinture" data-category="jouets">Gode ceinture</div>
-                                    <div class="item" data-item="Masturbateur" data-category="jouets">Masturbateur</div>
-                                    <div class="item" data-item="Jouet connecté" data-category="jouets">Jouet connecté</div>
-                                    <div class="item" data-item="Fuck machine" data-category="jouets">Fuck Machine</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Restriction & Bondage -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bondage" aria-expanded="false">
-                                <i class="fas fa-handcuffs me-2"></i>
-                                <span>Restriction & Bondage</span>
-                                <span class="category-counter" id="counter-bondage"></span>
-                            </button>
-                        </h2>
-                        <div id="bondage" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
-                            <div class="accordion-body">
-                                <div class="items-grid">
-                                    <div class="item" data-item="Bâillon" data-category="bondage">Bâillon</div>
-                                    <div class="item" data-item="Bandeau" data-category="bondage">Bandeau</div>
-                                    <div class="item" data-item="Collier" data-category="bondage">Collier</div>
-                                    <div class="item" data-item="Laisse" data-category="bondage">Laisse</div>
-                                    <div class="item" data-item="Harnais" data-category="bondage">Harnais</div>
-                                    <div class="item" data-item="Camisole" data-category="bondage">Camisole</div>
-                                    <div class="item" data-item="Barre d'écartement" data-category="bondage">Barre d'écartement</div>
-                                    <div class="item" data-item="Menottes tissu" data-category="bondage">Menottes tissu</div>
-                                    <div class="item" data-item="Menottes cuir" data-category="bondage">Menottes cuir</div>
-                                    <div class="item" data-item="Menottes métal" data-category="bondage">Menottes en métal</div>
-                                    <div class="item" data-item="Corde" data-category="bondage">Corde</div>
-                                    <div class="item" data-item="Ruban adhésif" data-category="bondage">Ruban adhésif</div>
-                                    <div class="item" data-item="Chaînes" data-category="bondage">Chaînes</div>
-                                    <div class="item" data-item="Cagoule" data-category="bondage">Cagoule</div>
-                                    <div class="item" data-item="Vacum Bed" data-category="bondage">Vacum Bed</div>
-                                    <div class="item" data-item="Privation sensorielle" data-category="bondage">Privation sensorielle</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Douleur -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#douleur" aria-expanded="false">
-                                <i class="fas fa-bandage me-2"></i>
-                                <span>Douleur</span>
-                                <span class="category-counter" id="counter-douleur"></span>
-                            </button>
-                        </h2>
-                        <div id="douleur" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
-                            <div class="accordion-body">
-                                <div class="items-grid">
-                                    <div class="item" data-item="Douleur légère" data-category="douleur">Douleur légère</div>
-                                    <div class="item" data-item="Douleur importante" data-category="douleur">Douleur importante</div>
-                                    <div class="item" data-item="Pinces à seins" data-category="douleur">Pinces à seins</div>
-                                    <div class="item" data-item="Aiguilles" data-category="douleur">Aiguilles</div>
-                                    <div class="item" data-item="Martinet" data-category="douleur">Martinet</div>
-                                    <div class="item" data-item="Paddles" data-category="douleur">Paddles</div>
-                                    <div class="item" data-item="Cravache" data-category="douleur">Cravache</div>
-                                    <div class="item" data-item="Cane / badine" data-category="douleur">Cane / badine</div>
-                                    <div class="item" data-item="Fessée" data-category="douleur">Fessée</div>
-                                    <div class="item" data-item="Fouet" data-category="douleur">Fouet</div>
-                                    <div class="item" data-item="Gifles" data-category="douleur">Gifles</div>
-                                    <div class="item" data-item="Cire & bougies" data-category="douleur">Cire & bougies</div>
-                                    <div class="item" data-item="Griffures" data-category="douleur">Griffures</div>
-                                    <div class="item" data-item="Gifles sur Pénis/Vulve" data-category="douleur">Gifles sur Pénis/Vulve</div>
-                                    <div class="item" data-item="Torture de Pénis/Vulve" data-category="douleur">Torture de Pénis/Vulve</div>
-                                    <div class="item" data-item="Morsure" data-category="douleur">Morsure</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- CNC -->
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cnc" aria-expanded="false">
-                                <i class="fas fa-lock me-2"></i>
-                                <span>CNC</span>
-                                <span class="category-counter" id="counter-cnc"></span>
-                            </button>
-                        </h2>
-                        <div id="cnc" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
-                            <div class="accordion-body">
-                                <div class="items-grid">
-                                    <div class="item" data-item="Simulation de viol" data-category="cnc">Simulation de viol</div>
-                                    <div class="item" data-item="Chantage" data-category="cnc">Chantage</div>
-                                    <div class="item" data-item="Coercition" data-category="cnc">Coercition</div>
-                                    <div class="item" data-item="Kidnapping" data-category="cnc">Kidnapping</div>
-                                    <div class="item" data-item="Alcool" data-category="cnc">Alcool</div>
-                                    <div class="item" data-item="Drogues & Somnifères" data-category="cnc">Drogues & Somnifères</div>
-                                    <div class="item" data-item="Sexe pendant le sommeil" data-category="cnc">Sexe pendant le sommeil</div>
-                                    <div class="item" data-item="Orgasmes forcés" data-category="cnc">Orgasmes forcés</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!--
-                <div class="category">
-                    <div class="category-header">
-                        <i class="fas fa-kiss"></i>
-                        <span>Nom de la categorie</span>
-                    </div>
-                    <div class="items-grid">
-                        <div class="item" data-item="Item">Item</div>
-                    </div>
-                </div>
-                -->
-                
-                <div class="text-center mt-4">
-                    <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <button class="btn export-btn" onclick="exportResults()">
-                            <i class="fas fa-download"></i> Exporter mes préférences
+            <!-- Accordéon des catégories -->
+            <div class="accordion" id="categoriesAccordion">
+                <!-- Aspect physique -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aspectPhysique" aria-expanded="false">
+                            <i class="fas fa-user me-2"></i>
+                            <span>Aspect physique</span>
+                            <span class="category-counter" id="counter-aspectPhysique"></span>
                         </button>
-                        <button class="btn export-btn" onclick="document.getElementById('importFile').click()">
-                            <i class="fas fa-upload"></i> Importer mes préférences
-                        </button>
-                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importResults(this)">
+                    </h2>
+                    <div id="aspectPhysique" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body">
+                            <div class="items-grid">
+                                <div class="item" data-item="Plutôt maigre" data-category="aspectPhysique">Plutôt maigre</div>
+                                <div class="item" data-item="Plutôt en chair" data-category="aspectPhysique">Plutôt en chair</div>
+                                <div class="item" data-item="Petits seins" data-category="aspectPhysique">Petits seins</div>
+                                <div class="item" data-item="Gros seins" data-category="aspectPhysique">Gros seins</div>
+                                <div class="item" data-item="Petit pénis" data-category="aspectPhysique">Petit pénis</div>
+                                <div class="item" data-item="Gros pénis" data-category="aspectPhysique">Gros pénis</div>
+                                <div class="item" data-item="Avec poils" data-category="aspectPhysique">Avec poils</div>
+                                <div class="item" data-item="Peu de poils" data-category="aspectPhysique">Peu de poils</div>
+                                <div class="item" data-item="Totalement épilé" data-category="aspectPhysique">Totalement épilé</div>
+                                <div class="item" data-item="Percing" data-category="aspectPhysique">Percing</div>
+                                <div class="item" data-item="Tatouage" data-category="aspectPhysique">Tatouage</div>
+                                <div class="item" data-item="Peu musclé" data-category="aspectPhysique">Peu Musclé</div>
+                                <div class="item" data-item="Musclé" data-category="aspectPhysique">Musclé</div>
+                                <div class="item" data-item="Tres musclé" data-category="aspectPhysique">Tres Musclé</div>
+                                <div class="item" data-item="Moins agé" data-category="aspectPhysique">Moins agé</div>
+                                <div class="item" data-item="Plus agé" data-category="aspectPhysique">Plus agé</div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+
+                <!-- Jouets -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#jouets" aria-expanded="false">
+                            <i class="fas fa-wand-magic-sparkles me-2"></i>
+                            <span>Jouets</span>
+                            <span class="category-counter" id="counter-jouets"></span>
+                        </button>
+                    </h2>
+                    <div id="jouets" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body">
+                            <div class="items-grid">
+                                <div class="item" data-item="Gode ventouse" data-category="jouets">Gode ventouse</div>
+                                <div class="item" data-item="Gode vibrant" data-category="jouets">Gode vibrant</div>
+                                <div class="item" data-item="Gode giclant" data-category="jouets">Gode giclant</div>
+                                <div class="item" data-item="Gode en bois" data-category="jouets">Gode en bois</div>
+                                <div class="item" data-item="Gode en metal" data-category="jouets">Gode en metal</div>
+                                <div class="item" data-item="Gode en verre" data-category="jouets">Gode en verre</div>
+                                <div class="item" data-item="Stimulateur clitoridien" data-category="jouets">Stimulateur clitoridien</div>
+                                <div class="item" data-item="Plug anal plastique" data-category="jouets">Plug anal plastique</div>
+                                <div class="item" data-item="Plug anal en verre" data-category="jouets">Plug anal en verre</div>
+                                <div class="item" data-item="Plug anal en métal" data-category="jouets">Plug anal en métal</div>
+                                <div class="item" data-item="Oeuf Vibrant" data-category="jouets">Oeuf Vibrant</div>
+                                <div class="item" data-item="Masseur prostatique" data-category="jouets">Masseur prostatique</div>
+                                <div class="item" data-item="Cockring" data-category="jouets">Cockring</div>
+                                <div class="item" data-item="Gaine pénienne" data-category="jouets">Gaine pénienne</div>
+                                <div class="item" data-item="Gode ceinture" data-category="jouets">Gode ceinture</div>
+                                <div class="item" data-item="Masturbateur" data-category="jouets">Masturbateur</div>
+                                <div class="item" data-item="Jouet connecté" data-category="jouets">Jouet connecté</div>
+                                <div class="item" data-item="Fuck machine" data-category="jouets">Fuck Machine</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Restriction & Bondage -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#bondage" aria-expanded="false">
+                            <i class="fas fa-handcuffs me-2"></i>
+                            <span>Restriction & Bondage</span>
+                            <span class="category-counter" id="counter-bondage"></span>
+                        </button>
+                    </h2>
+                    <div id="bondage" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body">
+                            <div class="items-grid">
+                                <div class="item" data-item="Bâillon" data-category="bondage">Bâillon</div>
+                                <div class="item" data-item="Bandeau" data-category="bondage">Bandeau</div>
+                                <div class="item" data-item="Collier" data-category="bondage">Collier</div>
+                                <div class="item" data-item="Laisse" data-category="bondage">Laisse</div>
+                                <div class="item" data-item="Harnais" data-category="bondage">Harnais</div>
+                                <div class="item" data-item="Camisole" data-category="bondage">Camisole</div>
+                                <div class="item" data-item="Barre d'écartement" data-category="bondage">Barre d'écartement</div>
+                                <div class="item" data-item="Menottes tissu" data-category="bondage">Menottes tissu</div>
+                                <div class="item" data-item="Menottes cuir" data-category="bondage">Menottes cuir</div>
+                                <div class="item" data-item="Menottes métal" data-category="bondage">Menottes en métal</div>
+                                <div class="item" data-item="Corde" data-category="bondage">Corde</div>
+                                <div class="item" data-item="Ruban adhésif" data-category="bondage">Ruban adhésif</div>
+                                <div class="item" data-item="Chaînes" data-category="bondage">Chaînes</div>
+                                <div class="item" data-item="Cagoule" data-category="bondage">Cagoule</div>
+                                <div class="item" data-item="Vacum Bed" data-category="bondage">Vacum Bed</div>
+                                <div class="item" data-item="Privation sensorielle" data-category="bondage">Privation sensorielle</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Douleur -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#douleur" aria-expanded="false">
+                            <i class="fas fa-bandage me-2"></i>
+                            <span>Douleur</span>
+                            <span class="category-counter" id="counter-douleur"></span>
+                        </button>
+                    </h2>
+                    <div id="douleur" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body">
+                            <div class="items-grid">
+                                <div class="item" data-item="Douleur légère" data-category="douleur">Douleur légère</div>
+                                <div class="item" data-item="Douleur importante" data-category="douleur">Douleur importante</div>
+                                <div class="item" data-item="Pinces à seins" data-category="douleur">Pinces à seins</div>
+                                <div class="item" data-item="Aiguilles" data-category="douleur">Aiguilles</div>
+                                <div class="item" data-item="Martinet" data-category="douleur">Martinet</div>
+                                <div class="item" data-item="Paddles" data-category="douleur">Paddles</div>
+                                <div class="item" data-item="Cravache" data-category="douleur">Cravache</div>
+                                <div class="item" data-item="Cane / badine" data-category="douleur">Cane / badine</div>
+                                <div class="item" data-item="Fessée" data-category="douleur">Fessée</div>
+                                <div class="item" data-item="Fouet" data-category="douleur">Fouet</div>
+                                <div class="item" data-item="Gifles" data-category="douleur">Gifles</div>
+                                <div class="item" data-item="Cire & bougies" data-category="douleur">Cire & bougies</div>
+                                <div class="item" data-item="Griffures" data-category="douleur">Griffures</div>
+                                <div class="item" data-item="Gifles sur Pénis/Vulve" data-category="douleur">Gifles sur Pénis/Vulve</div>
+                                <div class="item" data-item="Torture de Pénis/Vulve" data-category="douleur">Torture de Pénis/Vulve</div>
+                                <div class="item" data-item="Morsure" data-category="douleur">Morsure</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CNC -->
+                <div class="accordion-item">
+                    <h2 class="accordion-header">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cnc" aria-expanded="false">
+                            <i class="fas fa-lock me-2"></i>
+                            <span>CNC</span>
+                            <span class="category-counter" id="counter-cnc"></span>
+                        </button>
+                    </h2>
+                    <div id="cnc" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
+                        <div class="accordion-body">
+                            <div class="items-grid">
+                                <div class="item" data-item="Simulation de viol" data-category="cnc">Simulation de viol</div>
+                                <div class="item" data-item="Chantage" data-category="cnc">Chantage</div>
+                                <div class="item" data-item="Coercition" data-category="cnc">Coercition</div>
+                                <div class="item" data-item="Kidnapping" data-category="cnc">Kidnapping</div>
+                                <div class="item" data-item="Alcool" data-category="cnc">Alcool</div>
+                                <div class="item" data-item="Drogues & Somnifères" data-category="cnc">Drogues & Somnifères</div>
+                                <div class="item" data-item="Sexe pendant le sommeil" data-category="cnc">Sexe pendant le sommeil</div>
+                                <div class="item" data-item="Orgasmes forcés" data-category="cnc">Orgasmes forcés</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--
+            <div class="category">
+                <div class="category-header">
+                    <i class="fas fa-kiss"></i>
+                    <span>Nom de la categorie</span>
+                </div>
+                <div class="items-grid">
+                    <div class="item" data-item="Item">Item</div>
+                </div>
+            </div>
+            -->
+            
+            <div class="text-center mt-4">
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <button class="btn export-btn" onclick="exportResults()">
+                        <i class="fas fa-download"></i> Exporter mes préférences
+                    </button>
+                    <button class="btn export-btn" onclick="document.getElementById('importFile').click()">
+                        <i class="fas fa-upload"></i> Importer mes préférences
+                    </button>
+                    <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importResults(this)">
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script src="javascript/script.js"></script>
-    <script src="javascript/import.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<script src="javascript/script.js"></script>
 </body>
 </html>
