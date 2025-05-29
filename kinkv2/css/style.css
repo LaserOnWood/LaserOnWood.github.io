@@ -44,52 +44,80 @@ body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
-/* Styles de l'accordéon personnalisés */
-.accordion-item {
-    border: none;
-    margin-bottom: 1rem;
-    border-radius: 15px !important;
-    overflow: hidden;
+.stats {
+    background: white;
+    border-radius: 15px;
+    padding: 1.5rem;
+    margin: 2rem 0;
     box-shadow: 0 5px 15px rgba(0,0,0,0.08);
 }
 
-.accordion-header .accordion-button {
+.stat-item {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.stat-item:last-child {
+    border-bottom: none;
+}
+
+.stat-badge {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    color: white;
+    font-weight: bold;
+    min-width: 40px;
+    text-align: center;
+    margin-right: 10px;
+}
+
+/* Styles pour l'accordéon personnalisé */
+.accordion-button {
     background: linear-gradient(135deg, #667eea 0%, #764ba8 100%);
     color: white;
     font-weight: bold;
     font-size: 1.1rem;
     border: none;
-    padding: 1.5rem;
-    border-radius: 15px 15px 0 0;
+    padding: 1rem 1.5rem;
 }
 
-.accordion-header .accordion-button:focus {
-    border-color: transparent;
-    box-shadow: none;
-}
-
-.accordion-header .accordion-button:not(.collapsed) {
-    background: linear-gradient(135deg, #667eea 0%, #764ba8 100%);
+.accordion-button:not(.collapsed) {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     color: white;
     box-shadow: none;
 }
 
-.accordion-header .accordion-button::after {
+.accordion-button:focus {
+    box-shadow: none;
+    border: none;
+}
+
+.accordion-button::after {
     filter: brightness(0) invert(1);
+}
+
+.accordion-item {
+    margin: 1rem 0;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    overflow: hidden;
+}
+
+.accordion-header button {
+    border-radius: 15px 15px 0 0;
+}
+
+.accordion-button.collapsed {
+    border-radius: 15px;
 }
 
 .accordion-body {
     padding: 1.5rem;
     background: white;
-}
-
-.category-badge {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    font-size: 0.85rem;
-    margin-left: auto;
-    margin-right: 1rem;
 }
 
 .items-grid {
@@ -146,36 +174,6 @@ body {
     border-color: #f44336;
 }
 
-.stats {
-    background: white;
-    border-radius: 15px;
-    padding: 1.5rem;
-    margin: 2rem 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.stat-item {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0.5rem 0;
-    border-bottom: 1px solid #eee;
-}
-
-.stat-item:last-child {
-    border-bottom: none;
-}
-
-.stat-badge {
-    padding: 0.25rem 0.75rem;
-    border-radius: 20px;
-    color: white;
-    font-weight: bold;
-    min-width: 40px;
-    text-align: center;
-    margin-right: 10px;
-}
-
 .export-btn {
     background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
     border: none;
@@ -192,23 +190,13 @@ body {
     color: white;
 }
 
-.control-buttons {
-    background: white;
+/* Badge de compteur dans l'en-tête */
+.category-counter {
+    background: rgba(255,255,255,0.2);
+    padding: 0.25rem 0.75rem;
     border-radius: 15px;
-    padding: 1rem;
-    margin: 1rem 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    text-align: center;
-}
-
-.btn-outline-primary {
-    border-color: #4facfe;
-    color: #4facfe;
-}
-
-.btn-outline-primary:hover {
-    background-color: #4facfe;
-    border-color: #4facfe;
+    font-size: 0.9rem;
+    margin-left: 10px;
 }
 
 @media (max-width: 768px) {
@@ -224,10 +212,5 @@ body {
     .header {
         border-radius: 15px 15px 0 0;
         padding: 1.5rem;
-    }
-
-    .accordion-header .accordion-button {
-        padding: 1rem;
-        font-size: 1rem;
     }
 }
