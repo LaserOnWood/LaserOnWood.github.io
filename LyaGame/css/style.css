@@ -1,0 +1,198 @@
+
+:root {
+    --primary-gradient: linear-gradient(135deg, #6e7075 0%, #000000 100%);
+    --defis-gradient: linear-gradient(135deg, #f738cd 0%, #ee5a24 100%);
+    --fois-gradient: linear-gradient(135deg, #4ecdc4 0%, #4445a0 100%);
+    --bonus-gradient: linear-gradient(135deg, #feca57 0%, #dcee39 100%);
+}
+
+body {
+    background: var(--primary-gradient);
+    min-height: 100vh;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.app-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 2rem;
+    padding-top: 1rem;
+}
+
+.app-header h1 {
+    font-size: 2.5rem;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    margin-bottom: 0.5rem;
+}
+
+.app-header p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+/* Animation de retournement de carte */
+.card-flip-container {
+    perspective: 1000px;
+    height: 200px;
+    margin-bottom: 1.5rem;
+}
+
+.card-flip {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+}
+
+.card-flip.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-flip-front,
+.card-flip-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 1.5rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+    border: none;
+}
+
+.card-flip-front {
+    color: white;
+    font-weight: bold;
+}
+
+.card-flip-back {
+    background: white;
+    color: #333;
+    transform: rotateY(180deg);
+}
+
+/* Couleurs par catégorie */
+.defis .card-flip-front {
+    background: var(--defis-gradient);
+}
+
+.fois .card-flip-front {
+    background: var(--fois-gradient);
+}
+
+.bonus .card-flip-front {
+    background: var(--bonus-gradient);
+}
+
+.card-category {
+    font-size: 1.2rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.5rem;
+}
+
+.card-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+}
+
+.card-content {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #666;
+}
+
+/* Boutons de contrôle */
+.controls-section {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.btn-custom {
+    background: rgba(255,255,255,0.2);
+    border: 1px solid rgba(255,255,255,0.3);
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    margin: 0.25rem;
+    border-radius: 25px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+}
+
+.btn-custom:hover {
+    background: rgba(255,255,255,0.3);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.btn-custom:active {
+    transform: translateY(0);
+}
+
+/* Effet de pression tactile */
+.card-flip:active {
+    transform: scale(0.95);
+}
+
+/* Loading state */
+.loading-spinner {
+    text-align: center;
+    color: white;
+    font-size: 1.2rem;
+    padding: 2rem;
+}
+
+/* Responsive ajustements */
+@media (max-width: 576px) {
+    .app-header h1 {
+        font-size: 2rem;
+    }
+    
+    .card-flip-container {
+        height: 180px;
+    }
+    
+    .card-icon {
+        font-size: 2.5rem;
+    }
+    
+    .card-flip-front,
+    .card-flip-back {
+        padding: 1rem;
+    }
+}
+
+/* Animation de chargement */
+.spinner-border-custom {
+    color: white;
+}
+
+/* Effet de hover pour desktop */
+@media (hover: hover) {
+    .card-flip:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+    }
+    
+    .card-flip.flipped:hover {
+        transform: rotateY(180deg) translateY(-5px);
+    }
+}
