@@ -1,4 +1,3 @@
-
 :root {
     --primary-gradient: linear-gradient(135deg, #6e7075 0%, #000000 100%);
     --defis-gradient: linear-gradient(135deg, #f738cd 0%, #ee5a24 100%);
@@ -10,6 +9,8 @@ body {
     background: var(--primary-gradient);
     min-height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
 }
 
 .app-header {
@@ -36,15 +37,21 @@ body {
     perspective: 1000px;
     height: 200px;
     margin-bottom: 1.5rem;
+    width: 100%;
 }
 
 .card-flip {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.6s;
+    transition: transform 0.6s ease-in-out;
     transform-style: preserve-3d;
     cursor: pointer;
+    /* CORRECTION: Ajout de user-select pour éviter la sélection de texte */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
 }
 
 .card-flip.flipped {
@@ -57,6 +64,7 @@ body {
     width: 100%;
     height: 100%;
     backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -66,17 +74,24 @@ body {
     padding: 1.5rem;
     box-shadow: 0 8px 32px rgba(0,0,0,0.2);
     border: none;
+    /* CORRECTION: Amélioration de la compatibilité */
+    -webkit-transform-style: preserve-3d;
+    transform-style: preserve-3d;
 }
 
 .card-flip-front {
     color: white;
     font-weight: bold;
+    transform: rotateY(0deg);
 }
 
 .card-flip-back {
     background: white;
     color: #333;
     transform: rotateY(180deg);
+    /* CORRECTION: Assurer que le texte reste lisible */
+    overflow-wrap: break-word;
+    word-wrap: break-word;
 }
 
 /* Couleurs par catégorie */
@@ -103,6 +118,8 @@ body {
 .card-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
+    /* CORRECTION: Support des emoji sur tous les navigateurs */
+    font-family: 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji', sans-serif;
 }
 
 .card-title {
@@ -116,12 +133,17 @@ body {
     font-size: 1rem;
     line-height: 1.5;
     color: #666;
+    /* CORRECTION: Améliorer la lisibilité */
+    text-align: center;
+    max-width: 100%;
 }
 
 /* Boutons de contrôle */
 .controls-section {
     margin-top: 2rem;
     text-align: center;
+    /* CORRECTION: Espacement pour mobile */
+    padding: 0 1rem;
 }
 
 .btn-custom {
@@ -134,6 +156,10 @@ body {
     border-radius: 25px;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* CORRECTION: Éviter les problèmes de focus sur mobile */
+    outline: none;
+    touch-action: manipulation;
 }
 
 .btn-custom:hover {
@@ -147,9 +173,14 @@ body {
     transform: translateY(0);
 }
 
-/* Effet de pression tactile */
+.btn-custom:focus {
+    box-shadow: 0 0 0 0.2rem rgba(255,255,255,0.25);
+}
+
+/* Effet de pression tactile - CORRECTION: Durée plus courte */
 .card-flip:active {
     transform: scale(0.95);
+    transition: transform 0.1s ease;
 }
 
 /* Loading state */
@@ -168,15 +199,44 @@ body {
     
     .card-flip-container {
         height: 180px;
+        margin-bottom: 1rem;
     }
     
     .card-icon {
         font-size: 2.5rem;
+        margin-bottom: 0.5rem;
     }
     
     .card-flip-front,
     .card-flip-back {
         padding: 1rem;
+    }
+    
+    .card-content {
+        font-size: 0.9rem;
+    }
+    
+    .btn-custom {
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+        margin: 0.2rem;
+    }
+}
+
+/* CORRECTION: Média query pour très petits écrans */
+@media (max-width: 375px) {
+    .card-flip-container {
+        height: 160px;
+    }
+    
+    .card-flip-front,
+    .card-flip-back {
+        padding: 0.8rem;
+    }
+    
+    .card-content {
+        font-size: 0.85rem;
+        line-height: 1.4;
     }
 }
 
@@ -185,14 +245,45 @@ body {
     color: white;
 }
 
-/* Effet de hover pour desktop */
-@media (hover: hover) {
-    .card-flip:hover {
+/* Effet de hover pour desktop - CORRECTION: Éviter les conflits */
+@media (hover: hover) and (pointer: fine) {
+    .card-flip:hover:not(.flipped) {
         transform: translateY(-5px);
         box-shadow: 0 12px 40px rgba(0,0,0,0.3);
     }
     
     .card-flip.flipped:hover {
         transform: rotateY(180deg) translateY(-5px);
+    }
+}
+
+/* CORRECTION: Amélioration de l'accessibilité */
+@media (prefers-reduced-motion: reduce) {
+    .card-flip {
+        transition: none;
+    }
+    
+    .card-flip:hover {
+        transform: none;
+    }
+    
+    .btn-custom {
+        transition: none;
+    }
+}
+
+/* CORRECTION: Support du mode sombre si nécessaire */
+@media (prefers-color-scheme: dark) {
+    .card-flip-back {
+        background: #2a2a2a;
+        color: #e0e0e0;
+    }
+    
+    .card-title {
+        color: #e0e0e0;
+    }
+    
+    .card-content {
+        color: #b0b0b0;
     }
 }
