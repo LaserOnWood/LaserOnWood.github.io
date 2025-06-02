@@ -1,0 +1,104 @@
+{
+    "defis": {
+      "category": "Défis",
+      "icon": "🎯",
+      "cards": [
+        {
+          "title": "Défi",
+          "content": "Dessine quelque chose les yeux fermés pendant 1 minute"
+        },
+        {
+          "title": "Défi", 
+          "content": "Fais 20 pompes ou 30 secondes de planche"
+        },
+        {
+          "title": "Défi",
+          "content": "Appelle un ami que tu n'as pas vu depuis longtemps"
+        },
+        {
+          "title": "Défi",
+          "content": "Prépare un plat avec seulement 5 ingrédients"
+        },
+        {
+          "title": "Défi",
+          "content": "Écris un poème de 4 vers sur ce que tu vois autour de toi"
+        },
+        {
+          "title": "Défi",
+          "content": "Supprime une app que tu n'utilises plus de ton téléphone"
+        },
+        {
+          "title": "Défi",
+          "content": "Va dehors et prends 10 photos de choses que tu trouves belles"
+        }
+      ]
+    },
+    "fois": {
+      "category": "Fois",
+      "icon": "💭", 
+      "cards": [
+        {
+          "title": "Souvenir d'Enfance",
+          "content": "Raconte ton plus beau souvenir d'enfance"
+        },
+        {
+          "title": "Rêve Fou",
+          "content": "Si tu pouvais avoir n'importe quel super-pouvoir, lequel choisirais-tu?"
+        },
+        {
+          "title": "Voyage Imaginaire", 
+          "content": "Décris l'endroit où tu aimerais le plus voyager et pourquoi"
+        },
+        {
+          "title": "Machine à Remonter le Temps",
+          "content": "À quelle époque aimerais-tu retourner et que ferais-tu?"
+        },
+        {
+          "title": "Conversation Impossible",
+          "content": "Avec quelle personnalité (vivante ou morte) aimerais-tu dîner?"
+        },
+        {
+          "title": "Talent Secret",
+          "content": "Quel talent aimerais-tu posséder instantanément?"
+        },
+        {
+          "title": "Vie Parallèle",
+          "content": "Si tu recommençais ta vie, que ferais-tu différemment?"
+        }
+      ]
+    },
+    "bonus": {
+      "category": "Bonus",
+      "icon": "🎁",
+      "cards": [
+        {
+          "title": "Pause Détente",
+          "content": "Prends 5 minutes pour méditer ou respirer profondément"
+        },
+        {
+          "title": "Geste Gentil",
+          "content": "Envoie un message positif à quelqu'un de spécial"
+        },
+        {
+          "title": "Moment Gratitude",
+          "content": "Écris 3 choses pour lesquelles tu es reconnaissant(e) aujourd'hui"
+        },
+        {
+          "title": "Sourire Contagieux",
+          "content": "Souris à 3 personnes différentes aujourd'hui"
+        },
+        {
+          "title": "Découverte Musicale",
+          "content": "Écoute un genre de musique que tu n'as jamais exploré"
+        },
+        {
+          "title": "Acte de Bonté",
+          "content": "Fais quelque chose de gentil pour un inconnu"
+        },
+        {
+          "title": "Moment Présent",
+          "content": "Passe 10 minutes sans téléphone à observer le monde autour de toi"
+        }
+      ]
+    }
+  }
