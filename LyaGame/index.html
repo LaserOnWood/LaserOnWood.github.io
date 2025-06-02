@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cartes à Retourner - Bootstrap</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+    <div class="container-fluid">
+        <!-- Header -->
+        <div class="row">
+            <div class="col-12">
+                <div class="app-header">
+                    <h1><i class="fas fa-dice"></i> Cartes à Retourner</h1>
+                    <p class="lead">Touchez les cartes pour découvrir le contenu</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Cards Container -->
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-6">
+                <div id="cardsContainer">
+                    <div class="loading-spinner">
+                        <div class="spinner-border spinner-border-custom" role="status">
+                            <span class="visually-hidden">Chargement...</span>
+                        </div>
+                        <p class="mt-3">Chargement des cartes...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls -->
+        <div class="row">
+            <div class="col-12">
+                <div class="controls-section">
+                    <button class="btn btn-custom" onclick="shuffleCards()">
+                        <i class="fas fa-shuffle"></i> Mélanger
+                    </button>
+                    <button class="btn btn-custom" onclick="resetCards()">
+                        <i class="fas fa-rotate-left"></i> Réinitialiser
+                    </button>
+                    <button class="btn btn-custom" onclick="flipAllCards()">
+                        <i class="fas fa-arrows-rotate"></i> Tout retourner
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
