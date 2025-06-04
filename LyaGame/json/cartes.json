@@ -38,32 +38,24 @@
       "icon": "💭", 
       "cards": [
         {
-          "title": "Souvenir d'Enfance",
-          "content": "Raconte ton plus beau souvenir d'enfance"
+          "title": "Avec douceur",
+          "content": "10"
         },
         {
-          "title": "Rêve Fou",
-          "content": "Si tu pouvais avoir n'importe quel super-pouvoir, lequel choisirais-tu?"
+          "title": "Avec douceur",
+          "content": "15"
         },
         {
-          "title": "Voyage Imaginaire", 
-          "content": "Décris l'endroit où tu aimerais le plus voyager et pourquoi"
+          "title": "Avec douceur",
+          "content": "20"
         },
         {
-          "title": "Machine à Remonter le Temps",
-          "content": "À quelle époque aimerais-tu retourner et que ferais-tu?"
+          "title": "Avec douceur",
+          "content": "25"
         },
         {
-          "title": "Conversation Impossible",
-          "content": "Avec quelle personnalité (vivante ou morte) aimerais-tu dîner?"
-        },
-        {
-          "title": "Talent Secret",
-          "content": "Quel talent aimerais-tu posséder instantanément?"
-        },
-        {
-          "title": "Vie Parallèle",
-          "content": "Si tu recommençais ta vie, que ferais-tu différemment?"
+          "title": "Avec douceur",
+          "content": "50"
         }
       ]
     },
@@ -72,32 +64,24 @@
       "icon": "🎁",
       "cards": [
         {
-          "title": "Pause Détente",
-          "content": "Prends 5 minutes pour méditer ou respirer profondément"
+          "title": "La Chance",
+          "content": "Prends 2 minutes pour profiter. 20 coups de moins."
         },
         {
-          "title": "Geste Gentil",
-          "content": "Envoie un message positif à quelqu'un de spécial"
+          "title": "Oups pas de chance",
+          "content": "10 coups de plus"
         },
         {
-          "title": "Moment Gratitude",
-          "content": "Écris 3 choses pour lesquelles tu es reconnaissant(e) aujourd'hui"
+          "title": "Oups pas de chance",
+          "content": "30 coups de plus"
         },
         {
-          "title": "Sourire Contagieux",
-          "content": "Souris à 3 personnes différentes aujourd'hui"
+          "title": "Oups pas de chance",
+          "content": "40 coups de plus"
         },
         {
-          "title": "Découverte Musicale",
-          "content": "Écoute un genre de musique que tu n'as jamais exploré"
-        },
-        {
-          "title": "Acte de Bonté",
-          "content": "Fais quelque chose de gentil pour un inconnu"
-        },
-        {
-          "title": "Moment Présent",
-          "content": "Passe 10 minutes sans téléphone à observer le monde autour de toi"
+          "title": "La chance t'a oublier",
+          "content": "50 coups de plus"
         }
       ]
     }
