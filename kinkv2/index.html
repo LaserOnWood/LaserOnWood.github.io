@@ -86,20 +86,16 @@
                 <!-- Accordéon des catégories -->
                 <div class="accordion" id="categoriesAccordion">
                     
-                <!--
-                    
-                                    
-                -->
                     <!-- Aspect physique -->
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aspectPhysique" aria-expanded="true">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#aspectPhysique" aria-expanded="false">
                                 <i class="fas fa-user me-2"></i>
                                 <span>Aspect physique</span>
                                 <span class="category-counter" id="counter-aspectPhysique"></span>
                             </button>
                         </h2>
-                        <div id="aspectPhysique" class="accordion-collapse collapse show" data-bs-parent="#categoriesAccordion">
+                        <div id="aspectPhysique" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
                             <div class="accordion-body">
                                 <div class="items-grid">
                                     <div class="item" data-item="Plutôt maigre" data-category="aspectPhysique">Plutôt maigre</div>
@@ -272,49 +268,91 @@
                                     Chacune des pratique ici sont lier au Pet Play!
                                     <button type="button" class="btn btn-secondary" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="information sur ce qu'est le petplay">Tooltip on bottom</button>
                                 </div>
+
                                 <div class="accordion" id="accordionExample">
+                                    <!-- CNC 
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#puppyplay" aria-expanded="false" aria-controls="puppyplay">
-                                                Puppy
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cnc" aria-expanded="false" aria-controls="cnc">
+                                                <i class="fas fa-lock me-2"></i>
+                                                <span>CNC</span>
+                                                <span class="category-counter" id="counter-cnc"></span>
                                             </button>
                                         </h2>
-                                        <div id="puppyplay" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                        <div id="cnc" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
                                                 <div class="items-grid">
-                                                    <div class="item" data-item="Simulation de viol" data-category="petplay">Simulation de viol</div>
-                                                    <div class="item" data-item="Chantage" data-category="petplay">Chantage</div>
-                                                    <div class="item" data-item="Coercition" data-category="petplay">Coercition</div>
-                                                    <div class="item" data-item="Kidnapping" data-category="petplay">Kidnapping</div>
-                                                    <div class="item" data-item="Alcool" data-category="petplay">Alcool</div>
-                                                    <div class="item" data-item="Drogues & Somnifères" data-category="petplay">Drogues & Somnifères</div>
-                                                    <div class="item" data-item="Sexe pendant le sommeil" data-category="petplay">Sexe pendant le sommeil</div>
-                                                    <div class="item" data-item="Orgasmes forcés" data-category="petplay">Orgasmes forcés</div>
+                                                    <div class="item" data-item="Simulation de viol" data-category="cnc">Simulation de viol</div>
+                                                    <div class="item" data-item="Chantage" data-category="cnc">Chantage</div>
+                                                    <div class="item" data-item="Coercition" data-category="cnc">Coercition</div>
+                                                    <div class="item" data-item="Kidnapping" data-category="cnc">Kidnapping</div>
+                                                    <div class="item" data-item="Alcool" data-category="cnc">Alcool</div>
+                                                    <div class="item" data-item="Drogues & Somnifères" data-category="cnc">Drogues & Somnifères</div>
+                                                    <div class="item" data-item="Sexe pendant le sommeil" data-category="cnc">Sexe pendant le sommeil</div>
+                                                    <div class="item" data-item="Orgasmes forcés" data-category="cnc">Orgasmes forcés</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>-->
+
+                                    <!-- Puppy -->
+                                    <div class="accordion-item">
+                                        <h2 class="accordion-header">
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#puppy" aria-expanded="false" aria-controls="puppy">
+                                                <i class="fa-solid fa-paw"></i>
+                                                <span>Puppy</span>
+                                                <span class="category-counter" id="counter-puppy"></span>
+                                            </button>
+                                        </h2>
+                                        <div id="puppy" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                            <div class="accordion-body">
+                                                <div class="items-grid">
+                                                    <div class="item" data-item="Gamelle Cbhien" data-category="puppy">Gamelle</div>
+                                                    <div class="item" data-item="Collier Chien" data-category="puppy">Collier</div>
+                                                    <div class="item" data-item="Balle Chien" data-category="puppy">Balle</div>
+                                                    <div class="item" data-item="Niche Chien" data-category="puppy">Niche</div>
+                                                    <div class="item" data-item="Panier Chien" data-category="puppy" >Panier</div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- kitten -->
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                Kitten
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#kitten" aria-expanded="false" aria-controls="kitten">
+                                                <i class="fa-solid fa-paw"></i>
+                                                <span>kitten</span>
+                                                <span class="category-counter" id="counter-kitten"></span>
                                             </button>
                                         </h2>
-                                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                        <div id="kitten" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <strong>This is the second item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                                <div class="items-grid">
+                                                    <div class="item" data-item="Gamelle Chat" data-category="kitten">Gamelle</div>
+                                                    <div class="item" data-item="Collier Chat" data-category="kitten">Collier</div>
+                                                    <div class="item" data-item="Balle Chat" data-category="kitten">Balle</div>
+                                                    <div class="item" data-item="Panier Chat" data-category="kitten">Panier</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <!-- Pony -->
                                     <div class="accordion-item">
                                         <h2 class="accordion-header">
-                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                                Pony
+                                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#pony" aria-expanded="false" aria-controls="pony">
+                                                <i class="fa-solid fa-paw"></i>
+                                                <span>pony</span>
+                                                <span class="category-counter" id="counter-pony"></span>
                                             </button>
                                         </h2>
-                                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
+                                        <div id="pony" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                                             <div class="accordion-body">
-                                                <strong>This is the third item’s accordion body.</strong> It is hidden by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It’s also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow.
+                                                <div class="items-grid">
+                                                    <div class="item" data-item="Abrevoir" data-category="pony">Abrevoir</div>
+                                                    <div class="item" data-item="Morse" data-category="pony">Morse</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -349,32 +387,8 @@
                     </div>
                 </div>
 
-                <!--
-                <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#cnc" aria-expanded="false">
-                                <i class="fas fa-lock me-2"></i>
-                                <span>CNC</span>
-                                <span class="category-counter" id="counter-cnc"></span>
-                            </button>
-                        </h2>
-                        <div id="cnc" class="accordion-collapse collapse" data-bs-parent="#categoriesAccordion">
-                            <div class="accordion-body">
-                                <div class="items-grid">
-                                    <div class="item" data-item="Simulation de viol" data-category="cnc">Simulation de viol</div>
-                                    <div class="item" data-item="Chantage" data-category="cnc">Chantage</div>
-                                    <div class="item" data-item="Coercition" data-category="cnc">Coercition</div>
-                                    <div class="item" data-item="Kidnapping" data-category="cnc">Kidnapping</div>
-                                    <div class="item" data-item="Alcool" data-category="cnc">Alcool</div>
-                                    <div class="item" data-item="Drogues & Somnifères" data-category="cnc">Drogues & Somnifères</div>
-                                    <div class="item" data-item="Sexe pendant le sommeil" data-category="cnc">Sexe pendant le sommeil</div>
-                                    <div class="item" data-item="Orgasmes forcés" data-category="cnc">Orgasmes forcés</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                -->
-                
+
+                <!-- Bouton d'export et d'import -->
                 <div class="text-center mt-4">
                     <div class="d-flex gap-3 justify-content-center flex-wrap">
                         <button class="btn export-btn" onclick="exportResults()">
