@@ -95,6 +95,52 @@ function updateCategoryCounters() {
     });
 }
 
+// Mise à jour des compteurs par catégorie
+function updateCategoryCounters() {
+    const categories = ['aspectPhysique', 'habitTenue', 'jouets', 'bondage', 'douleur', 'cnc'];
+    
+    // Traiter les catégories normales
+    categories.forEach(category => {
+        const items = document.querySelectorAll(`[data-category="${category}"]`);
+        const totalItems = items.length;
+        let selectedItems = 0;
+        
+        items.forEach(item => {
+            const itemName = item.dataset.item;
+            if (preferences[itemName] && preferences[itemName] !== 'none') {
+                selectedItems++;
+            }
+        });
+        
+        const counter = document.getElementById(`counter-${category}`);
+        if (counter) {
+            counter.textContent = `${selectedItems}/${totalItems}`;
+        }
+    });
+    
+    // Traitement spécial pour petplay (inclut puppy, kitten, pony)
+    const petplaySubcategories = ['puppy', 'kitten', 'pony'];
+    let petplayTotalItems = 0;
+    let petplaySelectedItems = 0;
+    
+    petplaySubcategories.forEach(subcategory => {
+        const items = document.querySelectorAll(`[data-category="${subcategory}"]`);
+        petplayTotalItems += items.length;
+        
+        items.forEach(item => {
+            const itemName = item.dataset.item;
+            if (preferences[itemName] && preferences[itemName] !== 'none') {
+                petplaySelectedItems++;
+            }
+        });
+    });
+    
+    const petplayCounter = document.getElementById('counter-petplay');
+    if (petplayCounter) {
+        petplayCounter.textContent = `${petplaySelectedItems}/${petplayTotalItems}`;
+    }
+}
+
 // Import des résultats
 function importResults(input) {
     const file = input.files[0];
