@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jeu en 3 Étapes</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="game-container">
+            <div class="text-center mb-4">
+                <h1 class="text-white display-4 mb-3">🍷 Jeu en 3 Étapes</h1>
+                <div class="phase-indicator">
+                    <div class="phase-dot active" id="phase1">1</div>
+                    <div class="phase-dot" id="phase2">2</div>
+                    <div class="phase-dot" id="phase3">3</div>
+                </div>
+            </div>
+            
+            <div class="card" id="gameCard">
+                <div class="card-header">
+                    <h2 id="phaseTitle">Phase 1 - Zone du Corps</h2>
+                </div>
+                <div class="card-body text-center">
+                    <div class="phase-intro">
+                        <p id="phaseDescription">Choisissez votre gobelet...</p>
+                        <small>🎲 5 choix aléatoires parmi une sélection plus large !</small>
+                    </div>
+                    <div class="bonneteau-table">
+                        <div id="choices" class="d-flex flex-wrap justify-content-center align-items-end">
+                            <!-- Les choix seront générés dynamiquement -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="card d-none" id="resultCard">
+                <div class="card-body result-card">
+                    <div class="glass-animation mb-3">🥂</div>
+                    <h3>Résultat Final</h3>
+                    <div id="finalResult" class="mt-3 mb-3">
+                        <!-- Le résultat final sera affiché ici -->
+                    </div>
+                    <button class="btn btn-restart" onclick="restartGame()">Recommencer</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
