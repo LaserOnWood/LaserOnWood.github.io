@@ -9,7 +9,7 @@
     phase2: {
         title: "Phase 2 - Nombre de Coups",
         description: "Combien de coups se cachent sous le gobelet ?",
-        allChoices: ["10 coups", "15 coups", "20 coups", "25 coups", "30 coups", "35 coups", "40 coups", "45 coups", "50 coups", "12 coups", "18 coups", "22 coups", "28 coups", "33 coups", "38 coups"],
+        allChoices: ["5 coups", "10 coups", "15 coups", "20 coups", "25 coups", "30 coups", "35 coups", "40 coups", "45 coups", "50 coups", "75 coups", "100 coups"],
         choices: [] // Sera rempli dynamiquement
     },
     phase3: {
