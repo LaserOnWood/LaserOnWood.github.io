@@ -1,0 +1,204 @@
+{
+    "categories": [
+      {
+        "id": "aspectPhysique",
+        "name": "Aspect physique",
+        "icon": "fas fa-user",
+        "items": [
+          "Plutôt maigre",
+          "Plutôt en chair",
+          "Petits seins",
+          "Gros seins",
+          "Petit pénis",
+          "Gros pénis",
+          "Avec poils",
+          "Peu de poils",
+          "Totalement épilé",
+          "Percing",
+          "Tatouage",
+          "Peu musclé",
+          "Musclé",
+          "Tres musclé",
+          "Moins agé",
+          "Plus agé"
+        ]
+      },
+      {
+        "id": "habitTenue",
+        "name": "Habit & Tenue",
+        "icon": "fas fa-shirt",
+        "items": [
+          "Totalement nu",
+          "Caleçon",
+          "String",
+          "Sous-vetement ouvert",
+          "Lingerie sexy",
+          "Filet",
+          "Collant",
+          "Jarretelles",
+          "Talons hauts",
+          "Cuir",
+          "Latex",
+          "Vinyle",
+          "Wet look",
+          "Robes libertines",
+          "Uniforme",
+          "Cosplay"
+        ]
+      },
+      {
+        "id": "jouets",
+        "name": "Jouets",
+        "icon": "fas fa-wand-magic-sparkles",
+        "items": [
+          "Gode ventouse",
+          "Gode vibrant",
+          "Gode giclant",
+          "Gode en bois",
+          "Gode en metal",
+          "Gode en verre",
+          "Stimulateur clitoridien",
+          "Plug anal plastique",
+          "Plug anal en verre",
+          "Plug anal en métal",
+          "Oeuf Vibrant",
+          "Masseur prostatique",
+          "Cockring",
+          "Gaine pénienne",
+          "Gode ceinture",
+          "Masturbateur",
+          "Jouet connecté",
+          "Fuck Machine"
+        ]
+      },
+      {
+        "id": "bondage",
+        "name": "Restriction & Bondage",
+        "icon": "fas fa-handcuffs",
+        "items": [
+          "Bâillon",
+          "Bandeau",
+          "Collier",
+          "Laisse",
+          "Harnais",
+          "Camisole",
+          "Barre d'écartement",
+          "Menottes tissu",
+          "Menottes cuir",
+          "Menottes en métal",
+          "Corde",
+          "Ruban adhésif",
+          "Chaînes",
+          "Cagoule",
+          "Vacum Bed",
+          "Privation sensorielle"
+        ]
+      },
+      {
+        "id": "douleur",
+        "name": "Douleur",
+        "icon": "fas fa-bandage",
+        "items": [
+          "Douleur légère",
+          "Douleur importante",
+          "Pinces à seins",
+          "Aiguilles",
+          "Martinet",
+          "Paddles",
+          "Cravache",
+          "Cane / badine",
+          "Fessée",
+          "Fouet",
+          "Gifles",
+          "Cire & bougies",
+          "Griffures",
+          "Gifles sur Pénis/Vulve",
+          "Torture de Pénis/Vulve",
+          "Morsure"
+        ]
+      },
+      {
+        "id": "petplay",
+        "name": "Pet Play",
+        "icon": "fas fa-lock",
+        "description": "Chacune des pratiques ici sont liées au Pet Play!",
+        "hasSubcategories": true,
+        "subcategories": [
+          {
+            "id": "puppy",
+            "name": "Puppy",
+            "icon": "fa-solid fa-paw",
+            "items": [
+              "Gamelle",
+              "Collier Chien",
+              "Balle Chien",
+              "Niche Chien",
+              "Panier Chien"
+            ]
+          },
+          {
+            "id": "kitten",
+            "name": "Kitten",
+            "icon": "fa-solid fa-paw",
+            "items": [
+              "Gamelle Chat",
+              "Collier Chat",
+              "Balle Chat",
+              "Panier Chat"
+            ]
+          },
+          {
+            "id": "pony",
+            "name": "Pony",
+            "icon": "fa-solid fa-paw",
+            "items": [
+              "Abrevoir",
+              "Morse"
+            ]
+          }
+        ]
+      },
+      {
+        "id": "cnc",
+        "name": "CNC",
+        "icon": "fas fa-lock",
+        "items": [
+          "Simulation de viol",
+          "Chantage",
+          "Coercition",
+          "Kidnapping",
+          "Alcool",
+          "Drogues & Somnifères",
+          "Sexe pendant le sommeil",
+          "Orgasmes forcés"
+        ]
+      }
+    ],
+    "preferenceTypes": [
+      {
+        "id": "adore",
+        "name": "J'adore",
+        "color": "linear-gradient(135deg, #7d2e79, #7a3077)"
+      },
+      {
+        "id": "aime",
+        "name": "J'aime",
+        "color": "linear-gradient(135deg, #4CAF50, #45a049)"
+      },
+      {
+        "id": "curiosité",
+        "name": "Curieux",
+        "color": "linear-gradient(135deg, #FF9800, #f57c00)"
+      },
+      {
+        "id": "dislike",
+        "name": "Peu intéressé",
+        "color": "linear-gradient(135deg, #FF5722, #d84315)"
+      },
+      {
+        "id": "non_strict",
+        "name": "Non Strict",
+        "color": "linear-gradient(135deg, #f44336, #d32f2f)"
+      }
+    ]
+  }

@@ -1,144 +1,288 @@
 // État des préférences
 let preferences = {};
+let kinkData = null;
+
+// Chargement des données depuis le fichier JSON
+async function loadKinkData() {
+    try {
+        const response = await fetch('json/kink-data.json');
+        kinkData = await response.json();
+        console.log('Données chargées:', kinkData);
         
-// Gestion des clics sur les items
-document.querySelectorAll('.item').forEach(item => {
-    item.addEventListener('click', function() {
-        const itemName = this.dataset.item;
-        const currentState = preferences[itemName] || 'none';
-        
-        // Cycle through states: none -> adore -> aime -> curieux -> peu interesse -> non strict -> none
-        let newState;
-        switch(currentState) {
-            case 'none':
-                newState = 'adore';
-                break;
-            case 'adore':
-                newState = 'aime';
-                break;
-            case 'aime':
-                newState = 'curiosité';
-                break;
-            case 'curiosité':
-                newState = 'dislike';
-                break;
-            case 'dislike':
-                newState = 'non_strict';
-                break;
-            case 'non_strict':
-                newState = 'none';
-                break;
-        }
-        
-        // Mettre à jour l'état
-        preferences[itemName] = newState;
-        
-        // Mettre à jour l'apparence
-        this.className = 'item';
-        if (newState !== 'none') {
-            this.classList.add(newState);
-        }
-        
-        // Mettre à jour les statistiques
+        // Générer l'interface une fois les données chargées
+        generateInterface();
+        initializeEventListeners();
         updateStats();
         updateCategoryCounters();
+        
+    } catch (error) {
+        console.error('Erreur lors du chargement des données:', error);
+        showToast('Erreur lors du chargement des données', 'danger');
+    }
+}
+
+// Génération dynamique de l'interface
+function generateInterface() {
+    if (!kinkData) return;
+    
+    // Générer les badges de statistiques
+    generateStatsSection();
+    
+    // Générer l'accordéon des catégories
+    generateCategoriesAccordion();
+}
+
+// Génération de la section statistiques
+function generateStatsSection() {
+    const statsContainer = document.querySelector('.stats-badges');
+    if (!statsContainer) return;
+    
+    statsContainer.innerHTML = '';
+    
+    kinkData.preferenceTypes.forEach(type => {
+        const badge = document.createElement('div');
+        badge.className = 'stat-badge';
+        badge.style.background = type.color;
+        badge.innerHTML = `
+            <span>${type.name}</span>
+            <span class="count" id="${type.id}-count">0</span>
+        `;
+        statsContainer.appendChild(badge);
     });
-});
+    
+    // Ajouter le badge "Non sélectionné"
+    const unselectedBadge = document.createElement('div');
+    unselectedBadge.className = 'stat-badge';
+    unselectedBadge.style.background = 'linear-gradient(135deg, #6c757d, #5a6268)';
+    unselectedBadge.innerHTML = `
+        <span>Non sélectionné</span>
+        <span class="count" id="unselected-count">0</span>
+    `;
+    statsContainer.appendChild(unselectedBadge);
+}
+
+// Génération de l'accordéon des catégories
+function generateCategoriesAccordion() {
+    const accordion = document.getElementById('categoriesAccordion');
+    if (!accordion) return;
+    
+    accordion.innerHTML = '';
+    
+    kinkData.categories.forEach(category => {
+        const accordionItem = document.createElement('div');
+        accordionItem.className = 'accordion-item';
+        
+        // Générer le header
+        const header = `
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" 
+                        data-bs-toggle="collapse" data-bs-target="#${category.id}" 
+                        aria-expanded="false">
+                    <i class="${category.icon} me-2"></i>
+                    <span>${category.name}</span>
+                    <span class="category-counter" id="counter-${category.id}"></span>
+                </button>
+            </h2>
+        `;
+        
+        // Générer le contenu
+        let bodyContent = '';
+        
+        if (category.hasSubcategories) {
+            // Catégorie avec sous-catégories (Pet Play)
+            bodyContent = `
+                <div class="accordion-body">
+                    ${category.description ? `
+                        <div class="alert alert-warning text-center" role="alert">
+                            ${category.description}
+                        </div>
+                    ` : ''}
+                    <div class="accordion" id="accordion${category.id}">
+                        ${category.subcategories.map(subcat => `
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" 
+                                            data-bs-toggle="collapse" data-bs-target="#${subcat.id}" 
+                                            aria-expanded="false">
+                                        <i class="${subcat.icon} me-2"></i>
+                                        <span>${subcat.name}</span>
+                                        <span class="category-counter" id="counter-${subcat.id}"></span>
+                                    </button>
+                                </h2>
+                                <div id="${subcat.id}" class="accordion-collapse collapse" 
+                                     data-bs-parent="#accordion${category.id}">
+                                    <div class="accordion-body">
+                                        <div class="items-grid">
+                                            ${subcat.items.map(item => `
+                                                <div class="item" data-item="${item}" data-category="${subcat.id}">
+                                                    ${item}
+                                                </div>
+                                            `).join('')}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        } else {
+            // Catégorie normale
+            bodyContent = `
+                <div class="accordion-body">
+                    <div class="items-grid">
+                        ${category.items.map(item => `
+                            <div class="item" data-item="${item}" data-category="${category.id}">
+                                ${item}
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+        }
+        
+        accordionItem.innerHTML = `
+            ${header}
+            <div id="${category.id}" class="accordion-collapse collapse" 
+                 data-bs-parent="#categoriesAccordion">
+                ${bodyContent}
+            </div>
+        `;
+        
+        accordion.appendChild(accordionItem);
+    });
+}
+
+// Initialisation des event listeners
+function initializeEventListeners() {
+    // Gestion des clics sur les items (utilise la délégation d'événement)
+    document.addEventListener('click', function(e) {
+        if (e.target.classList.contains('item')) {
+            handleItemClick(e.target);
+        }
+    });
+}
+
+// Gestion du clic sur un item
+function handleItemClick(item) {
+    const itemName = item.dataset.item;
+    const currentState = preferences[itemName] || 'none';
+    
+    // Cycle à travers les états
+    const states = ['none', 'adore', 'aime', 'curiosité', 'dislike', 'non_strict'];
+    const currentIndex = states.indexOf(currentState);
+    const newState = states[(currentIndex + 1) % states.length];
+    
+    // Mettre à jour l'état
+    preferences[itemName] = newState;
+    
+    // Mettre à jour l'apparence
+    item.className = 'item';
+    if (newState !== 'none') {
+        item.classList.add(newState);
+    }
+    
+    // Mettre à jour les statistiques
+    updateStats();
+    updateCategoryCounters();
+}
 
 // Mise à jour des statistiques globales
 function updateStats() {
-    const stats = {
-        adore: 0,
-        aime: 0,
-        curiosité: 0,
-        dislike: 0,
-        non_strict: 0,
-        none: 0
-    };
+    if (!kinkData) return;
     
+    const stats = {};
+    
+    // Initialiser les compteurs
+    kinkData.preferenceTypes.forEach(type => {
+        stats[type.id] = 0;
+    });
+    stats.none = 0;
+    
+    // Compter le total d'items
     const totalItems = document.querySelectorAll('.item').length;
     
+    // Compter les préférences
     Object.values(preferences).forEach(pref => {
-        stats[pref]++;
-    });
-    
-    stats.none = totalItems - stats.adore - stats.aime - stats.curiosité - stats.dislike - stats.non_strict;
-    
-    document.getElementById('adore-count').textContent = stats.adore;
-    document.getElementById('aime-count').textContent = stats.aime;
-    document.getElementById('curiosité-count').textContent = stats.curiosité;
-    document.getElementById('dislike-count').textContent = stats.dislike;
-    document.getElementById('non_strict-count').textContent = stats.non_strict;
-    document.getElementById('unselected-count').textContent = stats.none;
-}
-
-// Mise à jour des compteurs par catégorie
-function updateCategoryCounters() {
-    const categories = ['aspectPhysique', 'habitTenue', 'jouets', 'bondage', 'douleur', 'petplay', 'puppy', 'kitten', 'pony', 'petautre','cnc'];
-    
-    categories.forEach(category => {
-        const items = document.querySelectorAll(`[data-category="${category}"]`);
-        const totalItems = items.length;
-        let selectedItems = 0;
-        
-        items.forEach(item => {
-            const itemName = item.dataset.item;
-            if (preferences[itemName] && preferences[itemName] !== 'none') {
-                selectedItems++;
-            }
-        });
-        
-        const counter = document.getElementById(`counter-${category}`);
-        if (counter) {
-            counter.textContent = `${selectedItems}/${totalItems}`;
-        }
-    });
-}
-
-// Mise à jour des compteurs par catégorie
-function updateCategoryCounters() {
-    const categories = ['aspectPhysique', 'habitTenue', 'jouets', 'bondage', 'douleur', 'cnc'];
-    
-    // Traiter les catégories normales
-    categories.forEach(category => {
-        const items = document.querySelectorAll(`[data-category="${category}"]`);
-        const totalItems = items.length;
-        let selectedItems = 0;
-        
-        items.forEach(item => {
-            const itemName = item.dataset.item;
-            if (preferences[itemName] && preferences[itemName] !== 'none') {
-                selectedItems++;
-            }
-        });
-        
-        const counter = document.getElementById(`counter-${category}`);
-        if (counter) {
-            counter.textContent = `${selectedItems}/${totalItems}`;
+        if (stats[pref] !== undefined) {
+            stats[pref]++;
         }
     });
     
-    // Traitement spécial pour petplay (inclut puppy, kitten, pony)
-    const petplaySubcategories = ['puppy', 'kitten', 'pony'];
-    let petplayTotalItems = 0;
-    let petplaySelectedItems = 0;
+    // Calculer les non sélectionnés
+    const selectedCount = Object.values(stats).reduce((sum, count) => sum + count, 0);
+    stats.none = totalItems - selectedCount;
     
-    petplaySubcategories.forEach(subcategory => {
-        const items = document.querySelectorAll(`[data-category="${subcategory}"]`);
-        petplayTotalItems += items.length;
-        
-        items.forEach(item => {
-            const itemName = item.dataset.item;
-            if (preferences[itemName] && preferences[itemName] !== 'none') {
-                petplaySelectedItems++;
-            }
-        });
+    // Mettre à jour l'interface
+    kinkData.preferenceTypes.forEach(type => {
+        const element = document.getElementById(`${type.id}-count`);
+        if (element) {
+            element.textContent = stats[type.id];
+        }
     });
     
-    const petplayCounter = document.getElementById('counter-petplay');
-    if (petplayCounter) {
-        petplayCounter.textContent = `${petplaySelectedItems}/${petplayTotalItems}`;
+    const unselectedElement = document.getElementById('unselected-count');
+    if (unselectedElement) {
+        unselectedElement.textContent = stats.none;
     }
+}
+
+// Mise à jour des compteurs par catégorie
+function updateCategoryCounters() {
+    if (!kinkData) return;
+    
+    kinkData.categories.forEach(category => {
+        if (category.hasSubcategories) {
+            // Traitement spécial pour les catégories avec sous-catégories
+            let totalItems = 0;
+            let selectedItems = 0;
+            
+            category.subcategories.forEach(subcat => {
+                const items = document.querySelectorAll(`[data-category="${subcat.id}"]`);
+                totalItems += items.length;
+                
+                items.forEach(item => {
+                    const itemName = item.dataset.item;
+                    if (preferences[itemName] && preferences[itemName] !== 'none') {
+                        selectedItems++;
+                    }
+                });
+                
+                // Mettre à jour le compteur de la sous-catégorie
+                const subcatCounter = document.getElementById(`counter-${subcat.id}`);
+                if (subcatCounter) {
+                    const subcatSelected = Array.from(items).filter(item => {
+                        const itemName = item.dataset.item;
+                        return preferences[itemName] && preferences[itemName] !== 'none';
+                    }).length;
+                    subcatCounter.textContent = `${subcatSelected}/${items.length}`;
+                }
+            });
+            
+            // Mettre à jour le compteur principal
+            const counter = document.getElementById(`counter-${category.id}`);
+            if (counter) {
+                counter.textContent = `${selectedItems}/${totalItems}`;
+            }
+        } else {
+            // Traitement normal
+            const items = document.querySelectorAll(`[data-category="${category.id}"]`);
+            const totalItems = items.length;
+            let selectedItems = 0;
+            
+            items.forEach(item => {
+                const itemName = item.dataset.item;
+                if (preferences[itemName] && preferences[itemName] !== 'none') {
+                    selectedItems++;
+                }
+            });
+            
+            const counter = document.getElementById(`counter-${category.id}`);
+            if (counter) {
+                counter.textContent = `${selectedItems}/${totalItems}`;
+            }
+        }
+    });
 }
 
 // Import des résultats
@@ -232,14 +376,15 @@ function exportResults() {
         timestamp: new Date().toISOString(),
         totalSelected: selectedPreferences.length,
         preferences: preferences,
-        summary: {
-            adore: Object.values(preferences).filter(v => v === 'adore').length,
-            aime: Object.values(preferences).filter(v => v === 'aime').length,
-            curiosité: Object.values(preferences).filter(v => v === 'curiosité').length,
-            dislike: Object.values(preferences).filter(v => v === 'dislike').length,
-            non_strict: Object.values(preferences).filter(v => v === 'non_strict').length
-        }
+        summary: {}
     };
+    
+    // Calculer le résumé basé sur les types de préférences définis
+    if (kinkData) {
+        kinkData.preferenceTypes.forEach(type => {
+            exportData.summary[type.id] = Object.values(preferences).filter(v => v === type.id).length;
+        });
+    }
     
     // Créer et télécharger le fichier
     const dataStr = JSON.stringify(exportData, null, 2);
@@ -247,14 +392,13 @@ function exportResults() {
     
     const link = document.createElement('a');
     link.href = URL.createObjectURL(dataBlob);
-    link.download = `Mes preferences_${new Date().toISOString().split('T')[0]}.json`;
+    link.download = `Mes_preferences_${new Date().toISOString().split('T')[0]}.json`;
     link.click();
     
     showToast(`${selectedPreferences.length} préférences exportées avec succès !`, 'success');
 }
 
-// Initialisation
+// Initialisation au chargement de la page
 document.addEventListener('DOMContentLoaded', function() {
-    updateStats();
-    updateCategoryCounters();
+    loadKinkData();
 });
