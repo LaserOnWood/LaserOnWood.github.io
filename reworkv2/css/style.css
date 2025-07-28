@@ -1,0 +1,234 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.game-container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 8px 32px rgba(31, 38, 135, 0.37);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    max-width: 500px;
+    width: 90%;
+    text-align: center;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-bottom: 1rem;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    background: linear-gradient(45deg, #fff, #f0f0f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.subtitle {
+    font-size: 1.1em;
+    margin-bottom: 2rem;
+    opacity: 0.9;
+}
+
+.button-container {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.game-button {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+    border: none;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.1em;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    font-weight: bold;
+    min-width: 120px;
+}
+
+.game-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+}
+
+.game-button.verite {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+    box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+}
+
+.game-button.verite:hover {
+    box-shadow: 0 6px 20px rgba(78, 205, 196, 0.6);
+}
+
+.challenge-container {
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 15px;
+    padding: 2rem;
+    margin: 2rem 0;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.5s ease;
+}
+
+.challenge-container.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.challenge-text {
+    font-size: 1.3em;
+    line-height: 1.5;
+    text-align: center;
+}
+
+.challenge-type {
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.challenge-type.action {
+    background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+}
+
+.challenge-type.verite {
+    background: linear-gradient(45deg, #4ecdc4, #44a08d);
+}
+
+.new-challenge {
+    background: linear-gradient(45deg, #a8e6cf, #56ab2f);
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    font-size: 1em;
+    border-radius: 25px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(168, 230, 207, 0.4);
+    margin-top: 1rem;
+}
+
+.new-challenge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 230, 207, 0.6);
+}
+
+.players-section {
+    margin-bottom: 2rem;
+}
+
+.players-input {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px 15px;
+    color: white;
+    font-size: 1em;
+    margin: 0.5rem;
+    backdrop-filter: blur(10px);
+    width: 200px;
+}
+
+.players-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.difficulty-section {
+    margin: 1.5rem 0;
+}
+
+.difficulty-select {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    padding: 10px 15px;
+    color: white;
+    font-size: 1em;
+    backdrop-filter: blur(10px);
+    width: 200px;
+    cursor: pointer;
+}
+
+.difficulty-select option {
+    background: #667eea;
+    color: white;
+}
+
+.difficulty-label {
+    font-size: 1.1em;
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+.players-list {
+    margin: 1rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.player-tag {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    backdrop-filter: blur(10px);
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+@media (max-width: 600px) {
+    .game-container {
+        padding: 1.5rem;
+    }
+    
+    h1 {
+        font-size: 2em;
+    }
+    
+    .button-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .game-button {
+        width: 100%;
+        max-width: 250px;
+    }
+}
