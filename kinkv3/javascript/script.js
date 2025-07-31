@@ -30,10 +30,6 @@ function generateInterface() {
     
     generateStatsSection();
     generateCategoriesAccordion();
-    // Initialiser les tooltips après génération du contenu
-    setTimeout(() => {
-        initializeTooltips();
-    }, 100);
 }
 
 // Génération de la section statistiques
@@ -76,14 +72,11 @@ function generateCategoriesAccordion() {
         const accordionItem = document.createElement('div');
         accordionItem.className = 'accordion-item';
         
-        // Header avec tooltip pour la description de la catégorie
-        const tooltipAttr = category.description ? `data-bs-toggle="tooltip" data-bs-placement="right" data-bs-title="${escapeHtml(category.description)}"` : '';
-        
         const header = `
             <h2 class="accordion-header">
                 <button class="accordion-button collapsed" type="button" 
                         data-bs-toggle="collapse" data-bs-target="#${category.id}" 
-                        aria-expanded="false" ${tooltipAttr}>
+                        aria-expanded="false">
                     <i class="${category.icon} me-2"></i>
                     <span>${category.name}</span>
                     <span class="category-counter" id="counter-${category.id}"></span>
@@ -174,10 +167,9 @@ function generateItemHTML(item, categoryId) {
     if (!itemName) return '';
     
     // Tooltip avec la description - échapper les guillemets
-    const tooltipAttr = itemDescription ? `data-bs-toggle="tooltip" data-bs-placement="top" data-bs-title="${escapeHtml(itemDescription)}"` : '';
     
     return `
-        <div class="item" data-item="${escapeHtml(itemName)}" data-category="${categoryId}" ${tooltipAttr}>
+        <div class="item" data-item="${escapeHtml(itemName)}" data-category="${categoryId}">
             <div class="item-name">${escapeHtml(itemName)}</div>
             ${itemDescription ? `<div class="item-description">${escapeHtml(itemDescription)}</div>` : ''}
         </div>
@@ -190,31 +182,6 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
-}
-
-// Initialisation des tooltips Bootstrap avec gestion d'erreur
-function initializeTooltips() {
-    try {
-        // Détruire les tooltips existants
-        const existingTooltips = document.querySelectorAll('[data-bs-toggle="tooltip"]');
-        existingTooltips.forEach(el => {
-            const tooltip = bootstrap.Tooltip.getInstance(el);
-            if (tooltip) {
-                tooltip.dispose();
-            }
-        });
-        
-        // Créer les nouveaux tooltips
-        const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-        tooltipTriggerList.map(function (tooltipTriggerEl) {
-            return new bootstrap.Tooltip(tooltipTriggerEl, {
-                boundary: 'viewport',
-                fallbackPlacements: ['top', 'bottom', 'left', 'right']
-            });
-        });
-    } catch (error) {
-        console.warn('Erreur lors de l\'initialisation des tooltips:', error);
-    }
 }
 
 // Initialisation des event listeners
