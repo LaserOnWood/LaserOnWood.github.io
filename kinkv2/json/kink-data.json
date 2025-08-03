@@ -293,6 +293,14 @@
         {
           "name": "Privation sensorielle",
           "description": "Limitation d'un ou plusieurs sens"
+        },
+        {
+          "name": "Film alimentaire",
+          "description": ""
+        },
+        {
+          "name": "Croix de St André",
+          "description":""
         }
       ]
     },
@@ -435,7 +443,7 @@
               "description": "Récipient pour boire comme un poney"
             },
             {
-              "name": "Morse",
+              "name": "Mors",
               "description": "Mord/bit placé dans la bouche"
             }
           ]
@@ -479,6 +487,114 @@
         {
           "name": "Orgasmes forcés",
           "description": "Stimulation continue malgré les protestations simulées"
+        }
+      ]
+    },
+    {
+      "id": "pratiquessexuelles",
+      "name": "Pratiques sexuelles",
+      "icon": "fas fa-puzzle-piece",
+      "description": "Test de rubrique",
+      "items":[
+        {
+          "name": "Caresses corporelles",
+          "description": "description"
+        },
+        {
+          "name": "French kiss",
+          "description": ""
+        },
+        {
+          "name": "Teasing",
+          "description": ""
+        },
+        {
+          "name": "Stimulation des tétons",
+          "description": ""
+        },
+        {
+          "name": "Masturbation",
+          "description": ""
+        },
+        {
+          "name": "Fellation",
+          "description": ""
+        },
+        {
+          "name": "Gorge profonde",
+          "description": ""
+        },
+        {
+          "name": "Pénétration vaginale",
+          "description": ""
+        },
+        {
+          "name": "Stimulation des testicules",
+          "description": ""
+        },
+        {
+          "name": "Cunnilingus",
+          "description": ""
+        },
+        {
+          "name": "JOI / Masturbation guidée",
+          "description": ""
+        },
+        {
+          "name": "Slow sex",
+          "description": ""
+        },
+        {
+          "name": "Sexe intense",
+          "description": ""
+        },
+        {
+          "name": "",
+          "description": ""
+        }
+      ]
+    },
+    {
+      "id": "pratiquesanales",
+      "name": "Pratiques anales",
+      "icon": "fas fa-moon",
+      "description": "Test de rubrique",
+      "items":[
+        {
+          "name": "Pénétration anale",
+          "description": "description"
+        },
+        {
+          "name": "Sextoys",
+          "description": "description"
+        },
+        {
+          "name": "Sodomie",
+          "description": "description"
+        },
+        {
+          "name": "Pegging",
+          "description": "description"
+        },
+        {
+          "name": "Anulingus",
+          "description": "description"
+        },
+        {
+          "name": "Fisting",
+          "description": "description"
+        },
+        {
+          "name": "Dilatation anale",
+          "description": "description"
+        },
+        {
+          "name": "Double pénétration",
+          "description": "description"
+        },
+        {
+          "name": "Massage de la prostate",
+          "description": "description"
         }
       ]
     }
