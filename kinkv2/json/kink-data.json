@@ -453,7 +453,7 @@
     {
       "id": "cnc",
       "name": "CNC",
-      "icon": "fas fa-lock",
+      "icon": "fas fa-triangle-exclamation",
       "description": "Consensual Non-Consent - Jeux simulant le non-consentement dans un cadre consensuel",
       "items": [
         {
@@ -651,6 +651,310 @@
         {
           "name": "Sang",
           "description": "Jeu impliquant le sang (avec précautions sanitaires)"
+        }
+      ]
+    },
+    {
+      "id": "fetichisme",
+      "name": "Fétichisme",
+      "icon": "fas fa-eye",
+      "description": "Attractions pour objets, parties du corps ou situations spécifiques",
+      "items": [
+        {
+          "name": "Pieds",
+          "description": "Fétichisme podophile"
+        },
+        {
+          "name": "Chaussures",
+          "description": "Attraction pour les chaussures"
+        },
+        {
+          "name": "Chaussettes/Bas",
+          "description": "Fétichisme des chaussettes et bas"
+        },
+        {
+          "name": "Sous-vêtements usagés",
+          "description": "Attraction pour la lingerie portée"
+        },
+        {
+          "name": "Cheveux",
+          "description": "Fétichisme capillaire"
+        },
+        {
+          "name": "Ongles",
+          "description": "Attraction pour les ongles longs ou vernis"
+        },
+        {
+          "name": "Mains",
+          "description": "Fétichisme des mains"
+        },
+        {
+          "name": "Fumée/Cigarette",
+          "description": "Attraction pour l'acte de fumer"
+        },
+        {
+          "name": "Ballons",
+          "description": "Fétichisme des ballons (looning)"
+        },
+        {
+          "name": "Cuir et vinyle",
+          "description": "Texture et odeur des matériaux"
+        }
+      ]
+    },
+    {
+      "id": "exhibition",
+      "name": "Exhibition & Voyeurisme",
+      "icon": "fas fa-eye-slash",
+      "description": "Pratiques d'exhibition et d'observation",
+      "items": [
+        {
+          "name": "Nudité publique",
+          "description": "Se montrer nu dans des lieux publics"
+        },
+        {
+          "name": "Sexe en public",
+          "description": "Relations sexuelles dans des lieux publics"
+        },
+        {
+          "name": "Fenêtre ouverte",
+          "description": "Se montrer à la fenêtre"
+        },
+        {
+          "name": "Webcam",
+          "description": "Exhibition via caméra en ligne"
+        },
+        {
+          "name": "Photos/Vidéos",
+          "description": "Création de contenu érotique"
+        },
+        {
+          "name": "Dogging",
+          "description": "Rencontres sexuelles en extérieur avec spectateurs"
+        },
+        {
+          "name": "Voyeurisme",
+          "description": "Plaisir à observer les autres (consensuel)"
+        },
+        {
+          "name": "Plage naturiste",
+          "description": "Nudité sur plages spécialisées"
+        },
+        {
+          "name": "Clubs libertins",
+          "description": "Exhibition dans des lieux dédiés"
+        }
+      ]
+    },
+    {
+      "id": "domination",
+      "name": "Domination & Soumission",
+      "icon": "fas fa-crown",
+      "description": "Rapports de pouvoir et hiérarchies érotiques",
+      "items": [
+        {
+          "name": "Dominant",
+          "description": "Rôle de celui qui contrôle et dirige"
+        },
+        {
+          "name": "Soumis",
+          "description": "Rôle de celui qui obéit et se soumet"
+        },
+        {
+          "name": "Switch",
+          "description": "Alternance entre domination et soumission"
+        },
+        {
+          "name": "Maître/Esclave",
+          "description": "Relation de propriété consensuelle"
+        },
+        {
+          "name": "Daddy/Little",
+          "description": "Relation paternelle/infantilisante"
+        },
+        {
+          "name": "Humiliation verbale",
+          "description": "Dégradation par les mots"
+        },
+        {
+          "name": "Ordres et punitions",
+          "description": "Système de règles et sanctions"
+        },
+        {
+          "name": "Service domestique",
+          "description": "Soumission par les tâches ménagères"
+        },
+        {
+          "name": "Financial domination",
+          "description": "Domination par l'argent"
+        },
+        {
+          "name": "Chastity",
+          "description": "Contrôle de la sexualité par dispositif"
+        }
+      ]
+    },
+    {
+      "id": "sensorialite",
+      "name": "Sensorialité",
+      "icon": "fas fa-hand-paper",
+      "description": "Jeux sensoriels et stimulation des sens",
+      "items": [
+        {
+          "name": "Température",
+          "description": "Jeux chaud/froid avec glaçons, cire"
+        },
+        {
+          "name": "Plumes",
+          "description": "Caresses douces avec plumes"
+        },
+        {
+          "name": "Huiles de massage",
+          "description": "Massages sensuels avec huiles"
+        },
+        {
+          "name": "Textures variées",
+          "description": "Stimulation avec différentes matières"
+        },
+        {
+          "name": "Vibrations",
+          "description": "Stimulation par vibrations douces"
+        },
+        {
+          "name": "Électrostimulation",
+          "description": "Stimulation électrique contrôlée"
+        },
+        {
+          "name": "Sons érotiques",
+          "description": "Stimulation auditive, dirty talk"
+        },
+        {
+          "name": "Parfums et odeurs",
+          "description": "Stimulation olfactive"
+        },
+        {
+          "name": "Soie et satin",
+          "description": "Caresses avec tissus soyeux"
+        }
+      ]
+    },
+    {
+      "id": "multipartenaires",
+      "name": "Multi-partenaires",
+      "icon": "fas fa-users",
+      "description": "Pratiques impliquant plusieurs personnes",
+      "items": [
+        {
+          "name": "Plan à trois (FFH)",
+          "description": "Deux femmes, un homme"
+        },
+        {
+          "name": "Plan à trois (HHF)",
+          "description": "Deux hommes, une femme"
+        },
+        {
+          "name": "Plan à trois (FFF)",
+          "description": "Trois femmes"
+        },
+        {
+          "name": "Plan à trois (HHH)",
+          "description": "Trois hommes"
+        },
+        {
+          "name": "Gangbang",
+          "description": "Plusieurs hommes, une femme"
+        },
+        {
+          "name": "Reverse gangbang",
+          "description": "Plusieurs femmes, un homme"
+        },
+        {
+          "name": "Orgie",
+          "description": "Groupe nombreux sans distinction"
+        },
+        {
+          "name": "Échangisme",
+          "description": "Échange de partenaires entre couples"
+        },
+        {
+          "name": "Candaulisme",
+          "description": "Plaisir à voir son partenaire avec un autre"
+        },
+        {
+          "name": "Triolisme",
+          "description": "Couple plus une troisième personne"
+        }
+      ]
+    },
+    {
+      "id": "tabous",
+      "name": "Tabous & Transgressions",
+      "icon": "fas fa-exclamation-triangle",
+      "description": "Pratiques considérées comme transgressives",
+      "items": [
+        {
+          "name": "Inceste roleplay",
+          "description": "Simulation de relations familiales"
+        },
+        {
+          "name": "Âge gap roleplay",
+          "description": "Simulation d'écart d'âge important"
+        },
+        {
+          "name": "Infidélité simulée",
+          "description": "Jeu de rôle de tromperie"
+        },
+        {
+          "name": "Lieux sacrés",
+          "description": "Transgression dans lieux religieux (roleplay)"
+        },
+        {
+          "name": "Autorité religieuse",
+          "description": "Jeu de rôle avec personnages religieux"
+        },
+        {
+          "name": "Interdit professionnel",
+          "description": "Relations interdites par le code professionnel"
+        }
+      ]
+    },
+    {
+      "id": "technologie",
+      "name": "Technologie & Virtuel",
+      "icon": "fas fa-laptop",
+      "description": "Pratiques liées aux nouvelles technologies",
+      "items": [
+        {
+          "name": "Sexting",
+          "description": "Messages texte érotiques"
+        },
+        {
+          "name": "Photos/Vidéos érotiques",
+          "description": "Échange de contenu visuel"
+        },
+        {
+          "name": "Cybersexe",
+          "description": "Relations sexuelles virtuelles"
+        },
+        {
+          "name": "Cam to cam",
+          "description": "Webcam en direct à deux"
+        },
+        {
+          "name": "Réalité virtuelle",
+          "description": "Expériences immersives VR"
+        },
+        {
+          "name": "Jouets connectés",
+          "description": "Contrôle à distance via internet"
+        },
+        {
+          "name": "Applications de rencontre",
+          "description": "Rencontres via apps spécialisées"
+        },
+        {
+          "name": "Jeux vidéo érotiques",
+          "description": "Gaming avec contenu adulte"
         }
       ]
     }
