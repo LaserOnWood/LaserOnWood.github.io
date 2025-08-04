@@ -135,7 +135,7 @@
     {
       "id": "pratiquesanales",
       "name": "Pratiques anales",
-      "icon": "fas fa-moon",
+      "icon": "fas fa-circle-dot",
       "description": "Pratiques sexuelles impliquant l'anus",
       "items": [
         {
@@ -591,7 +591,7 @@
     {
       "id": "sensorialite",
       "name": "Sensorialité",
-      "icon": "fas fa-hand-paper",
+      "icon": "fas fa-feather-pointed",
       "description": "Jeux sensoriels et stimulation des sens",
       "items": [
         {
@@ -683,7 +683,7 @@
     {
       "id": "exhibition",
       "name": "Exhibition & Voyeurisme",
-      "icon": "fas fa-eye-slash",
+      "icon": "fas fa-camera",
       "description": "Pratiques d'exhibition et d'observation",
       "items": [
         {
