@@ -43,7 +43,7 @@
           "description": "Préférence pour une épilation complète du corps"
         },
         {
-          "name": "Percing",
+          "name": "Piercing",
           "description": "Attraction pour les piercings corporels"
         },
         {
@@ -91,7 +91,7 @@
           "description": "Sous-vêtement minimaliste et sexy"
         },
         {
-          "name": "Sous-vetement ouvert",
+          "name": "Sous-vêtement ouvert",
           "description": "Sous-vêtements avec ouvertures stratégiques"
         },
         {
@@ -167,7 +167,7 @@
           "description": "Gode fabriqué en bois noble"
         },
         {
-          "name": "Gode en metal",
+          "name": "Gode en métal",
           "description": "Gode en métal, souvent en acier inoxydable"
         },
         {
@@ -191,7 +191,7 @@
           "description": "Plug anal en métal, souvent lesté"
         },
         {
-          "name": "Oeuf Vibrant",
+          "name": "Œuf vibrant",
           "description": "Petit vibromasseur ovale"
         },
         {
@@ -287,7 +287,7 @@
           "description": "Cagoule couvrant la tête partiellement ou totalement"
         },
         {
-          "name": "Vacum Bed",
+          "name": "Vacuum Bed",
           "description": "Matelas sous vide pour immobilisation totale"
         },
         {
@@ -296,11 +296,11 @@
         },
         {
           "name": "Film alimentaire",
-          "description": ""
+          "description": "Immobilisation avec film plastique"
         },
         {
-          "name": "Croix de St André",
-          "description":""
+          "name": "Croix de Saint-André",
+          "description": "Croix de bondage en forme de X"
         }
       ]
     },
@@ -363,11 +363,11 @@
           "description": "Égratignures avec les ongles"
         },
         {
-          "name": "Gifles sur Pénis/Vulve",
+          "name": "Gifles sur pénis/vulve",
           "description": "Claques sur les organes génitaux"
         },
         {
-          "name": "Torture de Pénis/Vulve",
+          "name": "Torture de pénis/vulve",
           "description": "Stimulation douloureuse des organes génitaux"
         },
         {
@@ -393,19 +393,19 @@
               "description": "Bol pour manger et boire comme un chien"
             },
             {
-              "name": "Collier Chien",
+              "name": "Collier chien",
               "description": "Collier spécifique au jeu de chiot"
             },
             {
-              "name": "Balle Chien",
+              "name": "Balle chien",
               "description": "Balle pour jouer et rapporter"
             },
             {
-              "name": "Niche Chien",
+              "name": "Niche chien",
               "description": "Espace confiné type niche"
             },
             {
-              "name": "Panier Chien",
+              "name": "Panier chien",
               "description": "Panier pour dormir et se reposer"
             }
           ]
@@ -416,19 +416,19 @@
           "icon": "fa-solid fa-paw",
           "items": [
             {
-              "name": "Gamelle Chat",
+              "name": "Gamelle chat",
               "description": "Bol pour manger et boire comme un chat"
             },
             {
-              "name": "Collier Chat",
+              "name": "Collier chat",
               "description": "Collier avec clochette pour chat"
             },
             {
-              "name": "Balle Chat",
+              "name": "Balle chat",
               "description": "Jouet balle pour chat"
             },
             {
-              "name": "Panier Chat",
+              "name": "Panier chat",
               "description": "Panier douillet pour chat"
             }
           ]
@@ -439,12 +439,12 @@
           "icon": "fa-solid fa-paw",
           "items": [
             {
-              "name": "Abrevoir",
+              "name": "Abreuvoir",
               "description": "Récipient pour boire comme un poney"
             },
             {
               "name": "Mors",
-              "description": "Mord/bit placé dans la bouche"
+              "description": "Mors/bit placé dans la bouche"
             }
           ]
         }
@@ -477,7 +477,7 @@
           "description": "Jeu impliquant l'alcool et l'état d'ébriété"
         },
         {
-          "name": "Drogues & Somnifères",
+          "name": "Drogues & somnifères",
           "description": "Simulation d'état altéré par substances"
         },
         {
@@ -494,63 +494,59 @@
       "id": "pratiquessexuelles",
       "name": "Pratiques sexuelles",
       "icon": "fas fa-puzzle-piece",
-      "description": "Test de rubrique",
-      "items":[
+      "description": "Différentes pratiques sexuelles de base",
+      "items": [
         {
           "name": "Caresses corporelles",
-          "description": "description"
+          "description": "Caresses et massages sur tout le corps"
         },
         {
           "name": "French kiss",
-          "description": ""
+          "description": "Baiser avec la langue"
         },
         {
           "name": "Teasing",
-          "description": ""
+          "description": "Excitation et provocation sans satisfaction immédiate"
         },
         {
           "name": "Stimulation des tétons",
-          "description": ""
+          "description": "Caresses et stimulation de la poitrine"
         },
         {
           "name": "Masturbation",
-          "description": ""
+          "description": "Stimulation manuelle des organes génitaux"
         },
         {
           "name": "Fellation",
-          "description": ""
+          "description": "Stimulation orale du pénis"
         },
         {
           "name": "Gorge profonde",
-          "description": ""
+          "description": "Fellation avec pénétration profonde"
         },
         {
           "name": "Pénétration vaginale",
-          "description": ""
+          "description": "Pénétration du vagin"
         },
         {
           "name": "Stimulation des testicules",
-          "description": ""
+          "description": "Caresses et stimulation des testicules"
         },
         {
           "name": "Cunnilingus",
-          "description": ""
+          "description": "Stimulation orale de la vulve"
         },
         {
           "name": "JOI / Masturbation guidée",
-          "description": ""
+          "description": "Instructions pour se masturber"
         },
         {
           "name": "Slow sex",
-          "description": ""
+          "description": "Rapports sexuels lents et sensuels"
         },
         {
           "name": "Sexe intense",
-          "description": ""
-        },
-        {
-          "name": "",
-          "description": ""
+          "description": "Rapports sexuels énergiques et passionnés"
         }
       ]
     },
@@ -558,103 +554,103 @@
       "id": "pratiquesanales",
       "name": "Pratiques anales",
       "icon": "fas fa-moon",
-      "description": "Test de rubrique",
-      "items":[
+      "description": "Pratiques sexuelles impliquant l'anus",
+      "items": [
         {
           "name": "Pénétration anale",
-          "description": "description"
+          "description": "Pénétration de l'anus par doigt ou jouet"
         },
         {
-          "name": "Sextoys",
-          "description": "description"
+          "name": "Sextoys anaux",
+          "description": "Utilisation de jouets spécialement conçus pour l'anal"
         },
         {
           "name": "Sodomie",
-          "description": "Penetration par un homme"
+          "description": "Pénétration anale par un pénis"
         },
         {
           "name": "Pegging",
-          "description": "Penetration par un gode ceinture"
+          "description": "Pénétration anale par un gode ceinture"
         },
         {
           "name": "Anulingus",
-          "description": "description"
+          "description": "Stimulation orale de l'anus"
         },
         {
-          "name": "Fisting",
-          "description": "description"
+          "name": "Fisting anal",
+          "description": "Pénétration anale avec la main"
         },
         {
           "name": "Dilatation anale",
-          "description": "description"
+          "description": "Élargissement progressif de l'anus"
         },
         {
           "name": "Double pénétration",
-          "description": "description"
+          "description": "Pénétration simultanée vaginale et anale"
         },
         {
           "name": "Massage de la prostate",
-          "description": "description"
+          "description": "Stimulation de la prostate via l'anus"
         }
       ]
     },
     {
-      "id":"",
-      "name":"Jeux de Fluides",
-      "icon":"fas fa-droplet",
-      "description":"",
-      "item":[
+      "id": "jeuxdefluides",
+      "name": "Jeux de fluides",
+      "icon": "fas fa-droplet",
+      "description": "Pratiques impliquant les fluides corporels",
+      "items": [
         {
-          "name":"Cyprine",
-          "description":""
+          "name": "Cyprine",
+          "description": "Jeu avec la lubrification naturelle féminine"
         },
         {
-          "name":"Liquide seminal",
-          "description":""
+          "name": "Liquide séminal",
+          "description": "Jeu avec le liquide pré-éjaculatoire"
         },
         {
-          "name":"Sperme",
-          "description":""
+          "name": "Sperme",
+          "description": "Jeu avec l'éjaculat masculin"
         },
         {
-          "name":"Ejaculation Facial",
-          "description":""
+          "name": "Éjaculation faciale",
+          "description": "Éjaculation sur le visage"
         },
         {
-          "name":"Éjaculation en bouche",
-          "description":""
+          "name": "Éjaculation en bouche",
+          "description": "Éjaculation dans la bouche"
         },
         {
-          "name":"Éjaculation sur la poitrine",
-          "description":""
+          "name": "Éjaculation sur la poitrine",
+          "description": "Éjaculation sur les seins"
         },
         {
-          "name":"Éjaculation sur le ventre",
-          "description":""
+          "name": "Éjaculation sur le ventre",
+          "description": "Éjaculation sur l'abdomen"
         },
         {
-          "name":"Éjaculation sur le pubis",
-          "description":""
+          "name": "Éjaculation sur le pubis",
+          "description": "Éjaculation sur la zone pubienne"
         },
         {
-          "name":"Éjaculation sur le dos",
-          "description":""
+          "name": "Éjaculation sur le dos",
+          "description": "Éjaculation sur le dos du partenaire"
         },
         {
-          "name":"Éjaculation sur les fesses",
-          "description":""
+          "name": "Éjaculation sur les fesses",
+          "description": "Éjaculation sur les fesses"
         },
         {
-          "name":"Éjaculation sur les pieds",
-          "description":""
+          "name": "Éjaculation sur les pieds",
+          "description": "Éjaculation sur les pieds"
         },
         {
-          "name":"Bukkake",
-          "description":""
+          "name": "Bukkake",
+          "description": "Éjaculations multiples sur une personne"
         },
         {
-          "name":"Sang",
-          "description":""
+          "name": "Sang",
+          "description": "Jeu impliquant le sang (avec précautions sanitaires)"
         }
       ]
     }
