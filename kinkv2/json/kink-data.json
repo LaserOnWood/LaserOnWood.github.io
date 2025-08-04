@@ -73,487 +73,6 @@
       ]
     },
     {
-      "id": "habitTenue",
-      "name": "Habit & Tenue",
-      "icon": "fas fa-shirt",
-      "description": "Préférences vestimentaires et accessoires",
-      "items": [
-        {
-          "name": "Totalement nu",
-          "description": "Préférence pour la nudité complète"
-        },
-        {
-          "name": "Caleçon",
-          "description": "Port du caleçon ou boxer"
-        },
-        {
-          "name": "String",
-          "description": "Sous-vêtement minimaliste et sexy"
-        },
-        {
-          "name": "Sous-vêtement ouvert",
-          "description": "Sous-vêtements avec ouvertures stratégiques"
-        },
-        {
-          "name": "Lingerie sexy",
-          "description": "Lingerie érotique et affriolante"
-        },
-        {
-          "name": "Filet",
-          "description": "Vêtements en résille ou filet"
-        },
-        {
-          "name": "Collant",
-          "description": "Bas, collants ou leggings"
-        },
-        {
-          "name": "Jarretelles",
-          "description": "Porte-jarretelles et bas"
-        },
-        {
-          "name": "Talons hauts",
-          "description": "Chaussures à talons hauts"
-        },
-        {
-          "name": "Cuir",
-          "description": "Vêtements en cuir"
-        },
-        {
-          "name": "Latex",
-          "description": "Vêtements en latex brillant"
-        },
-        {
-          "name": "Vinyle",
-          "description": "Vêtements en vinyle ou similicuir"
-        },
-        {
-          "name": "Wet look",
-          "description": "Vêtements à aspect mouillé et brillant"
-        },
-        {
-          "name": "Robes libertines",
-          "description": "Robes courtes, transparentes ou provocantes"
-        },
-        {
-          "name": "Uniforme",
-          "description": "Costumes d'infirmière, écolière, policier, etc."
-        },
-        {
-          "name": "Cosplay",
-          "description": "Déguisements de personnages fictifs"
-        }
-      ]
-    },
-    {
-      "id": "jouets",
-      "name": "Jouets",
-      "icon": "fas fa-wand-magic-sparkles",
-      "description": "Accessoires et jouets intimes",
-      "items": [
-        {
-          "name": "Gode ventouse",
-          "description": "Gode avec ventouse pour fixation"
-        },
-        {
-          "name": "Gode vibrant",
-          "description": "Gode avec fonction de vibration"
-        },
-        {
-          "name": "Gode giclant",
-          "description": "Gode capable d'éjecter du liquide"
-        },
-        {
-          "name": "Gode en bois",
-          "description": "Gode fabriqué en bois noble"
-        },
-        {
-          "name": "Gode en métal",
-          "description": "Gode en métal, souvent en acier inoxydable"
-        },
-        {
-          "name": "Gode en verre",
-          "description": "Gode en verre borosilicate"
-        },
-        {
-          "name": "Stimulateur clitoridien",
-          "description": "Jouet spécialement conçu pour le clitoris"
-        },
-        {
-          "name": "Plug anal plastique",
-          "description": "Plug anal en matière plastique"
-        },
-        {
-          "name": "Plug anal en verre",
-          "description": "Plug anal en verre borosilicate"
-        },
-        {
-          "name": "Plug anal en métal",
-          "description": "Plug anal en métal, souvent lesté"
-        },
-        {
-          "name": "Œuf vibrant",
-          "description": "Petit vibromasseur ovale"
-        },
-        {
-          "name": "Masseur prostatique",
-          "description": "Jouet spécialement conçu pour la prostate"
-        },
-        {
-          "name": "Cockring",
-          "description": "Anneau pénien pour maintenir l'érection"
-        },
-        {
-          "name": "Gaine pénienne",
-          "description": "Étui pour augmenter la taille du pénis"
-        },
-        {
-          "name": "Gode ceinture",
-          "description": "Harnais avec gode attaché"
-        },
-        {
-          "name": "Masturbateur",
-          "description": "Jouet de masturbation masculine"
-        },
-        {
-          "name": "Jouet connecté",
-          "description": "Jouet contrôlable via application mobile"
-        },
-        {
-          "name": "Fuck Machine",
-          "description": "Machine automatisée pour la pénétration"
-        }
-      ]
-    },
-    {
-      "id": "bondage",
-      "name": "Restriction & Bondage",
-      "icon": "fas fa-handcuffs",
-      "description": "Pratiques de restriction et de contrôle physique",
-      "items": [
-        {
-          "name": "Bâillon",
-          "description": "Accessoire pour empêcher de parler"
-        },
-        {
-          "name": "Bandeau",
-          "description": "Bandeau pour couvrir les yeux"
-        },
-        {
-          "name": "Collier",
-          "description": "Collier porté autour du cou"
-        },
-        {
-          "name": "Laisse",
-          "description": "Laisse attachée au collier pour guider"
-        },
-        {
-          "name": "Harnais",
-          "description": "Harnais corporel en cuir ou tissu"
-        },
-        {
-          "name": "Camisole",
-          "description": "Camisole de force pour immobiliser les bras"
-        },
-        {
-          "name": "Barre d'écartement",
-          "description": "Barre pour maintenir les jambes écartées"
-        },
-        {
-          "name": "Menottes tissu",
-          "description": "Menottes souples en tissu ou velours"
-        },
-        {
-          "name": "Menottes cuir",
-          "description": "Menottes en cuir pour les poignets"
-        },
-        {
-          "name": "Menottes en métal",
-          "description": "Menottes rigides en métal"
-        },
-        {
-          "name": "Corde",
-          "description": "Bondage à la corde, shibari/kinbaku"
-        },
-        {
-          "name": "Ruban adhésif",
-          "description": "Bondage tape ou ruban pour attacher"
-        },
-        {
-          "name": "Chaînes",
-          "description": "Chaînes métalliques pour la restriction"
-        },
-        {
-          "name": "Cagoule",
-          "description": "Cagoule couvrant la tête partiellement ou totalement"
-        },
-        {
-          "name": "Vacuum Bed",
-          "description": "Matelas sous vide pour immobilisation totale"
-        },
-        {
-          "name": "Privation sensorielle",
-          "description": "Limitation d'un ou plusieurs sens"
-        },
-        {
-          "name": "Film alimentaire",
-          "description": "Immobilisation avec film plastique"
-        },
-        {
-          "name": "Croix de Saint-André",
-          "description": "Croix de bondage en forme de X"
-        }
-      ]
-    },
-    {
-      "id": "douleur",
-      "name": "Douleur",
-      "icon": "fas fa-bandage",
-      "description": "Pratiques impliquant la douleur contrôlée",
-      "items": [
-        {
-          "name": "Douleur légère",
-          "description": "Sensations douloureuses douces et contrôlées"
-        },
-        {
-          "name": "Douleur importante",
-          "description": "Douleur plus intense et marquée"
-        },
-        {
-          "name": "Pinces à seins",
-          "description": "Pinces pour stimuler les tétons"
-        },
-        {
-          "name": "Aiguilles",
-          "description": "Percement temporaire avec des aiguilles"
-        },
-        {
-          "name": "Martinet",
-          "description": "Fouet à plusieurs lanières souples"
-        },
-        {
-          "name": "Paddles",
-          "description": "Palette rigide pour frapper"
-        },
-        {
-          "name": "Cravache",
-          "description": "Baguette flexible avec embout"
-        },
-        {
-          "name": "Cane / badine",
-          "description": "Baguette rigide en rotin ou similaire"
-        },
-        {
-          "name": "Fessée",
-          "description": "Coups donnés avec la main sur les fesses"
-        },
-        {
-          "name": "Fouet",
-          "description": "Fouet à une ou plusieurs lanières"
-        },
-        {
-          "name": "Gifles",
-          "description": "Claques données avec la main"
-        },
-        {
-          "name": "Cire & bougies",
-          "description": "Utilisation de cire chaude sur le corps"
-        },
-        {
-          "name": "Griffures",
-          "description": "Égratignures avec les ongles"
-        },
-        {
-          "name": "Gifles sur pénis/vulve",
-          "description": "Claques sur les organes génitaux"
-        },
-        {
-          "name": "Torture de pénis/vulve",
-          "description": "Stimulation douloureuse des organes génitaux"
-        },
-        {
-          "name": "Morsure",
-          "description": "Morsures sur différentes parties du corps"
-        }
-      ]
-    },
-    {
-      "id": "petplay",
-      "name": "Pet Play",
-      "icon": "fas fa-paw",
-      "description": "Jeux de rôles impliquant des comportements animaliers",
-      "hasSubcategories": true,
-      "subcategories": [
-        {
-          "id": "puppy",
-          "name": "Puppy",
-          "icon": "fa-solid fa-paw",
-          "items": [
-            {
-              "name": "Gamelle",
-              "description": "Bol pour manger et boire comme un chien"
-            },
-            {
-              "name": "Collier chien",
-              "description": "Collier spécifique au jeu de chiot"
-            },
-            {
-              "name": "Balle chien",
-              "description": "Balle pour jouer et rapporter"
-            },
-            {
-              "name": "Niche chien",
-              "description": "Espace confiné type niche"
-            },
-            {
-              "name": "Panier chien",
-              "description": "Panier pour dormir et se reposer"
-            },
-            {
-              "name": "Aboiements",
-              "description": "Communication par aboiements ou grognements"
-            },
-            {
-              "name": "Marcher à quatre pattes",
-              "description": "Se déplacer sur les mains et les genoux"
-            },
-            {
-              "name": "Se faire toiletter",
-              "description": "Aimer être brossé, lavé, etc."
-            },
-            {
-              "name": "Promenade en laisse",
-              "description": "Être promené avec un collier et une laisse"
-            }
-          ]
-        },
-        {
-          "id": "kitten",
-          "name": "Kitten",
-          "icon": "fa-solid fa-paw",
-          "items": [
-            {
-              "name": "Gamelle chat",
-              "description": "Bol pour manger et boire comme un chat"
-            },
-            {
-              "name": "Collier chat",
-              "description": "Collier avec clochette pour chat"
-            },
-            {
-              "name": "Balle chat",
-              "description": "Jouet balle pour chat"
-            },
-            {
-              "name": "Panier chat",
-              "description": "Panier douillet pour chat"
-            },
-            {
-              "name": "Miaulements",
-              "description": "Communication par miaulements ou ronronnements"
-            },
-            {
-              "name": "Griffures",
-              "description": "Faire semblant de griffer avec ses ongles"
-            },
-            {
-              "name": "Jouer avec des plumes",
-              "description": "Jouer avec des plumes ou des jouets suspendus"
-            }
-          ]
-        },
-        {
-          "id": "pony",
-          "name": "Pony",
-          "icon": "fa-solid fa-paw",
-          "items": [
-            {
-              "name": "Abreuvoir",
-              "description": "Récipient pour boire comme un poney"
-            },
-            {
-              "name": "Mors",
-              "description": "Mors/bit placé dans la bouche"
-            },
-            {
-              "name": "Harnais",
-              "description": "Porter un harnais spécifique pour poney"
-            },
-            {
-              "name": "Se cabrer",
-              "description": "Imiter l'action d'un poney qui se cabre"
-            }
-          ]
-        },
-        {
-          "id": "otherAnimals",
-          "name": "Autres animaux",
-          "icon": "fa-solid fa-paw",
-          "items": [
-            {
-              "name": "Lapin",
-              "description": "Jeu de rôle de lapin"
-            },
-            {
-              "name": "Loup / Renard",
-              "description": "Jeu de rôle de loup ou de renard"
-            },
-            {
-              "name": "Ours",
-              "description": "Jeu de rôle d'ours"
-            },
-            {
-              "name": "Vache",
-              "description": "Jeu de rôle de vache"
-            },
-            {
-              "name": "Cochon",
-              "description":"Jeu de rôle de cochon"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "id": "cnc",
-      "name": "CNC",
-      "icon": "fas fa-triangle-exclamation",
-      "description": "Consensual Non-Consent - Jeux simulant le non-consentement dans un cadre consensuel",
-      "items": [
-        {
-          "name": "Simulation de viol",
-          "description": "Jeu de rôle simulant une agression sexuelle"
-        },
-        {
-          "name": "Chantage",
-          "description": "Jeu de rôle avec contrainte psychologique"
-        },
-        {
-          "name": "Coercition",
-          "description": "Contrainte et pression psychologique simulée"
-        },
-        {
-          "name": "Kidnapping",
-          "description": "Simulation d'enlèvement et séquestration"
-        },
-        {
-          "name": "Alcool",
-          "description": "Jeu impliquant l'alcool et l'état d'ébriété"
-        },
-        {
-          "name": "Drogues & somnifères",
-          "description": "Simulation d'état altéré par substances"
-        },
-        {
-          "name": "Sexe pendant le sommeil",
-          "description": "Activité sexuelle sur partenaire endormi"
-        },
-        {
-          "name": "Orgasmes forcés",
-          "description": "Stimulation continue malgré les protestations simulées"
-        }
-      ]
-    },
-    {
       "id": "pratiquessexuelles",
       "name": "Pratiques sexuelles",
       "icon": "fas fa-puzzle-piece",
@@ -718,6 +237,402 @@
       ]
     },
     {
+      "id": "habitTenue",
+      "name": "Habit & Tenue",
+      "icon": "fas fa-shirt",
+      "description": "Préférences vestimentaires et accessoires",
+      "items": [
+        {
+          "name": "Totalement nu",
+          "description": "Préférence pour la nudité complète"
+        },
+        {
+          "name": "Caleçon",
+          "description": "Port du caleçon ou boxer"
+        },
+        {
+          "name": "String",
+          "description": "Sous-vêtement minimaliste et sexy"
+        },
+        {
+          "name": "Sous-vêtement ouvert",
+          "description": "Sous-vêtements avec ouvertures stratégiques"
+        },
+        {
+          "name": "Lingerie sexy",
+          "description": "Lingerie érotique et affriolante"
+        },
+        {
+          "name": "Filet",
+          "description": "Vêtements en résille ou filet"
+        },
+        {
+          "name": "Collant",
+          "description": "Bas, collants ou leggings"
+        },
+        {
+          "name": "Jarretelles",
+          "description": "Porte-jarretelles et bas"
+        },
+        {
+          "name": "Talons hauts",
+          "description": "Chaussures à talons hauts"
+        },
+        {
+          "name": "Cuir",
+          "description": "Vêtements en cuir"
+        },
+        {
+          "name": "Latex",
+          "description": "Vêtements en latex brillant"
+        },
+        {
+          "name": "Vinyle",
+          "description": "Vêtements en vinyle ou similicuir"
+        },
+        {
+          "name": "Wet look",
+          "description": "Vêtements à aspect mouillé et brillant"
+        },
+        {
+          "name": "Robes libertines",
+          "description": "Robes courtes, transparentes ou provocantes"
+        },
+        {
+          "name": "Uniforme",
+          "description": "Costumes d'infirmière, écolière, policier, etc."
+        },
+        {
+          "name": "Cosplay",
+          "description": "Déguisements de personnages fictifs"
+        }
+      ]
+    },
+    {
+      "id": "jouets",
+      "name": "Jouets",
+      "icon": "fas fa-wand-magic-sparkles",
+      "description": "Accessoires et jouets intimes",
+      "items": [
+        {
+          "name": "Gode ventouse",
+          "description": "Gode avec ventouse pour fixation"
+        },
+        {
+          "name": "Gode vibrant",
+          "description": "Gode avec fonction de vibration"
+        },
+        {
+          "name": "Gode giclant",
+          "description": "Gode capable d'éjecter du liquide"
+        },
+        {
+          "name": "Gode en bois",
+          "description": "Gode fabriqué en bois noble"
+        },
+        {
+          "name": "Gode en métal",
+          "description": "Gode en métal, souvent en acier inoxydable"
+        },
+        {
+          "name": "Gode en verre",
+          "description": "Gode en verre borosilicate"
+        },
+        {
+          "name": "Stimulateur clitoridien",
+          "description": "Jouet spécialement conçu pour le clitoris"
+        },
+        {
+          "name": "Plug anal plastique",
+          "description": "Plug anal en matière plastique"
+        },
+        {
+          "name": "Plug anal en verre",
+          "description": "Plug anal en verre borosilicate"
+        },
+        {
+          "name": "Plug anal en métal",
+          "description": "Plug anal en métal, souvent lesté"
+        },
+        {
+          "name": "Œuf vibrant",
+          "description": "Petit vibromasseur ovale"
+        },
+        {
+          "name": "Masseur prostatique",
+          "description": "Jouet spécialement conçu pour la prostate"
+        },
+        {
+          "name": "Cockring",
+          "description": "Anneau pénien pour maintenir l'érection"
+        },
+        {
+          "name": "Gaine pénienne",
+          "description": "Étui pour augmenter la taille du pénis"
+        },
+        {
+          "name": "Gode ceinture",
+          "description": "Harnais avec gode attaché"
+        },
+        {
+          "name": "Masturbateur",
+          "description": "Jouet de masturbation masculine"
+        },
+        {
+          "name": "Jouet connecté",
+          "description": "Jouet contrôlable via application mobile"
+        },
+        {
+          "name": "Fuck Machine",
+          "description": "Machine automatisée pour la pénétration"
+        }
+      ]
+    },
+    {
+      "id": "domination",
+      "name": "Domination & Soumission",
+      "icon": "fas fa-crown",
+      "description": "Rapports de pouvoir et hiérarchies érotiques",
+      "items": [
+        {
+          "name": "Dominant",
+          "description": "Rôle de celui qui contrôle et dirige"
+        },
+        {
+          "name": "Soumis",
+          "description": "Rôle de celui qui obéit et se soumet"
+        },
+        {
+          "name": "Switch",
+          "description": "Alternance entre domination et soumission"
+        },
+        {
+          "name": "Maître/Esclave",
+          "description": "Relation de propriété consensuelle"
+        },
+        {
+          "name": "Daddy/Little",
+          "description": "Relation paternelle/infantilisante"
+        },
+        {
+          "name": "Humiliation verbale",
+          "description": "Dégradation par les mots"
+        },
+        {
+          "name": "Ordres et punitions",
+          "description": "Système de règles et sanctions"
+        },
+        {
+          "name": "Service domestique",
+          "description": "Soumission par les tâches ménagères"
+        },
+        {
+          "name": "Financial domination",
+          "description": "Domination par l'argent"
+        },
+        {
+          "name": "Chastity",
+          "description": "Contrôle de la sexualité par dispositif"
+        }
+      ]
+    },
+    {
+      "id": "restriction",
+      "name": "Restriction & Bondage",
+      "icon": "fas fa-handcuffs",
+      "description": "Pratiques de restriction et de contrôle physique",
+      "items": [
+        {
+          "name": "Bâillon",
+          "description": "Accessoire pour empêcher de parler"
+        },
+        {
+          "name": "Bandeau",
+          "description": "Bandeau pour couvrir les yeux"
+        },
+        {
+          "name": "Collier",
+          "description": "Collier porté autour du cou"
+        },
+        {
+          "name": "Laisse",
+          "description": "Laisse attachée au collier pour guider"
+        },
+        {
+          "name": "Harnais",
+          "description": "Harnais corporel en cuir ou tissu"
+        },
+        {
+          "name": "Camisole",
+          "description": "Camisole de force pour immobiliser les bras"
+        },
+        {
+          "name": "Barre d'écartement",
+          "description": "Barre pour maintenir les jambes écartées"
+        },
+        {
+          "name": "Menottes tissu",
+          "description": "Menottes souples en tissu ou velours"
+        },
+        {
+          "name": "Menottes cuir",
+          "description": "Menottes en cuir pour les poignets"
+        },
+        {
+          "name": "Menottes en métal",
+          "description": "Menottes rigides en métal"
+        },
+        {
+          "name": "Corde",
+          "description": "Bondage à la corde, shibari/kinbaku"
+        },
+        {
+          "name": "Ruban adhésif",
+          "description": "Bondage tape ou ruban pour attacher"
+        },
+        {
+          "name": "Chaînes",
+          "description": "Chaînes métalliques pour la restriction"
+        },
+        {
+          "name": "Cagoule",
+          "description": "Cagoule couvrant la tête partiellement ou totalement"
+        },
+        {
+          "name": "Vacuum Bed",
+          "description": "Matelas sous vide pour immobilisation totale"
+        },
+        {
+          "name": "Privation sensorielle",
+          "description": "Limitation d'un ou plusieurs sens"
+        },
+        {
+          "name": "Film alimentaire",
+          "description": "Immobilisation avec film plastique"
+        },
+        {
+          "name": "Croix de Saint-André",
+          "description": "Croix de bondage en forme de X"
+        }
+      ]
+    },
+    {
+      "id": "douleur",
+      "name": "Douleur",
+      "icon": "fas fa-bandage",
+      "description": "Pratiques impliquant la douleur contrôlée",
+      "items": [
+        {
+          "name": "Douleur légère",
+          "description": "Sensations douloureuses douces et contrôlées"
+        },
+        {
+          "name": "Douleur importante",
+          "description": "Douleur plus intense et marquée"
+        },
+        {
+          "name": "Pinces à seins",
+          "description": "Pinces pour stimuler les tétons"
+        },
+        {
+          "name": "Aiguilles",
+          "description": "Percement temporaire avec des aiguilles"
+        },
+        {
+          "name": "Martinet",
+          "description": "Fouet à plusieurs lanières souples"
+        },
+        {
+          "name": "Paddles",
+          "description": "Palette rigide pour frapper"
+        },
+        {
+          "name": "Cravache",
+          "description": "Baguette flexible avec embout"
+        },
+        {
+          "name": "Cane / badine",
+          "description": "Baguette rigide en rotin ou similaire"
+        },
+        {
+          "name": "Fessée",
+          "description": "Coups donnés avec la main sur les fesses"
+        },
+        {
+          "name": "Fouet",
+          "description": "Fouet à une ou plusieurs lanières"
+        },
+        {
+          "name": "Gifles",
+          "description": "Claques données avec la main"
+        },
+        {
+          "name": "Cire & bougies",
+          "description": "Utilisation de cire chaude sur le corps"
+        },
+        {
+          "name": "Griffures",
+          "description": "Égratignures avec les ongles"
+        },
+        {
+          "name": "Gifles sur pénis/vulve",
+          "description": "Claques sur les organes génitaux"
+        },
+        {
+          "name": "Torture de pénis/vulve",
+          "description": "Stimulation douloureuse des organes génitaux"
+        },
+        {
+          "name": "Morsure",
+          "description": "Morsures sur différentes parties du corps"
+        }
+      ]
+    },
+    {
+      "id": "sensorialite",
+      "name": "Sensorialité",
+      "icon": "fas fa-hand-paper",
+      "description": "Jeux sensoriels et stimulation des sens",
+      "items": [
+        {
+          "name": "Température",
+          "description": "Jeux chaud/froid avec glaçons, cire"
+        },
+        {
+          "name": "Plumes",
+          "description": "Caresses douces avec plumes"
+        },
+        {
+          "name": "Huiles de massage",
+          "description": "Massages sensuels avec huiles"
+        },
+        {
+          "name": "Textures variées",
+          "description": "Stimulation avec différentes matières"
+        },
+        {
+          "name": "Vibrations",
+          "description": "Stimulation par vibrations douces"
+        },
+        {
+          "name": "Électrostimulation",
+          "description": "Stimulation électrique contrôlée"
+        },
+        {
+          "name": "Sons érotiques",
+          "description": "Stimulation auditive, dirty talk"
+        },
+        {
+          "name": "Parfums et odeurs",
+          "description": "Stimulation olfactive"
+        },
+        {
+          "name": "Soie et satin",
+          "description": "Caresses avec tissus soyeux"
+        }
+      ]
+    },
+    {
       "id": "fetichisme",
       "name": "Fétichisme",
       "icon": "fas fa-eye",
@@ -810,94 +725,211 @@
       ]
     },
     {
-      "id": "domination",
-      "name": "Domination & Soumission",
-      "icon": "fas fa-crown",
-      "description": "Rapports de pouvoir et hiérarchies érotiques",
-      "items": [
+      "id": "petplay",
+      "name": "Pet Play",
+      "icon": "fas fa-paw",
+      "description": "Jeux de rôles impliquant des comportements animaliers",
+      "hasSubcategories": true,
+      "subcategories": [
         {
-          "name": "Dominant",
-          "description": "Rôle de celui qui contrôle et dirige"
+          "id": "puppy",
+          "name": "Puppy",
+          "icon": "fa-solid fa-paw",
+          "items": [
+            {
+              "name": "Gamelle",
+              "description": "Bol pour manger et boire comme un chien"
+            },
+            {
+              "name": "Collier chien",
+              "description": "Collier spécifique au jeu de chiot"
+            },
+            {
+              "name": "Balle chien",
+              "description": "Balle pour jouer et rapporter"
+            },
+            {
+              "name": "Niche chien",
+              "description": "Espace confiné type niche"
+            },
+            {
+              "name": "Panier chien",
+              "description": "Panier pour dormir et se reposer"
+            },
+            {
+              "name": "Aboiements",
+              "description": "Communication par aboiements ou grognements"
+            },
+            {
+              "name": "Marcher à quatre pattes",
+              "description": "Se déplacer sur les mains et les genoux"
+            },
+            {
+              "name": "Se faire toiletter",
+              "description": "Aimer être brossé, lavé, etc."
+            },
+            {
+              "name": "Promenade en laisse",
+              "description": "Être promené avec un collier et une laisse"
+            }
+          ]
         },
         {
-          "name": "Soumis",
-          "description": "Rôle de celui qui obéit et se soumet"
+          "id": "kitten",
+          "name": "Kitten",
+          "icon": "fa-solid fa-paw",
+          "items": [
+            {
+              "name": "Gamelle chat",
+              "description": "Bol pour manger et boire comme un chat"
+            },
+            {
+              "name": "Collier chat",
+              "description": "Collier avec clochette pour chat"
+            },
+            {
+              "name": "Balle chat",
+              "description": "Jouet balle pour chat"
+            },
+            {
+              "name": "Panier chat",
+              "description": "Panier douillet pour chat"
+            },
+            {
+              "name": "Miaulements",
+              "description": "Communication par miaulements ou ronronnements"
+            },
+            {
+              "name": "Griffures",
+              "description": "Faire semblant de griffer avec ses ongles"
+            },
+            {
+              "name": "Jouer avec des plumes",
+              "description": "Jouer avec des plumes ou des jouets suspendus"
+            }
+          ]
         },
         {
-          "name": "Switch",
-          "description": "Alternance entre domination et soumission"
+          "id": "pony",
+          "name": "Pony",
+          "icon": "fa-solid fa-paw",
+          "items": [
+            {
+              "name": "Abreuvoir",
+              "description": "Récipient pour boire comme un poney"
+            },
+            {
+              "name": "Mors",
+              "description": "Mors/bit placé dans la bouche"
+            },
+            {
+              "name": "Harnais",
+              "description": "Porter un harnais spécifique pour poney"
+            },
+            {
+              "name": "Se cabrer",
+              "description": "Imiter l'action d'un poney qui se cabre"
+            }
+          ]
         },
         {
-          "name": "Maître/Esclave",
-          "description": "Relation de propriété consensuelle"
-        },
-        {
-          "name": "Daddy/Little",
-          "description": "Relation paternelle/infantilisante"
-        },
-        {
-          "name": "Humiliation verbale",
-          "description": "Dégradation par les mots"
-        },
-        {
-          "name": "Ordres et punitions",
-          "description": "Système de règles et sanctions"
-        },
-        {
-          "name": "Service domestique",
-          "description": "Soumission par les tâches ménagères"
-        },
-        {
-          "name": "Financial domination",
-          "description": "Domination par l'argent"
-        },
-        {
-          "name": "Chastity",
-          "description": "Contrôle de la sexualité par dispositif"
+          "id": "otherAnimals",
+          "name": "Autres animaux",
+          "icon": "fa-solid fa-paw",
+          "items": [
+            {
+              "name": "Lapin",
+              "description": "Jeu de rôle de lapin"
+            },
+            {
+              "name": "Loup / Renard",
+              "description": "Jeu de rôle de loup ou de renard"
+            },
+            {
+              "name": "Ours",
+              "description": "Jeu de rôle d'ours"
+            },
+            {
+              "name": "Vache",
+              "description": "Jeu de rôle de vache"
+            },
+            {
+              "name": "Cochon",
+              "description": "Jeu de rôle de cochon"
+            }
+          ]
         }
       ]
     },
     {
-      "id": "sensorialite",
-      "name": "Sensorialité",
-      "icon": "fas fa-hand-paper",
-      "description": "Jeux sensoriels et stimulation des sens",
+      "id": "cnc",
+      "name": "CNC",
+      "icon": "fas fa-triangle-exclamation",
+      "description": "Consensual Non-Consent - Jeux simulant le non-consentement dans un cadre consensuel",
       "items": [
         {
-          "name": "Température",
-          "description": "Jeux chaud/froid avec glaçons, cire"
+          "name": "Simulation de viol",
+          "description": "Jeu de rôle simulant une agression sexuelle"
         },
         {
-          "name": "Plumes",
-          "description": "Caresses douces avec plumes"
+          "name": "Chantage",
+          "description": "Jeu de rôle avec contrainte psychologique"
         },
         {
-          "name": "Huiles de massage",
-          "description": "Massages sensuels avec huiles"
+          "name": "Coercition",
+          "description": "Contrainte et pression psychologique simulée"
         },
         {
-          "name": "Textures variées",
-          "description": "Stimulation avec différentes matières"
+          "name": "Kidnapping",
+          "description": "Simulation d'enlèvement et séquestration"
         },
         {
-          "name": "Vibrations",
-          "description": "Stimulation par vibrations douces"
+          "name": "Alcool",
+          "description": "Jeu impliquant l'alcool et l'état d'ébriété"
         },
         {
-          "name": "Électrostimulation",
-          "description": "Stimulation électrique contrôlée"
+          "name": "Drogues & somnifères",
+          "description": "Simulation d'état altéré par substances"
         },
         {
-          "name": "Sons érotiques",
-          "description": "Stimulation auditive, dirty talk"
+          "name": "Sexe pendant le sommeil",
+          "description": "Activité sexuelle sur partenaire endormi"
         },
         {
-          "name": "Parfums et odeurs",
-          "description": "Stimulation olfactive"
+          "name": "Orgasmes forcés",
+          "description": "Stimulation continue malgré les protestations simulées"
+        }
+      ]
+    },
+    {
+      "id": "tabous",
+      "name": "Tabous & Transgressions",
+      "icon": "fas fa-exclamation-triangle",
+      "description": "Pratiques considérées comme transgressives",
+      "items": [
+        {
+          "name": "Inceste roleplay",
+          "description": "Simulation de relations familiales"
         },
         {
-          "name": "Soie et satin",
-          "description": "Caresses avec tissus soyeux"
+          "name": "Âge gap roleplay",
+          "description": "Simulation d'écart d'âge important"
+        },
+        {
+          "name": "Infidélité simulée",
+          "description": "Jeu de rôle de tromperie"
+        },
+        {
+          "name": "Lieux sacrés",
+          "description": "Transgression dans lieux religieux (roleplay)"
+        },
+        {
+          "name": "Autorité religieuse",
+          "description": "Jeu de rôle avec personnages religieux"
+        },
+        {
+          "name": "Interdit professionnel",
+          "description": "Relations interdites par le code professionnel"
         }
       ]
     },
@@ -950,38 +982,6 @@
       ]
     },
     {
-      "id": "tabous",
-      "name": "Tabous & Transgressions",
-      "icon": "fas fa-exclamation-triangle",
-      "description": "Pratiques considérées comme transgressives",
-      "items": [
-        {
-          "name": "Inceste roleplay",
-          "description": "Simulation de relations familiales"
-        },
-        {
-          "name": "Âge gap roleplay",
-          "description": "Simulation d'écart d'âge important"
-        },
-        {
-          "name": "Infidélité simulée",
-          "description": "Jeu de rôle de tromperie"
-        },
-        {
-          "name": "Lieux sacrés",
-          "description": "Transgression dans lieux religieux (roleplay)"
-        },
-        {
-          "name": "Autorité religieuse",
-          "description": "Jeu de rôle avec personnages religieux"
-        },
-        {
-          "name": "Interdit professionnel",
-          "description": "Relations interdites par le code professionnel"
-        }
-      ]
-    },
-    {
       "id": "technologie",
       "name": "Technologie & Virtuel",
       "icon": "fas fa-laptop",
@@ -1009,7 +1009,7 @@
         },
         {
           "name": "Jouets connectés",
-          "description": "Contrôle à distance via internet"
+          "description": "Contrôle à distance via application mobile"
         },
         {
           "name": "Applications de rencontre",
