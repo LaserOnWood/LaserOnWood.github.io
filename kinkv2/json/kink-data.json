@@ -864,7 +864,7 @@
     {
       "id": "cnc",
       "name": "CNC",
-      "icon": "fas fa-triangle-exclamation",
+      "icon": "fas fa-heart-pulse",
       "description": "Consensual Non-Consent - Jeux simulant le non-consentement dans un cadre consensuel",
       "items": [
         {
