@@ -407,6 +407,22 @@
             {
               "name": "Panier chien",
               "description": "Panier pour dormir et se reposer"
+            },
+            {
+              "name": "Aboiements",
+              "description": "Communication par aboiements ou grognements"
+            },
+            {
+              "name": "Marcher à quatre pattes",
+              "description": "Se déplacer sur les mains et les genoux"
+            },
+            {
+              "name": "Se faire toiletter",
+              "description": "Aimer être brossé, lavé, etc."
+            },
+            {
+              "name": "Promenade en laisse",
+              "description": "Être promené avec un collier et une laisse"
             }
           ]
         },
@@ -430,6 +446,18 @@
             {
               "name": "Panier chat",
               "description": "Panier douillet pour chat"
+            },
+            {
+              "name": "Miaulements",
+              "description": "Communication par miaulements ou ronronnements"
+            },
+            {
+              "name": "Griffures",
+              "description": "Faire semblant de griffer avec ses ongles"
+            },
+            {
+              "name": "Jouer avec des plumes",
+              "description": "Jouer avec des plumes ou des jouets suspendus"
             }
           ]
         },
@@ -445,6 +473,41 @@
             {
               "name": "Mors",
               "description": "Mors/bit placé dans la bouche"
+            },
+            {
+              "name": "Harnais",
+              "description": "Porter un harnais spécifique pour poney"
+            },
+            {
+              "name": "Se cabrer",
+              "description": "Imiter l'action d'un poney qui se cabre"
+            }
+          ]
+        },
+        {
+          "id": "otherAnimals",
+          "name": "Autres animaux",
+          "icon": "fa-solid fa-paw",
+          "items": [
+            {
+              "name": "Lapin",
+              "description": "Jeu de rôle de lapin"
+            },
+            {
+              "name": "Loup / Renard",
+              "description": "Jeu de rôle de loup ou de renard"
+            },
+            {
+              "name": "Ours",
+              "description": "Jeu de rôle d'ours"
+            },
+            {
+              "name": "Vache",
+              "description": "Jeu de rôle de vache"
+            },
+            {
+              "name": "Cochon",
+              "description":"Jeu de rôle de cochon"
             }
           ]
         }
