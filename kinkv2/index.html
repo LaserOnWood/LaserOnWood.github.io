@@ -66,16 +66,22 @@
             </div>
             
             <div class="container-fluid p-4">
+                <!-- Accordéon des catégories -->
+                <div class="accordion" id="categoriesAccordion">
+                    <!-- Les catégories seront générées dynamiquement par JavaScript -->
+                </div>
+
+                <!--Statistiques-->
                 <div class="stats">
                     <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Statistiques</h5>
                     <div class="stats-badges">
                         <!-- Les badges seront générés dynamiquement par JavaScript -->
                     </div>
                 </div>
-                
-                <!-- Accordéon des catégories -->
-                <div class="accordion" id="categoriesAccordion">
-                    <!-- Les catégories seront générées dynamiquement par JavaScript -->
+                <div class="text-center mt-3 mb-4">
+                    <button class="btn btn-outline-primary" onclick="toggleStatsView()" id="toggle-stats-btn">
+                        <i class="fas fa-chart-line me-2"></i>Vue Détaillée
+                    </button>
                 </div>
 
                 <!-- Bouton d'export et d'import -->
@@ -96,6 +102,7 @@
     
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
     <script src="javascript/script.js"></script>
 </body>
 </html>
