@@ -101,6 +101,7 @@ class KinkListApp {
     window.exportResults = this.exportResults.bind(this);
     window.importResults = this.importResults.bind(this);
     window.toggleStatsView = this.toggleStatsView.bind(this);
+    window.exportToPDF = this.exportToPDF.bind(this);
   }
 
   // Méthodes appelées depuis l'HTML
@@ -142,6 +143,26 @@ class KinkListApp {
 
   toggleStatsView() {
     this.managers.statistics.toggleStatsView();
+  }
+
+  // Nouvelle méthode pour export PDF
+  async exportToPDF() {
+    try {
+      if (!this.managers.chart) {
+        throw new Error('Gestionnaire de graphiques non disponible');
+      }
+
+      const result = await this.managers.chart.exportToPDF();
+      
+      if (result.success) {
+        this.managers.notification.showSuccess(result.message);
+      } else {
+        this.managers.notification.showError(result.message);
+      }
+    } catch (error) {
+      console.error('Erreur export PDF:', error);
+      this.managers.notification.showError('Erreur lors de la génération du PDF');
+    }
   }
 
   // Gestionnaires d'événements
