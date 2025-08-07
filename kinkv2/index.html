@@ -6,7 +6,6 @@
     <meta name="author" content="Azarothis" />
     <title>KinkList</title>
 
-
     <!--Open Graph Tags -->
     <meta property="og:url" content="https://laseronwood.github.io/kinkv2/">
     <meta property="og:type" content="website">
@@ -42,7 +41,8 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <!---->
+    
+    <!-- CSS Dependencies -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
@@ -50,11 +50,12 @@
 </head>
 <body>
     <!-- Loading indicator -->
-    <div id="loading" class="d-none">
-        <div class="d-flex justify-content-center align-items-center" style="height: 100vh;">
-            <div class="spinner-border text-primary" role="status">
+    <div id="loading" class="d-flex justify-content-center align-items-center d-none" style="height: 100vh; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.9); z-index: 10000;">
+        <div class="text-center">
+            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
                 <span class="visually-hidden">Chargement...</span>
             </div>
+            <h5 class="text-muted">Chargement de l'application...</h5>
         </div>
     </div>
 
@@ -71,20 +72,22 @@
                     <!-- Les catégories seront générées dynamiquement par JavaScript -->
                 </div>
 
-                <!--Statistiques-->
+                <!-- Statistiques -->
                 <div class="stats">
                     <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Statistiques</h5>
                     <div class="stats-badges">
                         <!-- Les badges seront générés dynamiquement par JavaScript -->
                     </div>
                 </div>
+                
+                <!-- Bouton de basculement des vues -->
                 <div class="text-center mt-3 mb-4">
                     <button class="btn btn-outline-primary" onclick="toggleStatsView()" id="toggle-stats-btn">
                         <i class="fas fa-chart-line me-2"></i>Vue Détaillée
                     </button>
                 </div>
 
-                <!-- Bouton d'export et d'import -->
+                <!-- Boutons d'export et d'import -->
                 <div class="text-center mt-4">
                     <div class="d-flex gap-3 justify-content-center flex-wrap">
                         <button class="btn export-btn" onclick="exportResults()">
@@ -100,9 +103,68 @@
         </div>
     </div>
     
+    <!-- JavaScript Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.min.js"></script>
-    <script src="javascript/script.js"></script>
+<!--    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.js"></script>-->
+    <script type="module" src="javascript/app.js"></script>
+
+    <!-- Application Modules -->
+    <script type="module">
+        // Afficher le loading
+        document.getElementById('loading').classList.remove('d-none');
+        
+        // Importer et initialiser l'application
+        import('./javascript/app.js')
+            .then(module => {
+                console.log('✅ Modules chargés avec succès');
+            })
+            .catch(error => {
+                console.error('❌ Erreur lors du chargement des modules:', error);
+                
+                // Masquer le loading et afficher l'erreur
+                document.getElementById('loading').classList.add('d-none');
+                
+                // Créer un message d'erreur
+                const errorAlert = document.createElement('div');
+                errorAlert.className = 'alert alert-danger m-3';
+                errorAlert.innerHTML = `
+                    <h4><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h4>
+                    <p>Les modules JavaScript n'ont pas pu être chargés. Vérifiez que tous les fichiers sont présents :</p>
+                    <ul>
+                        <li>javascript/config.js</li>
+                        <li>javascript/state.js</li>
+                        <li>javascript/dataLoader.js</li>
+                        <li>javascript/uiGenerator.js</li>
+                        <li>javascript/preferencesManager.js</li>
+                        <li>javascript/statisticsManager.js</li>
+                        <li>javascript/chartManager.js</li>
+                        <li>javascript/notificationManager.js</li>
+                        <li>javascript/app.js</li>
+                    </ul>
+                    <p class="text-muted">Erreur technique : ${error.message}</p>
+                    <button class="btn btn-outline-danger" onclick="location.reload()">
+                        <i class="fas fa-redo"></i> Recharger la page
+                    </button>
+                `;
+                
+                const container = document.querySelector('.container');
+                container.insertBefore(errorAlert, container.firstChild);
+            })
+            .finally(() => {
+                // Masquer le loading après un délai minimum pour éviter le flash
+                setTimeout(() => {
+                    document.getElementById('loading').classList.add('d-none');
+                }, 500);
+            });
+    </script>
+
+    <!-- Fallback pour navigateurs sans support ES6 modules -->
+    <noscript>
+        <div class="alert alert-warning m-3">
+            <h4>JavaScript requis</h4>
+            <p>Cette application nécessite JavaScript pour fonctionner. Veuillez activer JavaScript dans votre navigateur.</p>
+        </div>
+    </noscript>
 </body>
 </html>
