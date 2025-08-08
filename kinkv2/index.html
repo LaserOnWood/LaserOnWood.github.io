@@ -101,7 +101,7 @@
                         <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importResults(this)">
                     </div>
                 </div>
-                
+
             </div>
         </div>
     </div>
@@ -110,68 +110,49 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.0/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+
     <script type="module" src="javascript/app.js"></script>
-    <script type="module" src="javascript/chartManager.js"></script>
-    <script type="module" src="javascript/config.js"></script>
-    <script type="module" src="javascript/dataLoader.js"></script>
-    <script type="module" src="javascript/notificationManager.js"></script>
-    <script type="module" src="javascript/preferencesManager.js"></script>
-    <script type="module" src="javascript/state.js"></script>
-    <script type="module" src="javascript/statisticsManager.js"></script>
-    <script type="module" src="javascript/uiGenerator.js"></script>
+    
 
-
-    <!-- Application Modules -->
+    <!-- Script d'initialisation à la fin -->
     <script type="module">
-        // Afficher le loading
+        // Test immédiat de Chart.js
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('🧪 Test Chart.js au chargement DOM:', {
+                exists: typeof Chart !== 'undefined',
+                version: typeof Chart !== 'undefined' ? Chart.version : 'N/A'
+            });
+        });
+        
+        // Votre code d'initialisation existant...
         document.getElementById('loading').classList.remove('d-none');
         
-        // Importer et initialiser l'application
         import('./javascript/app.js')
             .then(module => {
                 console.log('✅ Modules chargés avec succès');
+                
+                // Test Chart.js après chargement des modules
+                setTimeout(() => {
+                    console.log('🧪 Test Chart.js après modules:', {
+                        exists: typeof Chart !== 'undefined',
+                        version: typeof Chart !== 'undefined' ? Chart.version : 'N/A'
+                    });
+                }, 1000);
             })
             .catch(error => {
                 console.error('❌ Erreur lors du chargement des modules:', error);
-                
-                // Masquer le loading et afficher l'erreur
-                document.getElementById('loading').classList.add('d-none');
-                
-                // Créer un message d'erreur
-                const errorAlert = document.createElement('div');
-                errorAlert.className = 'alert alert-danger m-3';
-                errorAlert.innerHTML = `
-                    <h4><i class="fas fa-exclamation-triangle"></i> Erreur de chargement</h4>
-                    <p>Les modules JavaScript n'ont pas pu être chargés. Vérifiez que tous les fichiers sont présents :</p>
-                    <ul>
-                        <li>javascript/config.js</li>
-                        <li>javascript/state.js</li>
-                        <li>javascript/dataLoader.js</li>
-                        <li>javascript/uiGenerator.js</li>
-                        <li>javascript/preferencesManager.js</li>
-                        <li>javascript/statisticsManager.js</li>
-                        <li>javascript/chartManager.js</li>
-                        <li>javascript/notificationManager.js</li>
-                        <li>javascript/app.js</li>
-                    </ul>
-                    <p class="text-muted">Erreur technique : ${error.message}</p>
-                    <button class="btn btn-outline-danger" onclick="location.reload()">
-                        <i class="fas fa-redo"></i> Recharger la page
-                    </button>
-                `;
-                
-                const container = document.querySelector('.container');
-                container.insertBefore(errorAlert, container.firstChild);
+                // ... votre gestion d'erreur existante ...
             })
             .finally(() => {
-                // Masquer le loading après un délai minimum pour éviter le flash
                 setTimeout(() => {
                     document.getElementById('loading').classList.add('d-none');
                 }, 500);
             });
     </script>
 
+
+    
     <!-- Fallback pour navigateurs sans support ES6 modules -->
     <noscript>
         <div class="alert alert-warning m-3">
