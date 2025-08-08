@@ -1,88 +1,142 @@
-// chartManager.js - Gestion des graphiques avec Chart.js (version corrigée)
+// chartManager.js - Version corrigée avec debug amélioré
 import appState from './state.js';
 
 export class ChartManager {
   constructor() {
     this.currentChartType = 'doughnut';
     this.isChartJSReady = false;
-    this.checkChartJSAvailability();
+    this.initializationPromise = null;
+    this.debug = false; // Activer pour debugging
+    
+    // Initialiser Chart.js de manière asynchrone
+    this.initializationPromise = this.initializeChartJS();
   }
 
-  checkChartJSAvailability() {
-    // Vérifier si Chart.js est disponible
-    const checkChart = () => {
+  async initializeChartJS() {
+    return new Promise((resolve, reject) => {
+      // Vérifier si Chart.js est déjà disponible
       if (typeof Chart !== 'undefined') {
         this.isChartJSReady = true;
-        console.log('✅ Chart.js disponible');
-        return true;
-      }
-      return false;
-    };
-
-    if (!checkChart()) {
-      // Attendre que Chart.js se charge
-      let attempts = 0;
-      const maxAttempts = 50; // 5 secondes max
-      
-      const waitForChart = setInterval(() => {
-        attempts++;
-        if (checkChart() || attempts >= maxAttempts) {
-          clearInterval(waitForChart);
-          if (!this.isChartJSReady) {
-            console.error('❌ Chart.js non disponible après 5 secondes');
-            this.showChartError();
-          }
-        }
-      }, 100);
-    }
-  }
-
-  createChart(type = 'doughnut') {
-    if (!this.isChartJSReady) {
-      console.warn('Chart.js pas encore prêt, tentative ultérieure...');
-      setTimeout(() => this.createChart(type), 500);
-      return;
-    }
-
-    const canvas = document.getElementById('preferencesChart');
-    if (!canvas) {
-      console.warn('Canvas preferencesChart non trouvé');
-      return;
-    }
-
-    const ctx = canvas.getContext('2d');
-    const stats = appState.getStats();
-    if (!stats) {
-      console.warn('Statistiques non disponibles');
-      return;
-    }
-
-    try {
-      // Détruire l'ancien graphique
-      const currentChart = appState.getCurrentChart();
-      if (currentChart) {
-        currentChart.destroy();
-      }
-
-      // Préparer les données - filtrer les valeurs à 0
-      const chartData = this.prepareChartData(stats);
-      
-      if (chartData.labels.length === 0) {
-        this.showEmptyChartMessage();
+        this.logDebug('✅ Chart.js déjà disponible');
+        resolve(true);
         return;
       }
 
+      // Attendre le chargement de Chart.js
+      let attempts = 0;
+      const maxAttempts = 100; // 10 secondes max
+      
+      const checkInterval = setInterval(() => {
+        attempts++;
+        
+        this.logDebug(`🔄 Tentative ${attempts}/${maxAttempts} - Vérification Chart.js...`);
+        
+        if (typeof Chart !== 'undefined') {
+          this.isChartJSReady = true;
+          clearInterval(checkInterval);
+          this.logDebug('✅ Chart.js maintenant disponible');
+          
+          // Vérifier la version et les composants
+          this.validateChartJS();
+          resolve(true);
+          
+        } else if (attempts >= maxAttempts) {
+          clearInterval(checkInterval);
+          const error = 'Chart.js non disponible après 10 secondes';
+          this.logDebug(`❌ ${error}`);
+          this.showChartError(error);
+          reject(new Error(error));
+        }
+      }, 100);
+    });
+  }
+
+  validateChartJS() {
+    try {
+      this.logDebug(`📊 Chart.js version: ${Chart.version || 'inconnue'}`);
+      
+      // Vérifier les composants nécessaires
+      const requiredComponents = ['Chart', 'DoughnutController', 'BarController'];
+      const missing = [];
+      
+      if (!Chart.registry) {
+        missing.push('Registry');
+      }
+      
+      if (missing.length > 0) {
+        this.logDebug(`⚠️ Composants manquants: ${missing.join(', ')}`);
+      }
+      
+      return missing.length === 0;
+    } catch (error) {
+      this.logDebug('❌ Erreur lors de la validation Chart.js:', error);
+      return false;
+    }
+  }
+
+  async createChart(type = 'doughnut') {
+    try {
+      this.logDebug(`🎯 Tentative de création de graphique: ${type}`);
+      
+      // Attendre que Chart.js soit prêt
+      if (!this.isChartJSReady) {
+        this.logDebug('⏳ Attente de Chart.js...');
+        await this.initializationPromise;
+      }
+
+      // Vérifier le canvas
+      const canvas = document.getElementById('preferencesChart');
+      if (!canvas) {
+        throw new Error('Canvas preferencesChart introuvable dans le DOM');
+      }
+      this.logDebug('✅ Canvas trouvé');
+
+      // Vérifier les données
+      const stats = appState.getStats();
+      if (!stats) {
+        throw new Error('Statistiques non disponibles');
+      }
+      this.logDebug('✅ Statistiques disponibles:', stats);
+
+      // Détruire l'ancien graphique
+      const currentChart = appState.getCurrentChart();
+      if (currentChart) {
+        this.logDebug('🗑️ Destruction de l\'ancien graphique');
+        try {
+          currentChart.destroy();
+        } catch (destroyError) {
+          this.logDebug('⚠️ Erreur lors de la destruction:', destroyError);
+        }
+      }
+
+      // Préparer les données
+      const chartData = this.prepareChartData(stats);
+      this.logDebug('📊 Données du graphique:', chartData);
+      
+      if (chartData.labels.length === 0) {
+        this.showEmptyChartMessage();
+        return null;
+      }
+
+      // Obtenir la configuration
       const config = this.getChartConfig(type, chartData);
+      this.logDebug('⚙️ Configuration du graphique:', config);
+
+      // Créer le nouveau graphique
+      const ctx = canvas.getContext('2d');
       const newChart = new Chart(ctx, config);
       
+      // Sauvegarder dans l'état
       appState.setCurrentChart(newChart, type);
       this.currentChartType = type;
       
-      console.log(`✅ Graphique ${type} créé avec succès`);
+      this.logDebug(`✅ Graphique ${type} créé avec succès`);
+      return newChart;
 
     } catch (error) {
-      console.error('Erreur lors de la création du graphique:', error);
-      this.showChartError(error.message);
+      this.logDebug('❌ Erreur lors de la création du graphique:', error);
+      this.showChartError(`Erreur: ${error.message}`);
+      return null;
     }
   }
 
@@ -91,16 +145,30 @@ export class ChartManager {
     const data = [];
     const colors = [];
 
+    this.logDebug('🔄 Préparation des données...');
+    
+    // Vérifier la structure des stats
+    if (!stats.preferenceStats) {
+      this.logDebug('❌ stats.preferenceStats manquant');
+      return { labels, data, colors };
+    }
+
     // Filtrer les préférences avec des valeurs > 0
     Object.entries(stats.preferenceStats).forEach(([key, stat]) => {
-      if (stat.count > 0) {
-        labels.push(stat.name);
+      this.logDebug(`📊 ${key}:`, stat);
+      
+      if (stat && stat.count && stat.count > 0) {
+        labels.push(stat.name || key);
         data.push(stat.count);
-        // Extraire la couleur du gradient ou utiliser une couleur de fallback
-        colors.push(this.extractColor(stat.color) || this.getDefaultColor(key));
+        
+        const color = this.extractColor(stat.color) || this.getDefaultColor(key);
+        colors.push(color);
+        
+        this.logDebug(`✅ Ajouté: ${stat.name} = ${stat.count} (${color})`);
       }
     });
 
+    this.logDebug(`📈 Données finales: ${labels.length} éléments`);
     return { labels, data, colors };
   }
 
@@ -108,22 +176,43 @@ export class ChartManager {
     if (!gradient) return null;
     
     // Si c'est déjà une couleur simple
+    if (gradient.startsWith('#')) {
+      return gradient;
+    }
+    
     if (!gradient.includes('gradient')) {
       return gradient;
     }
     
     // Extraire la première couleur du gradient
-    const match = gradient.match(/#[0-9a-fA-F]{6}|#[0-9a-fA-F]{3}|rgb\([^)]+\)/);
-    if (match) {
-      return match[0];
+    const colorPatterns = [
+      /#[0-9a-fA-F]{6}/,
+      /#[0-9a-fA-F]{3}/,
+      /rgb\([^)]+\)/,
+      /rgba\([^)]+\)/
+    ];
+    
+    for (const pattern of colorPatterns) {
+      const match = gradient.match(pattern);
+      if (match) {
+        return match[0];
+      }
     }
     
-    // Fallback : extraire les couleurs connues du gradient
-    if (gradient.includes('#7d2e79')) return '#7d2e79'; // adore
-    if (gradient.includes('#4CAF50')) return '#4CAF50'; // aime
-    if (gradient.includes('#FF9800')) return '#FF9800'; // curiosité
-    if (gradient.includes('#FF5722')) return '#FF5722'; // dislike
-    if (gradient.includes('#f44336')) return '#f44336'; // non_strict
+    // Fallback : couleurs connues
+    const knownColors = {
+      '#7d2e79': '#7d2e79', // adore
+      '#4CAF50': '#4CAF50', // aime
+      '#FF9800': '#FF9800', // curiosité
+      '#FF5722': '#FF5722', // dislike
+      '#f44336': '#f44336'  // non_strict
+    };
+    
+    for (const [search, color] of Object.entries(knownColors)) {
+      if (gradient.includes(search)) {
+        return color;
+      }
+    }
     
     return null;
   }
@@ -156,10 +245,13 @@ export class ChartManager {
         maintainAspectRatio: false,
         plugins: {
           legend: {
-            position: type === 'radar' ? 'bottom' : 'right',
+            position: type === 'polarArea' ? 'bottom' : 'right',
             labels: {
               padding: 20,
-              usePointStyle: true
+              usePointStyle: true,
+              font: {
+                size: 12
+              }
             }
           },
           tooltip: {
@@ -170,6 +262,13 @@ export class ChartManager {
                 return `${context.label}: ${context.raw} (${percentage}%)`;
               }
             }
+          }
+        },
+        // Configuration pour éviter les erreurs d'animation
+        animation: {
+          duration: 1000,
+          onComplete: () => {
+            this.logDebug('✅ Animation du graphique terminée');
           }
         }
       }
@@ -184,20 +283,31 @@ export class ChartManager {
             ticks: {
               stepSize: 1
             }
+          },
+          x: {
+            ticks: {
+              maxRotation: 45
+            }
           }
         };
         break;
         
-      case 'radar':
+      case 'polarArea':
+        const maxValue = Math.max(...chartData.data);
         baseConfig.options.scales = {
           r: {
             beginAtZero: true,
-            max: Math.max(...chartData.data) + 1,
+            max: maxValue > 0 ? maxValue + 1 : 5,
             ticks: {
               stepSize: 1
             }
           }
         };
+        break;
+        
+      case 'doughnut':
+      case 'pie':
+        // Configuration par défaut suffit
         break;
     }
 
@@ -205,6 +315,8 @@ export class ChartManager {
   }
 
   toggleChart(type) {
+    this.logDebug(`🔄 Changement de type de graphique: ${type}`);
+    
     this.currentChartType = type;
 
     // Mettre à jour les boutons
@@ -217,12 +329,17 @@ export class ChartManager {
       activeBtn.classList.add('active');
     }
 
+    // Créer le nouveau graphique
     this.createChart(type);
   }
 
   updateChart() {
+    this.logDebug('🔄 Mise à jour du graphique demandée');
+    
     if (appState.isDetailedView && this.isChartJSReady) {
       this.createChart(this.currentChartType);
+    } else {
+      this.logDebug('⏭️ Mise à jour ignorée (vue non détaillée ou Chart.js non prêt)');
     }
   }
 
@@ -230,14 +347,19 @@ export class ChartManager {
     const container = document.querySelector('.chart-container');
     if (container) {
       container.innerHTML = `
-        <div class="alert alert-warning text-center" role="alert">
-          <i class="fas fa-exclamation-triangle"></i>
+        <div class="alert alert-danger text-center" role="alert">
+          <i class="fas fa-exclamation-triangle mb-2"></i>
           <h6>Erreur de graphique</h6>
           <p>Le graphique ne peut pas être affiché.</p>
           ${message ? `<small class="text-muted">Détail : ${message}</small>` : ''}
-          <button class="btn btn-sm btn-outline-warning mt-2" onclick="window.chartManager?.retryChart()">
-            <i class="fas fa-redo"></i> Réessayer
-          </button>
+          <div class="mt-3">
+            <button class="btn btn-sm btn-outline-danger me-2" onclick="window.chartManager?.retryChart()">
+              <i class="fas fa-redo"></i> Réessayer
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="window.chartManager?.debugChart()">
+              <i class="fas fa-bug"></i> Debug
+            </button>
+          </div>
         </div>
       `;
     }
@@ -248,183 +370,84 @@ export class ChartManager {
     if (container) {
       container.innerHTML = `
         <div class="alert alert-info text-center" role="alert">
-          <i class="fas fa-chart-pie"></i>
+          <i class="fas fa-chart-pie mb-2"></i>
           <h6>Aucune donnée à afficher</h6>
           <p>Sélectionnez des préférences pour voir le graphique.</p>
+          <small class="text-muted">Cliquez sur les éléments des catégories pour les sélectionner.</small>
         </div>
       `;
     }
   }
 
   retryChart() {
-    this.checkChartJSAvailability();
+    this.logDebug('🔄 Nouvelle tentative de création du graphique');
+    this.isChartJSReady = false;
+    this.initializationPromise = this.initializeChartJS();
+    
     setTimeout(() => {
-      if (this.isChartJSReady) {
-        this.createChart(this.currentChartType);
-      }
-    }, 500);
+      this.createChart(this.currentChartType);
+    }, 1000);
   }
 
-  // Export PDF avec jsPDF
-  async exportToPDF() {
-    try {
-      // Vérifier si jsPDF est disponible
-      if (typeof window.jsPDF === 'undefined') {
-        await this.loadJsPDF();
-      }
-
-      const stats = appState.getStats();
-      if (!stats) {
-        throw new Error('Aucune statistique disponible');
-      }
-
-      // Créer le PDF
-      const pdf = new window.jsPDF('p', 'mm', 'a4');
-      
-      // Configuration
-      const pageWidth = pdf.internal.pageSize.getWidth();
-      const pageHeight = pdf.internal.pageSize.getHeight();
-      const margin = 20;
-      let yPos = margin;
-
-      // En-tête
-      pdf.setFontSize(24);
-      pdf.setFont(undefined, 'bold');
-      pdf.text('Mes Préférences - Rapport Détaillé', pageWidth / 2, yPos, { align: 'center' });
-      yPos += 15;
-
-      // Date
-      pdf.setFontSize(12);
-      pdf.setFont(undefined, 'normal');
-      const today = new Date().toLocaleDateString('fr-FR', { 
-        year: 'numeric', month: 'long', day: 'numeric' 
-      });
-      pdf.text(`Généré le ${today}`, pageWidth / 2, yPos, { align: 'center' });
-      yPos += 20;
-
-      // Vue d'ensemble
-      pdf.setFontSize(16);
-      pdf.setFont(undefined, 'bold');
-      pdf.text('📊 Vue d\'ensemble', margin, yPos);
-      yPos += 10;
-
-      pdf.setFontSize(12);
-      pdf.setFont(undefined, 'normal');
-      pdf.text(`• Total d'éléments explorés : ${stats.selectedItems} / ${stats.totalItems}`, margin, yPos);
-      yPos += 7;
-      pdf.text(`• Pourcentage de completion : ${stats.completionPercentage}%`, margin, yPos);
-      yPos += 15;
-
-      // Répartition des préférences
-      pdf.setFontSize(16);
-      pdf.setFont(undefined, 'bold');
-      pdf.text('🎯 Répartition des préférences', margin, yPos);
-      yPos += 10;
-
-      // Tableau des préférences
-      Object.entries(stats.preferenceStats).forEach(([key, stat]) => {
-        if (stat.count > 0) {
-          pdf.setFontSize(12);
-          pdf.setFont(undefined, 'normal');
-          pdf.text(`• ${stat.name} : ${stat.count} (${stat.percentage}%)`, margin, yPos);
-          yPos += 7;
-        }
-      });
-      yPos += 10;
-
-      // Analyse par catégorie
-      pdf.setFontSize(16);
-      pdf.setFont(undefined, 'bold');
-      pdf.text('📂 Analyse par catégorie', margin, yPos);
-      yPos += 10;
-
-      Object.entries(stats.categoryStats).forEach(([categoryId, categoryData]) => {
-        if (categoryData.selected > 0) {
-          // Vérifier si on a assez de place
-          if (yPos > pageHeight - 30) {
-            pdf.addPage();
-            yPos = margin;
-          }
-
-          pdf.setFontSize(12);
-          pdf.setFont(undefined, 'bold');
-          pdf.text(`${categoryData.name}`, margin, yPos);
-          yPos += 7;
-          
-          pdf.setFont(undefined, 'normal');
-          pdf.text(`  Sélectionnées : ${categoryData.selected} / ${categoryData.total} (${categoryData.percentage}%)`, margin, yPos);
-          yPos += 10;
-        }
-      });
-
-      // Ajouter le graphique si disponible
-      if (this.isChartJSReady && appState.getCurrentChart()) {
-        const canvas = document.getElementById('preferencesChart');
-        if (canvas) {
-          try {
-            // Nouvelle page pour le graphique
-            pdf.addPage();
-            yPos = margin;
-
-            pdf.setFontSize(16);
-            pdf.setFont(undefined, 'bold');
-            pdf.text('📈 Graphique des préférences', pageWidth / 2, yPos, { align: 'center' });
-            yPos += 20;
-
-            // Convertir le canvas en image
-            const imgData = canvas.toDataURL('image/png');
-            const imgWidth = pageWidth - (margin * 2);
-            const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-            pdf.addImage(imgData, 'PNG', margin, yPos, imgWidth, imgHeight);
-          } catch (error) {
-            console.warn('Impossible d\'ajouter le graphique au PDF:', error);
-          }
-        }
-      }
-
-      // Pied de page
-      pdf.setFontSize(8);
-      pdf.setFont(undefined, 'italic');
-      pdf.text('Généré par KinkList - Application de gestion des préférences', pageWidth / 2, pageHeight - 10, { align: 'center' });
-
-      // Sauvegarder
-      const filename = `Mes_preferences_${today.replace(/\s+/g, '_').replace(/,/g, '')}.pdf`;
-      pdf.save(filename);
-
-      return {
-        success: true,
-        message: 'Rapport PDF généré avec succès !',
-        filename: filename
-      };
-
-    } catch (error) {
-      console.error('Erreur lors de la génération du PDF:', error);
-      return {
-        success: false,
-        message: `Erreur lors de la génération du PDF: ${error.message}`
-      };
+  debugChart() {
+    this.logDebug('🐛 Mode debug activé');
+    
+    const debugInfo = {
+      chartJSReady: this.isChartJSReady,
+      chartJSExists: typeof Chart !== 'undefined',
+      chartVersion: typeof Chart !== 'undefined' ? Chart.version : 'N/A',
+      canvasExists: !!document.getElementById('preferencesChart'),
+      statsAvailable: !!appState.getStats(),
+      currentChart: !!appState.getCurrentChart(),
+      detailedView: appState.isDetailedView
+    };
+    
+    console.table(debugInfo);
+    
+    // Afficher dans l'interface
+    const container = document.querySelector('.chart-container');
+    if (container) {
+      container.innerHTML = `
+        <div class="alert alert-warning">
+          <h6>🐛 Informations de debug</h6>
+          <pre>${JSON.stringify(debugInfo, null, 2)}</pre>
+          <button class="btn btn-sm btn-primary mt-2" onclick="window.chartManager?.createChart()">
+            Forcer la création
+          </button>
+        </div>
+      `;
     }
   }
 
-  async loadJsPDF() {
-    return new Promise((resolve, reject) => {
-      if (typeof window.jsPDF !== 'undefined') {
-        resolve();
-        return;
+  logDebug(message, data = null) {
+    if (this.debug) {
+      if (data) {
+        console.log(`[ChartManager] ${message}`, data);
+      } else {
+        console.log(`[ChartManager] ${message}`);
       }
+    }
+  }
 
-      const script = document.createElement('script');
-      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js';
-      script.onload = () => {
-        if (typeof window.jsPDF !== 'undefined') {
-          resolve();
-        } else {
-          reject(new Error('jsPDF non disponible après chargement'));
-        }
-      };
-      script.onerror = () => reject(new Error('Erreur de chargement de jsPDF'));
-      document.head.appendChild(script);
-    });
+  // Désactiver le debug pour la production
+  disableDebug() {
+    this.debug = false;
   }
 }
+
+// Fonctions utilitaires pour debugging global
+window.debugChart = () => {
+  if (window.chartManager) {
+    window.chartManager.debugChart();
+  } else {
+    console.log('ChartManager non disponible');
+  }
+};
+
+window.testChartJS = () => {
+  console.log('Test Chart.js:', {
+    exists: typeof Chart !== 'undefined',
+    version: typeof Chart !== 'undefined' ? Chart.version : 'N/A',
+    registry: typeof Chart !== 'undefined' ? !!Chart.registry : false
+  });
+};
