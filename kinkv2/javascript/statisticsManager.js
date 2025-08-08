@@ -183,15 +183,20 @@ export class StatisticsManager {
   toggleStatsView() {
     const statsContainer = document.querySelector('.stats');
     const toggleBtn = document.getElementById('toggle-stats-btn');
-
-    if (!statsContainer || !toggleBtn) return;
-
+  
+    if (!statsContainer || !toggleBtn) {
+      console.error('❌ Éléments UI non trouvés pour la bascule');
+      return;
+    }
+  
     if (!appState.isDetailedView) {
+      console.log('🔄 Passage en vue détaillée...');
+      
       // Sauvegarder la vue simple si nécessaire
       if (!this.originalStatsHTML) {
         this.originalStatsHTML = statsContainer.innerHTML;
       }
-
+  
       // Passer en vue détaillée
       statsContainer.innerHTML = `
         <h5 class="mb-3 text-center">
@@ -202,26 +207,61 @@ export class StatisticsManager {
         </h5>
         ${UIGenerator.createEnhancedStatsHTML()}
       `;
-
-      // Ajouter les styles CSS si nécessaire
+  
+      // Ajouter les styles CSS
       this.addEnhancedStatsCSS();
-
-      // Initialiser les composants détaillés
-      this.updateAdvancedStats();
-
+  
+      // IMPORTANT : Attendre que le DOM soit mis à jour
+      setTimeout(() => {
+        console.log('🔄 DOM mis à jour, initialisation du canvas...');
+        
+        // Initialiser le canvas
+        const canvasInitialized = UIGenerator.initializeChartCanvas();
+        
+        if (canvasInitialized) {
+          // Attendre encore un peu pour que Chart.js soit prêt
+          setTimeout(() => {
+            console.log('🚀 Tentative de création du graphique...');
+            
+            // Vérifier Chart.js une dernière fois
+            if (typeof Chart === 'undefined') {
+              console.error('❌ Chart.js toujours non disponible');
+              this.showChartJSError();
+              return;
+            }
+            
+            // Initialiser les composants détaillés
+            this.updateAdvancedStats();
+            
+            // Créer le graphique
+            if (window.chartManager) {
+              window.chartManager.createChart('doughnut');
+            } else {
+              console.error('❌ ChartManager non disponible');
+            }
+            
+          }, 500);
+        } else {
+          console.error('❌ Échec de l\'initialisation du canvas');
+        }
+      }, 100);
+  
+      // Mettre à jour l'UI du bouton
       toggleBtn.innerHTML = '<i class="fas fa-chart-bar me-2"></i>Vue Simple';
       toggleBtn.classList.remove('btn-outline-primary');
       toggleBtn.classList.add('btn-outline-success');
       appState.setDetailedView(true);
-
+  
     } else {
+      console.log('🔄 Retour en vue simple...');
+      
       // Revenir à la vue simple
       statsContainer.innerHTML = this.originalStatsHTML;
-
+  
       // Régénérer les badges simples
       UIGenerator.generateStatsSection();
       this.updateSimpleStats();
-
+  
       toggleBtn.innerHTML = '<i class="fas fa-chart-line me-2"></i>Vue Détaillée';
       toggleBtn.classList.remove('btn-outline-success');
       toggleBtn.classList.add('btn-outline-primary');
@@ -407,6 +447,33 @@ export class StatisticsManager {
     } catch (error) {
       console.error('Erreur lors de l\'export:', error);
       return { success: false, message: 'Erreur lors de l\'export des statistiques' };
+    }
+  }
+  
+  showChartJSError() {
+    const container = document.querySelector('.chart-container');
+    if (container) {
+      container.innerHTML = `
+        <div class="alert alert-danger text-center" role="alert">
+          <i class="fas fa-exclamation-triangle mb-2"></i>
+          <h6>Chart.js non disponible</h6>
+          <p>La librairie Chart.js n'a pas pu être chargée.</p>
+          <div class="mt-3">
+            <p><strong>Solutions possibles :</strong></p>
+            <ul class="text-start">
+              <li>Vérifiez votre connexion internet</li>
+              <li>Rechargez la page</li>
+              <li>Vérifiez que le script Chart.js est bien chargé</li>
+            </ul>
+            <button class="btn btn-sm btn-outline-danger me-2" onclick="location.reload()">
+              <i class="fas fa-redo"></i> Recharger la page
+            </button>
+            <button class="btn btn-sm btn-outline-secondary" onclick="window.testChartJS()">
+              <i class="fas fa-bug"></i> Test Chart.js
+            </button>
+          </div>
+        </div>
+      `;
     }
   }
 }
