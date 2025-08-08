@@ -254,73 +254,117 @@ export class UIGenerator {
     return div.innerHTML;
   }
 
-  static createEnhancedStatsHTML() {
-    return `
-      <!-- Statistiques Améliorées -->
-      <div class="stat-card">
-        <h4><i class="fas fa-chart-bar me-2"></i>Vue d'ensemble</h4>
-        <div class="row">
-          <div class="col-md-6">
-            <div class="d-flex justify-content-center position-relative">
-              <svg class="progress-ring" width="120" height="120">
-                <circle class="progress-ring-circle" stroke="#e9ecef" stroke-width="8" 
-                        fill="transparent" r="52" cx="60" cy="60"/>
-                <circle id="progress-circle" class="progress-ring-circle" stroke="#4facfe" 
-                        stroke-width="8" fill="transparent" r="52" cx="60" cy="60" 
-                        stroke-dasharray="327" stroke-dashoffset="327"/>
-              </svg>
-              <div class="position-absolute d-flex align-items-center justify-content-center h-100">
-                <div class="text-center">
-                  <div class="h3 mb-0" id="total-percentage">0%</div>
-                  <small class="text-muted">Complété</small>
-                </div>
+  // 2. CORRECTION DE LA GÉNÉRATION DU CANVAS dans uiGenerator.js
+// Ajoutez cette méthode corrigée dans votre UIGenerator.js
+
+static createEnhancedStatsHTML() {
+  return `
+    <!-- Statistiques Améliorées -->
+    <div class="stat-card">
+      <h4><i class="fas fa-chart-bar me-2"></i>Vue d'ensemble</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="d-flex justify-content-center position-relative">
+            <svg class="progress-ring" width="120" height="120">
+              <circle class="progress-ring-circle" stroke="#e9ecef" stroke-width="8" 
+                      fill="transparent" r="52" cx="60" cy="60"/>
+              <circle id="progress-circle" class="progress-ring-circle" stroke="#4facfe" 
+                      stroke-width="8" fill="transparent" r="52" cx="60" cy="60" 
+                      stroke-dasharray="327" stroke-dashoffset="327"/>
+            </svg>
+            <div class="position-absolute d-flex align-items-center justify-content-center h-100">
+              <div class="text-center">
+                <div class="h3 mb-0" id="total-percentage">0%</div>
+                <small class="text-muted">Complété</small>
               </div>
             </div>
           </div>
-          <div class="col-md-6">
-            <div class="d-flex flex-wrap justify-content-center" id="overview-badges">
-              <!-- Badges générés dynamiquement -->
+        </div>
+        <div class="col-md-6">
+          <div class="d-flex flex-wrap justify-content-center" id="overview-badges">
+            <!-- Badges générés dynamiquement -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Graphiques - SECTION CORRIGÉE -->
+    <div class="stat-card">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4><i class="fas fa-chart-pie me-2"></i>Répartition des Préférences</h4>
+        <div class="chart-controls">
+          <button class="toggle-btn active" onclick="window.chartManager?.toggleChart('doughnut')" id="btn-doughnut">
+            <i class="fas fa-chart-pie me-1"></i>Camembert
+          </button>
+          <button class="toggle-btn" onclick="window.chartManager?.toggleChart('bar')" id="btn-bar">
+            <i class="fas fa-chart-bar me-1"></i>Barres
+          </button>
+          <button class="toggle-btn" onclick="window.chartManager?.toggleChart('polarArea')" id="btn-polarArea">
+            <i class="fas fa-chart-line me-1"></i>Polar Area
+          </button>
+        </div>
+      </div>
+      
+      <!-- CANVAS CORRECTEMENT GÉNÉRÉ -->
+      <div class="chart-container" id="chart-container">
+        <canvas id="preferencesChart" width="450" height="450"></canvas>
+        <div class="chart-loading d-none" id="chart-loading">
+          <div class="text-center p-4">
+            <div class="spinner-border text-primary mb-2" role="status">
+              <span class="visually-hidden">Chargement...</span>
             </div>
+            <p class="text-muted">Génération du graphique...</p>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Graphiques -->
-      <div class="stat-card">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-          <h4><i class="fas fa-chart-pie me-2"></i>Répartition des Préférences</h4>
-          <div>
-            <button class="toggle-btn active" onclick="window.chartManager?.toggleChart('doughnut')" id="btn-doughnut">
-              <i class="fas fa-chart-pie me-1"></i>Camembert
-            </button>
-            <button class="toggle-btn" onclick="window.chartManager?.toggleChart('bar')" id="btn-bar">
-              <i class="fas fa-chart-bar me-1"></i>Barres
-            </button>
-            <button class="toggle-btn" onclick="window.chartManager?.toggleChart('radar')" id="btn-radar">
-              <i class="fas fa-chart-line me-1"></i>Radar
-            </button>
-          </div>
-        </div>
-        <div class="chart-container">
-          <canvas id="preferencesChart"></canvas>
-        </div>
+    <!-- Analyse par catégorie -->
+    <div class="stat-card">
+      <h4><i class="fas fa-layer-group me-2"></i>Analyse par Catégorie</h4>
+      <div id="category-analysis">
+        <!-- Analyses par catégorie générées dynamiquement -->
       </div>
+    </div>
 
-      <!-- Analyse par catégorie -->
-      <div class="stat-card">
-        <h4><i class="fas fa-layer-group me-2"></i>Analyse par Catégorie</h4>
-        <div id="category-analysis">
-          <!-- Analyses par catégorie générées dynamiquement -->
-        </div>
+    <!-- Tendances et insights -->
+    <div class="stat-card">
+      <h4><i class="fas fa-lightbulb me-2"></i>Insights & Tendances</h4>
+      <div id="insights-container">
+        <!-- Insights générés dynamiquement -->
       </div>
+    </div>
+  `;
+}
 
-      <!-- Tendances et insights -->
-      <div class="stat-card">
-        <h4><i class="fas fa-lightbulb me-2"></i>Insights & Tendances</h4>
-        <div id="insights-container">
-          <!-- Insights générés dynamiquement -->
-        </div>
-      </div>
-    `;
+// NOUVELLE MÉTHODE : Initialisation du canvas après génération HTML
+static initializeChartCanvas() {
+  console.log('🎨 Initialisation du canvas Chart.js');
+  
+  // Vérifier que le canvas existe
+  const canvas = document.getElementById('preferencesChart');
+  if (!canvas) {
+    console.error('❌ Canvas preferencesChart non trouvé après génération HTML');
+    return false;
   }
+  
+  // Vérifier les dimensions
+  const container = canvas.parentElement;
+  if (container) {
+    const rect = container.getBoundingClientRect();
+    console.log('📐 Dimensions du conteneur:', {
+      width: rect.width,
+      height: rect.height
+    });
+    
+    // Ajuster les dimensions du canvas si nécessaire
+    if (rect.width > 0 && rect.height > 0) {
+      canvas.style.maxWidth = '100%';
+      canvas.style.maxHeight = '400px';
+    }
+  }
+  
+  console.log('✅ Canvas initialisé');
+  return true;
+}
 }
