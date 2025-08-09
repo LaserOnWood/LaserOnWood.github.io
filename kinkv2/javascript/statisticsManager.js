@@ -31,7 +31,7 @@ export class StatisticsManager {
 
   updateAdvancedStats() {
     this.updateDetailedOverview();
-    this.updateCategoryAnalysis();
+    this.updateCategoryAnalysisAccordion();
     this.generateInsights();
     
     // Mettre à jour le graphique si il existe
@@ -75,34 +75,14 @@ export class StatisticsManager {
     }
   }
 
+  updateCategoryAnalysisAccordion() {
+    // Utiliser la nouvelle méthode de UIGenerator pour générer l'accordion
+    UIGenerator.generateCategoryAnalysisAccordion();
+  }
+
+  // Garder l'ancienne méthode pour compatibilité mais la rediriger
   updateCategoryAnalysis() {
-    const container = document.getElementById('category-analysis');
-    if (!container) return;
-
-    const stats = appState.getStats();
-    if (!stats) return;
-
-    container.innerHTML = '';
-
-    Object.entries(stats.categoryStats).forEach(([categoryId, categoryData]) => {
-      if (categoryData.selected > 0 || categoryData.total > 0) {
-        const categoryDiv = document.createElement('div');
-        categoryDiv.className = 'category-detail';
-
-        categoryDiv.innerHTML = `
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="mb-0">${UIGenerator.escapeHtml(categoryData.name)}</h6>
-            <span class="badge bg-primary">${categoryData.selected}/${categoryData.total}</span>
-          </div>
-          <div class="percentage-bar">
-            <div class="percentage-fill" style="width: ${categoryData.percentage}%; background: linear-gradient(90deg, #4facfe, #00f2fe);"></div>
-          </div>
-          <small class="text-muted">${categoryData.percentage}% complété</small>
-        `;
-
-        container.appendChild(categoryDiv);
-      }
-    });
+    this.updateCategoryAnalysisAccordion();
   }
 
   generateInsights() {
@@ -233,6 +213,12 @@ export class StatisticsManager {
             // Initialiser les composants détaillés
             this.updateAdvancedStats();
             
+            // Générer l'accordion d'analyse (AJOUT IMPORTANT)
+            setTimeout(() => {
+              console.log('🎯 Génération de l\'accordion d\'analyse...');
+              UIGenerator.generateCategoryAnalysisAccordion();
+            }, 200);
+            
             // Créer le graphique
             if (window.chartManager) {
               window.chartManager.createChart('doughnut');
@@ -276,7 +262,8 @@ export class StatisticsManager {
     const style = document.createElement('style');
     style.id = cssId;
     style.textContent = `
-      .stat-card {
+      /* Styles spécifiques pour les statistiques détaillées - éviter les conflits */
+      .stats .stat-card {
         background: white;
         border-radius: 15px;
         padding: 1.5rem;
@@ -285,42 +272,28 @@ export class StatisticsManager {
         transition: transform 0.3s ease;
       }
 
-      .stat-card:hover {
+      .stats .stat-card:hover {
         transform: translateY(-2px);
       }
 
-      .progress-ring {
+      .stats .progress-ring {
         width: 120px;
         height: 120px;
       }
 
-      .progress-ring-circle {
+      .stats .progress-ring-circle {
         transition: stroke-dashoffset 0.8s ease-in-out;
         transform: rotate(-90deg);
         transform-origin: 50% 50%;
       }
 
-      .chart-container {
+      .stats .chart-container {
         position: relative;
         height: 300px;
         margin: 1rem 0;
       }
 
-      .category-detail {
-        background: #f8f9fa;
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-        border-left: 4px solid #4facfe;
-        transition: all 0.3s ease;
-      }
-
-      .category-detail:hover {
-        background: #e9ecef;
-        transform: translateX(5px);
-      }
-
-      .percentage-bar {
+      .stats .percentage-bar {
         background: #e9ecef;
         border-radius: 10px;
         height: 20px;
@@ -328,13 +301,13 @@ export class StatisticsManager {
         margin: 0.5rem 0;
       }
 
-      .percentage-fill {
+      .stats .percentage-fill {
         height: 100%;
         border-radius: 10px;
         transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
 
-      .toggle-btn {
+      .stats .toggle-btn {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         border: none;
         color: white;
@@ -346,45 +319,67 @@ export class StatisticsManager {
         font-size: 0.85rem;
       }
 
-      .toggle-btn:hover {
+      .stats .toggle-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
         color: white;
       }
 
-      .toggle-btn.active {
+      .stats .toggle-btn.active {
         background: linear-gradient(135deg, #28a745, #20c997);
         box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
       }
 
-      .stat-badge {
-        display: inline-flex;
-        align-items: center;
-        padding: 0.5rem 1rem;
-        border-radius: 25px;
-        color: white;
-        font-weight: bold;
-        font-size: 0.85rem;
-        margin: 0.25rem;
-        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-        transition: all 0.3s ease;
+      .stats .preference-color-dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        flex-shrink: 0;
       }
 
-      .stat-badge:hover {
-        transform: scale(1.05);
+      /* Styles spécifiques pour l'accordion d'analyse par catégorie */
+      #categoryAnalysisAccordion .accordion-item {
+        border: none;
+        border-radius: 10px;
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      }
+
+      #categoryAnalysisAccordion .accordion-button {
+        border-radius: 10px !important;
+        border: none;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        color: #495057;
+        font-weight: 500;
+      }
+
+      #categoryAnalysisAccordion .accordion-button:not(.collapsed) {
+        background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        color: white;
+        box-shadow: none;
+      }
+
+      #categoryAnalysisAccordion .accordion-button:focus {
+        box-shadow: none;
+        border: none;
+      }
+
+      #categoryAnalysisAccordion .accordion-button::after {
+        filter: brightness(0) invert(1);
+      }
+
+      #categoryAnalysisAccordion .accordion-button.collapsed::after {
+        filter: none;
       }
 
       @media (max-width: 768px) {
-        .chart-container {
+        .stats .chart-container {
           height: 250px;
         }
         
-        .toggle-btn {
-          font-size: 0.75rem;
-          padding: 0.4rem 0.8rem;
-        }
-        
-        .stat-badge {
+        .stats .toggle-btn {
           font-size: 0.75rem;
           padding: 0.4rem 0.8rem;
         }
