@@ -161,10 +161,10 @@ export class StatisticsManager {
   }
 
   toggleStatsView() {
-    const statsContainer = document.querySelector('.stats');
+    const detailedContainer = document.getElementById('detailed-stats-container');
     const toggleBtn = document.getElementById('toggle-stats-btn');
   
-    if (!statsContainer || !toggleBtn) {
+    if (!detailedContainer || !toggleBtn) {
       console.error('❌ Éléments UI non trouvés pour la bascule');
       return;
     }
@@ -172,20 +172,17 @@ export class StatisticsManager {
     if (!appState.isDetailedView) {
       console.log('🔄 Passage en vue détaillée...');
       
-      // Sauvegarder la vue simple si nécessaire
-      if (!this.originalStatsHTML) {
-        this.originalStatsHTML = statsContainer.innerHTML;
-      }
-  
-      // Passer en vue détaillée
-      statsContainer.innerHTML = `
-        <h5 class="mb-3 text-center">
-          <i class="fas fa-chart-bar"></i> Statistiques Détaillées
-          <button class="btn btn-sm btn-outline-secondary ms-2" onclick="window.statisticsManager?.exportStats()">
-            <i class="fas fa-download"></i> Exporter Stats
-          </button>
-        </h5>
-        ${UIGenerator.createEnhancedStatsHTML()}
+      // Afficher le conteneur et générer le contenu détaillé
+      detailedContainer.style.display = 'block';
+      detailedContainer.innerHTML = `
+        <div class="detailed-stats-content">
+          <div class="text-center mb-3">
+            <button class="btn btn-sm btn-outline-secondary" onclick="window.statisticsManager?.exportStats()">
+              <i class="fas fa-download me-1"></i> Exporter Stats
+            </button>
+          </div>
+          ${UIGenerator.createEnhancedStatsHTML()}
+        </div>
       `;
   
       // Ajouter les styles CSS
@@ -233,23 +230,23 @@ export class StatisticsManager {
       }, 100);
   
       // Mettre à jour l'UI du bouton
-      toggleBtn.innerHTML = '<i class="fas fa-chart-bar me-2"></i>Vue Simple';
+      toggleBtn.innerHTML = '<i class="fas fa-chart-bar me-2"></i>Masquer Vue Détaillée';
       toggleBtn.classList.remove('btn-outline-primary');
-      toggleBtn.classList.add('btn-outline-success');
+      toggleBtn.classList.add('btn-outline-danger');
       appState.setDetailedView(true);
   
     } else {
-      console.log('🔄 Retour en vue simple...');
+      console.log('🔄 Masquer la vue détaillée...');
       
-      // Revenir à la vue simple
-      statsContainer.innerHTML = this.originalStatsHTML;
-  
-      // Régénérer les badges simples
-      UIGenerator.generateStatsSection();
-      this.updateSimpleStats();
+      // Masquer le conteneur détaillé
+      detailedContainer.style.display = 'none';
+      detailedContainer.innerHTML = '';
+      
+      // Les badges du footer restent visibles et à jour
+      UIGenerator.updateStatsDisplay();
   
       toggleBtn.innerHTML = '<i class="fas fa-chart-line me-2"></i>Vue Détaillée';
-      toggleBtn.classList.remove('btn-outline-success');
+      toggleBtn.classList.remove('btn-outline-danger');
       toggleBtn.classList.add('btn-outline-primary');
       appState.setDetailedView(false);
     }
@@ -262,8 +259,33 @@ export class StatisticsManager {
     const style = document.createElement('style');
     style.id = cssId;
     style.textContent = `
+      /* Styles pour les sections de statistiques */
+      .stats-header {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        padding: 1rem;
+        margin-bottom: 2rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border-left: 4px solid #4facfe;
+      }
+
+      .stats-footer {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        padding: 1rem;
+        margin-top: 2rem;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        border-left: 4px solid #4facfe;
+      }
+
+      .detailed-stats-content {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        border-top: 2px dashed #dee2e6;
+      }
+
       /* Styles spécifiques pour les statistiques détaillées - éviter les conflits */
-      .stats .stat-card {
+      .detailed-stats-content .stat-card {
         background: white;
         border-radius: 15px;
         padding: 1.5rem;
@@ -272,28 +294,28 @@ export class StatisticsManager {
         transition: transform 0.3s ease;
       }
 
-      .stats .stat-card:hover {
+      .detailed-stats-content .stat-card:hover {
         transform: translateY(-2px);
       }
 
-      .stats .progress-ring {
+      .detailed-stats-content .progress-ring {
         width: 120px;
         height: 120px;
       }
 
-      .stats .progress-ring-circle {
+      .detailed-stats-content .progress-ring-circle {
         transition: stroke-dashoffset 0.8s ease-in-out;
         transform: rotate(-90deg);
         transform-origin: 50% 50%;
       }
 
-      .stats .chart-container {
+      .detailed-stats-content .chart-container {
         position: relative;
         height: 300px;
         margin: 1rem 0;
       }
 
-      .stats .percentage-bar {
+      .detailed-stats-content .percentage-bar {
         background: #e9ecef;
         border-radius: 10px;
         height: 20px;
@@ -301,13 +323,13 @@ export class StatisticsManager {
         margin: 0.5rem 0;
       }
 
-      .stats .percentage-fill {
+      .detailed-stats-content .percentage-fill {
         height: 100%;
         border-radius: 10px;
         transition: width 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
       }
 
-      .stats .toggle-btn {
+      .detailed-stats-content .toggle-btn {
         background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
         border: none;
         color: white;
@@ -319,18 +341,18 @@ export class StatisticsManager {
         font-size: 0.85rem;
       }
 
-      .stats .toggle-btn:hover {
+      .detailed-stats-content .toggle-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 5px 15px rgba(79, 172, 254, 0.3);
         color: white;
       }
 
-      .stats .toggle-btn.active {
+      .detailed-stats-content .toggle-btn.active {
         background: linear-gradient(135deg, #28a745, #20c997);
         box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
       }
 
-      .stats .preference-color-dot {
+      .detailed-stats-content .preference-color-dot {
         width: 12px;
         height: 12px;
         border-radius: 50%;
@@ -374,14 +396,25 @@ export class StatisticsManager {
         filter: none;
       }
 
+      /* Animation d'apparition pour le conteneur détaillé */
+      #detailed-stats-container {
+        transition: all 0.3s ease-in-out;
+      }
+
       @media (max-width: 768px) {
-        .stats .chart-container {
+        .detailed-stats-content .chart-container {
           height: 250px;
         }
         
-        .stats .toggle-btn {
+        .detailed-stats-content .toggle-btn {
           font-size: 0.75rem;
           padding: 0.4rem 0.8rem;
+        }
+
+        .stats-header, .stats-footer {
+          padding: 0.75rem;
+          margin-bottom: 1rem;
+          margin-top: 1rem;
         }
       }
     `;
