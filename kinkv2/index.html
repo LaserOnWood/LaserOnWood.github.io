@@ -70,23 +70,41 @@
             
             <div class="container-fluid p-4">
 
-                <!-- Statistiques -->
-                <div class="stats">
-                    <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Statistiques</h5>
-                    <div class="stats-badges">
+                <!-- Statistiques en haut - TOUJOURS VISIBLES avec légende -->
+                <div class="stats-header">
+                    <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Légende & Statistiques</h5>
+                    <div class="stats-badges" id="stats-badges-header">
                         <!-- Les badges seront générés dynamiquement par JavaScript -->
                     </div>
-                </div>
-                <!-- Bouton de basculement des vues -->
-                <div class="text-center mt-3 mb-4">
-                    <button class="btn btn-outline-primary" onclick="toggleStatsView()" id="toggle-stats-btn">
-                        <i class="fas fa-chart-line me-2"></i>Vue Détaillée
-                    </button>
+                    <p class="text-center text-muted small mt-2">
+                        <i class="fas fa-info-circle me-1"></i>
+                        Référence des couleurs pour vos sélections
+                    </p>
                 </div>
 
                 <!-- Accordéon des catégories -->
                 <div class="accordion" id="categoriesAccordion">
                     <!-- Les catégories seront générées dynamiquement par JavaScript -->
+                </div>
+
+                <!-- Statistiques du bas avec vue détaillée optionnelle -->
+                <div class="stats-footer">
+                    <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Statistiques Détaillées</h5>
+                    <div class="stats-badges" id="stats-badges-footer">
+                        <!-- Les badges seront générés dynamiquement par JavaScript -->
+                    </div>
+                    
+                    <!-- Bouton de basculement des vues -->
+                    <div class="text-center mt-3 mb-4">
+                        <button class="btn btn-outline-primary" onclick="toggleStatsView()" id="toggle-stats-btn">
+                            <i class="fas fa-chart-line me-2"></i>Vue Détaillée
+                        </button>
+                    </div>
+                    
+                    <!-- Container pour la vue détaillée -->
+                    <div id="detailed-stats-container" style="display: none;">
+                        <!-- Contenu généré dynamiquement -->
+                    </div>
                 </div>
 
                 <!-- Boutons d'export et d'import -->
