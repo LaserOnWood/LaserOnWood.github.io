@@ -24,9 +24,22 @@ export class UIGenerator {
 
   /**
    * Génère les badges de statistiques (vue simple)
+   * Maintenant génère pour les deux emplacements : header et footer
    */
   static generateStatsSection() {
-    const statsContainer = document.querySelector('.stats-badges');
+    const kinkData = appState.getKinkData();
+    if (!kinkData) return;
+
+    // Générer pour les deux conteneurs
+    UIGenerator.generateStatsBadges('stats-badges-header');
+    UIGenerator.generateStatsBadges('stats-badges-footer');
+  }
+
+  /**
+   * Génère les badges pour un conteneur spécifique
+   */
+  static generateStatsBadges(containerId) {
+    const statsContainer = document.getElementById(containerId);
     if (!statsContainer) return;
 
     const kinkData = appState.getKinkData();
@@ -41,7 +54,7 @@ export class UIGenerator {
       badge.style.background = type.color;
       badge.innerHTML = `
         <span>${type.name}</span>
-        <span class="count" id="${type.id}-count">0</span>
+        <span class="count" id="${type.id}-count-${containerId}">0</span>
       `;
       statsContainer.appendChild(badge);
     });
@@ -52,7 +65,7 @@ export class UIGenerator {
     unselectedBadge.style.background = 'linear-gradient(135deg, #6c757d, #5a6268)';
     unselectedBadge.innerHTML = `
       <span>Non sélectionné</span>
-      <span class="count" id="unselected-count">0</span>
+      <span class="count" id="unselected-count-${containerId}">0</span>
     `;
     statsContainer.appendChild(unselectedBadge);
   }
@@ -452,6 +465,7 @@ export class UIGenerator {
 
   /**
    * Met à jour l'affichage des statistiques (badges)
+   * Maintenant met à jour les deux sections
    */
   static updateStatsDisplay() {
     const stats = appState.getStats();
@@ -460,16 +474,25 @@ export class UIGenerator {
     const kinkData = appState.getKinkData();
     if (!kinkData) return;
 
+    // Mettre à jour les deux sections de badges
+    UIGenerator.updateStatsBadges('stats-badges-header', stats, kinkData);
+    UIGenerator.updateStatsBadges('stats-badges-footer', stats, kinkData);
+  }
+
+  /**
+   * Met à jour les badges d'une section spécifique
+   */
+  static updateStatsBadges(containerId, stats, kinkData) {
     // Mettre à jour les badges des types de préférences
     kinkData.preferenceTypes.forEach(type => {
-      const element = document.getElementById(`${type.id}-count`);
+      const element = document.getElementById(`${type.id}-count-${containerId}`);
       if (element && stats.preferenceStats[type.id]) {
         element.textContent = stats.preferenceStats[type.id].count || 0;
       }
     });
 
     // Mettre à jour le badge "non sélectionné"
-    const unselectedElement = document.getElementById('unselected-count');
+    const unselectedElement = document.getElementById(`unselected-count-${containerId}`);
     if (unselectedElement) {
       const unselected = stats.totalItems - stats.selectedItems;
       unselectedElement.textContent = unselected;
