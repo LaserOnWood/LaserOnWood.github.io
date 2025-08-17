@@ -10,7 +10,7 @@
     <meta property="og:url" content="https://laseronwood.github.io/kinkv2/">
     <meta property="og:type" content="website">
     <meta property="og:title" content="Liste de Kink">
-    <meta property="og:description" content="Petit site qui permet de créer une liste de préférence a partager a qui de droit">
+    <meta property="og:description" content="Petit site qui permet de créer une liste de préférence à partager à qui de droit">
     <meta property="og:image" content="https://laseronwood.github.io/kinkv2/og/ogpicture.png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -20,7 +20,7 @@
     <meta property="twitter:domain" content="laseronwood.github.io">
     <meta property="twitter:url" content="https://laseronwood.github.io/kinkv2/">
     <meta name="twitter:title" content="Liste de Kink">
-    <meta name="twitter:description" content="Petit site qui permet de créer une liste de préférence a partager a qui de droit">
+    <meta name="twitter:description" content="Petit site qui permet de créer une liste de préférence à partager à qui de droit">
     <meta name="twitter:image" content="https://laseronwood.github.io/kinkv2/og/ogpicture.png">
 
     <!--Favicon-->
@@ -33,7 +33,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="favicon/apple-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="favicon/apple-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-icon-180x180.png">
-    <link rel="icon" type="image/png" sizes="192x192"  href="favicon/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="favicon/android-icon-192x192.png">
     <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="96x96" href="favicon/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -41,142 +41,78 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    
-    <!-- CSS Dependencies -->
+
+    <!-- CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/description.css">
 </head>
 <body>
-    <!-- Loading indicator -->
-    <div id="loading" class="d-flex justify-content-center align-items-center d-none" style="height: 100vh; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255,255,255,0.9); z-index: 10000;">
-        <div class="text-center">
-            <div class="spinner-border text-primary mb-3" role="status" style="width: 3rem; height: 3rem;">
-                <span class="visually-hidden">Chargement...</span>
-            </div>
-            <h5 class="text-muted">Chargement de l'application...</h5>
-        </div>
-    </div>
-
-    <div class="container" id="main-content">
+    <div class="container" id="main-content" class="loading">
         <div class="main-container">
             <div class="header">
                 <h1><i class="fas fa-heart"></i> Liste Interactive des Préférences</h1>
                 <p class="mb-0">Cliquez sur chaque élément pour exprimer votre niveau d'intérêt</p>
             </div>
-
-            
             
             <div class="container-fluid p-4">
-
-                <!-- Statistiques en haut - TOUJOURS VISIBLES avec légende -->
-                <div class="stats-header">
-                    <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Légende & Statistiques</h5>
-                    <div class="stats-badges" id="stats-badges-header">
+                <div class="stats">
+                    <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i>Légende & Statistiques</h5>
+                    <div class="stats-badges">
                         <!-- Les badges seront générés dynamiquement par JavaScript -->
                     </div>
-                    <p class="text-center text-muted small mt-2">
-                        <i class="fas fa-info-circle me-1"></i>
-                        Référence des couleurs pour vos sélections
-                    </p>
                 </div>
-
+                
                 <!-- Accordéon des catégories -->
                 <div class="accordion" id="categoriesAccordion">
                     <!-- Les catégories seront générées dynamiquement par JavaScript -->
                 </div>
 
-                <!-- Statistiques du bas avec vue détaillée optionnelle -->
-                <div class="stats-footer">
-                    <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i> Statistiques Détaillées</h5>
-                    <div class="stats-badges" id="stats-badges-footer">
-                        <!-- Les badges seront générés dynamiquement par JavaScript -->
-                    </div>
-                    
-                    <!-- Bouton de basculement des vues -->
-                    <div class="text-center mt-3 mb-4">
-                        <button class="btn btn-outline-primary" onclick="toggleStatsView()" id="toggle-stats-btn">
-                            <i class="fas fa-chart-line me-2"></i>Vue Détaillée
-                        </button>
-                    </div>
-                    
-                    <!-- Container pour la vue détaillée -->
-                    <div id="detailed-stats-container" style="display: none;">
-                        <!-- Contenu généré dynamiquement -->
-                    </div>
-                </div>
-
                 <!-- Boutons d'export et d'import -->
                 <div class="text-center mt-4">
                     <div class="d-flex gap-3 justify-content-center flex-wrap">
-                        <button class="btn export-btn" onclick="exportResults()">
+                        <button class="btn export-btn" id="exportBtn">
                             <i class="fas fa-download"></i> Exporter mes préférences
                         </button>
-                        <button class="btn import-btn" onclick="document.getElementById('importFile').click()">
+                        <button class="btn import-btn" id="importBtn">
                             <i class="fas fa-upload"></i> Importer mes préférences
                         </button>
-                        <input type="file" id="importFile" accept=".json" style="display: none;" onchange="importResults(this)">
+                        <input type="file" id="importFile" accept=".json" style="display: none;">
                     </div>
                 </div>
 
+                <!-- Instructions d'utilisation -->
+                <div class="mt-4">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title"><i class="fas fa-info-circle"></i> Instructions</h6>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <small class="text-muted">
+                                        <strong>Cliquez sur un élément pour cycler :</strong><br>
+                                        Non sélectionné → Adore → Aime → Curiosité → Peu intéressé → Non strict → Non sélectionné
+                                    </small>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <small class="text-muted">
+                                        <strong>Fonctionnalités :</strong><br>
+                                        • Export/Import de vos préférences<br>
+                                        • Statistiques en temps réel
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
     
-    <!-- JavaScript Dependencies -->
-
+    <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
-
-    <script type="module" src="javascript/app.js"></script>
-    
-
-    <!-- Script d'initialisation à la fin -->
-    <script type="module">
-        // Test immédiat de Chart.js
-        document.addEventListener('DOMContentLoaded', () => {
-            console.log('🧪 Test Chart.js au chargement DOM:', {
-                exists: typeof Chart !== 'undefined',
-                version: typeof Chart !== 'undefined' ? Chart.version : 'N/A'
-            });
-        });
-        
-        // Votre code d'initialisation existant...
-        document.getElementById('loading').classList.remove('d-none');
-        
-        import('./javascript/app.js')
-            .then(module => {
-                console.log('✅ Modules chargés avec succès');
-                
-                // Test Chart.js après chargement des modules
-                setTimeout(() => {
-                    console.log('🧪 Test Chart.js après modules:', {
-                        exists: typeof Chart !== 'undefined',
-                        version: typeof Chart !== 'undefined' ? Chart.version : 'N/A'
-                    });
-                }, 1000);
-            })
-            .catch(error => {
-                console.error('❌ Erreur lors du chargement des modules:', error);
-                // ... votre gestion d'erreur existante ...
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    document.getElementById('loading').classList.add('d-none');
-                }, 500);
-            });
-    </script>
-
-
-    
-    <!-- Fallback pour navigateurs sans support ES6 modules -->
-    <noscript>
-        <div class="alert alert-warning m-3">
-            <h4>JavaScript requis</h4>
-            <p>Cette application nécessite JavaScript pour fonctionner. Veuillez activer JavaScript dans votre navigateur.</p>
-        </div>
-    </noscript>
+    <script src="javascript/script.js"></script>
 </body>
 </html>
