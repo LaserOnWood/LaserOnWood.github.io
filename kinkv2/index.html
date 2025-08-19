@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="author" content="Azarothis" />
-    <title>KinkList</title>
+    <title>KinkList - Version Modulaire</title>
 
     <!--Open Graph Tags -->
     <meta property="og:url" content="https://laseronwood.github.io/kinkv2/">
@@ -49,11 +49,22 @@
     <link rel="stylesheet" href="css/description.css">
 </head>
 <body>
+    <!-- Indicateur de chargement -->
+    <div id="loading" class="loading-overlay show">
+        <div class="loading-content">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Chargement...</span>
+            </div>
+            <p class="mt-3">Chargement de l'application...</p>
+        </div>
+    </div>
+
     <div class="container" id="main-content" class="loading">
         <div class="main-container">
             <div class="header">
                 <h1><i class="fas fa-heart"></i> Liste Interactive des Préférences</h1>
                 <p class="mb-0">Cliquez sur chaque élément pour exprimer votre niveau d'intérêt</p>
+                <small class="text-muted">Version modulaire - Code restructuré pour une meilleure maintenabilité</small>
             </div>
             
             <div class="container-fluid p-4">
@@ -74,6 +85,9 @@
                     <div class="d-flex gap-3 justify-content-center flex-wrap">
                         <button class="btn export-btn" id="exportBtn">
                             <i class="fas fa-download"></i> Exporter mes préférences
+                        </button>
+                        <button class="btn image-btn" id="generateImageBtn">
+                            <i class="fas fa-image"></i> Générer une image
                         </button>
                         <button class="btn import-btn" id="importBtn">
                             <i class="fas fa-upload"></i> Importer mes préférences
@@ -99,7 +113,9 @@
                                     <small class="text-muted">
                                         <strong>Fonctionnalités :</strong><br>
                                         • Export/Import de vos préférences<br>
-                                        • Statistiques en temps réel
+                                        • Génération d'image récapitulative<br>
+                                        • Statistiques en temps réel<br>
+                                        • Architecture modulaire améliorée
                                     </small>
                                 </div>
                             </div>
@@ -113,6 +129,47 @@
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <script src="javascript/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Module principal - Point d'entrée de l'application modulaire -->
+    <script type="module" src="js/main.js"></script>
+
+    <!-- CSS pour l'indicateur de chargement -->
+    <style>
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .loading-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loading-content {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        #main-content.loading {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+    </style>
 </body>
 </html>
+
