@@ -1,5 +1,6 @@
 /**
  * Module de génération d'image récapitulative pour l'application de gestion des préférences Kink
+ * Version modifiée : Organisation par catégories au lieu des types de préférences
  */
 import { getDateString } from './utils.js';
 import { ToastManager } from './toast-manager.js';
@@ -7,7 +8,7 @@ import { ToastManager } from './toast-manager.js';
 /**
  * Classe responsable de la génération d'images récapitulatives des préférences
  */
-export class ImageGenerator {
+export class ImageGeneratorByCategory {
     constructor(preferencesManager, kinkData) {
         this.preferencesManager = preferencesManager;
         this.kinkData = kinkData;
@@ -50,7 +51,7 @@ export class ImageGenerator {
             document.body.removeChild(imageContainer);
 
             // Télécharger l'image
-            this.downloadImage(canvas, `Mes_preferences_${getDateString()}.png`);
+            this.downloadImage(canvas, `Ma_liste_de_kink_par_categories_${getDateString()}.png`);
             
             ToastManager.showToast('Image générée et téléchargée avec succès !', 'success');
             console.log('✅ Génération d\'image terminée avec succès');
@@ -85,7 +86,7 @@ export class ImageGenerator {
 
         // Titre principal
         const title = document.createElement('h1');
-        title.textContent = 'Mes Préférences KinkList';
+        title.textContent = 'Ma liste de Kink - Par catégories';
         title.style.cssText = `
             text-align: center;
             margin: 0 0 30px 0;
@@ -99,13 +100,13 @@ export class ImageGenerator {
         const legend = this.createLegend();
         container.appendChild(legend);
 
-        // Grouper les préférences par type
-        const groupedPreferences = this.groupPreferencesByType(preferences);
+        // Organiser les préférences par catégories
+        const categorizedPreferences = this.organizePreferencesByCategories(preferences);
 
-        // Créer les sections pour chaque type de préférence
-        Object.entries(groupedPreferences).forEach(([typeId, items]) => {
-            if (items.length > 0) {
-                const section = this.createPreferenceSection(typeId, items);
+        // Créer les sections pour chaque catégorie
+        categorizedPreferences.forEach(categoryData => {
+            if (categoryData.items.length > 0) {
+                const section = this.createCategorySection(categoryData);
                 container.appendChild(section);
             }
         });
@@ -120,7 +121,7 @@ export class ImageGenerator {
             border-top: 1px solid #ecf0f1;
             padding-top: 15px;
         `;
-        footer.textContent = `Généré le ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR')}`;
+        footer.textContent = `Généré avec beaucoup d'amour le ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR')}`;
         container.appendChild(footer);
 
         return container;
@@ -137,7 +138,7 @@ export class ImageGenerator {
             border: 1px solid #dee2e6;
             border-radius: 8px;
             padding: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         `;
 
         const legendTitle = document.createElement('h3');
@@ -189,55 +190,105 @@ export class ImageGenerator {
         return legend;
     }
 
-    /**
-     * Groupement des préférences par type
-     * @param {Map} preferences - Map des préférences
-     * @returns {Object} Préférences groupées par type
-     */
-    groupPreferencesByType(preferences) {
-        const grouped = {};
-        
-        // Initialiser les groupes
-        this.kinkData.preferenceTypes.forEach(type => {
-            grouped[type.id] = [];
-        });
 
-        // Grouper les préférences
-        preferences.forEach((type, itemName) => {
-            if (grouped[type]) {
-                grouped[type].push(itemName);
+
+    /**
+     * Organisation des préférences par catégories
+     * @param {Map} preferences - Map des préférences
+     * @returns {Array} Tableau des catégories avec leurs items
+     */
+    organizePreferencesByCategories(preferences) {
+        const categorizedData = [];
+
+        this.kinkData.categories.forEach(category => {
+            if (category.hasSubcategories && category.subcategories) {
+                // Traiter les sous-catégories
+                category.subcategories.forEach(subcat => {
+                    const subcatItems = this.getItemsForCategory(subcat.id, preferences);
+                    if (subcatItems.length > 0) {
+                        categorizedData.push({
+                            name: `${category.name} - ${subcat.name}`,
+                            icon: subcat.icon,
+                            items: subcatItems,
+                            isSubcategory: true
+                        });
+                    }
+                });
+            } else {
+                // Traiter la catégorie principale
+                const categoryItems = this.getItemsForCategory(category.id, preferences);
+                if (categoryItems.length > 0) {
+                    categorizedData.push({
+                        name: category.name,
+                        icon: category.icon,
+                        items: categoryItems,
+                        isSubcategory: false
+                    });
+                }
             }
         });
 
-        return grouped;
+        return categorizedData;
     }
 
     /**
-     * Création d'une section de préférences pour un type donné
-     * @param {string} typeId - ID du type de préférence
-     * @param {Array} items - Liste des items de ce type
-     * @returns {HTMLElement} Section de préférences
+     * Récupération des items d'une catégorie avec leurs préférences
+     * @param {string} categoryId - ID de la catégorie
+     * @param {Map} preferences - Map des préférences
+     * @returns {Array} Items avec leurs préférences
      */
-    createPreferenceSection(typeId, items) {
-        const preferenceType = this.kinkData.preferenceTypes.find(type => type.id === typeId);
-        if (!preferenceType) return document.createElement('div');
+    getItemsForCategory(categoryId, preferences) {
+        const items = [];
+        
+        // Récupérer tous les éléments DOM de cette catégorie
+        const categoryElements = document.querySelectorAll(`[data-category="${categoryId}"]`);
+        
+        categoryElements.forEach(element => {
+            const itemName = element.dataset.item;
+            if (itemName && preferences.has(itemName)) {
+                const preferenceType = preferences.get(itemName);
+                const typeData = this.kinkData.preferenceTypes.find(t => t.id === preferenceType);
+                
+                if (typeData) {
+                    items.push({
+                        name: itemName,
+                        preference: preferenceType,
+                        color: typeData.color,
+                        typeName: typeData.name
+                    });
+                }
+            }
+        });
 
+        // Trier les items par nom pour une présentation cohérente
+        items.sort((a, b) => a.name.localeCompare(b.name));
+
+        return items;
+    }
+
+    /**
+     * Création d'une section de catégorie
+     * @param {Object} categoryData - Données de la catégorie
+     * @returns {HTMLElement} Section de catégorie
+     */
+    createCategorySection(categoryData) {
         const section = document.createElement('div');
         section.style.cssText = `
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             break-inside: avoid;
         `;
 
-        // Titre de la section
+        // Titre de la section avec icône
         const sectionTitle = document.createElement('h3');
-        sectionTitle.textContent = `${preferenceType.name} (${items.length})`;
+        sectionTitle.innerHTML = `<i class="${categoryData.icon}" style="margin-right: 10px; color: #4facfe;"></i>${categoryData.name} (${categoryData.items.length})`;
         sectionTitle.style.cssText = `
             margin: 0 0 15px 0;
             font-size: 20px;
             color: #2c3e50;
-            border-bottom: 2px solid;
-            border-image: ${preferenceType.color} 1;
-            padding-bottom: 5px;
+            border-bottom: 2px solid #4facfe;
+            padding-bottom: 8px;
+            display: flex;
+            align-items: center;
         `;
         section.appendChild(sectionTitle);
 
@@ -245,41 +296,54 @@ export class ImageGenerator {
         const itemsGrid = document.createElement('div');
         itemsGrid.style.cssText = `
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
             gap: 8px;
         `;
 
-        items.forEach(itemName => {
+        categoryData.items.forEach(item => {
             const itemElement = document.createElement('div');
             itemElement.style.cssText = `
                 display: flex;
                 align-items: center;
-                gap: 10px;
-                padding: 8px 12px;
+                gap: 12px;
+                padding: 10px 15px;
                 background: #ffffff;
                 border: 1px solid #dee2e6;
-                border-radius: 6px;
+                border-radius: 8px;
                 font-size: 14px;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1);
             `;
 
             const colorIndicator = document.createElement('div');
             colorIndicator.style.cssText = `
-                width: 12px;
-                height: 12px;
+                width: 14px;
+                height: 14px;
                 border-radius: 50%;
-                background: ${preferenceType.color};
+                background: ${item.color};
                 flex-shrink: 0;
+                border: 2px solid white;
+                box-shadow: 0 1px 3px rgba(0,0,0,0.2);
             `;
 
             const itemText = document.createElement('span');
-            itemText.textContent = itemName;
+            itemText.textContent = item.name;
             itemText.style.cssText = `
                 color: #495057;
                 line-height: 1.2;
+                flex: 1;
+            `;
+
+            const preferenceType = document.createElement('span');
+            preferenceType.textContent = item.typeName;
+            preferenceType.style.cssText = `
+                font-size: 12px;
+                color: #6c757d;
+                font-style: italic;
             `;
 
             itemElement.appendChild(colorIndicator);
             itemElement.appendChild(itemText);
+            itemElement.appendChild(preferenceType);
             itemsGrid.appendChild(itemElement);
         });
 
@@ -350,4 +414,3 @@ export class ImageGenerator {
         }, 100);
     }
 }
-
