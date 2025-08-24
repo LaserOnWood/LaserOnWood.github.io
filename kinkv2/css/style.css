@@ -203,7 +203,6 @@ body {
     box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
     color: white;
 }
-
 .image-btn {
     background:#00f2fe;
     border: none;
@@ -219,6 +218,62 @@ body {
     box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
     background:#00f2fe;
     color: white;
+}
+.dropdown-menu {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    border-radius: 15px;
+    border: none;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    padding: 0.5rem 0;
+}
+
+.dropdown-item {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    border: none;
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 25px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.dropdown-item:hover {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    color: white;
+}
+
+.dropdown-item:hover small {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.dropdown-item small {
+    font-size: 0.75rem;
+    margin-top: 0.25rem;
+    color: #6c757d;
+}
+
+.dropdown-item i {
+    width: 20px;
+    text-align: center;
+}
+
+.dropdown-toggle::after {
+    margin-left: 0.5rem;
+}
+
+/* Animation du dropdown */
+.dropdown-menu {
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    display: block !important;
+    visibility: hidden;
+}
+
+.dropdown-menu.show {
+    opacity: 1;
+    transform: translateY(0);
+    visibility: visible;
 }
 
 .import-btn {

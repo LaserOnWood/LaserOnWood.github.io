@@ -86,9 +86,28 @@
                         <button class="btn export-btn" id="exportBtn">
                             <i class="fas fa-download"></i> Exporter mes préférences
                         </button>
-                        <button class="btn image-btn" id="generateImageBtn">
-                            <i class="fas fa-image"></i> Générer une image
-                        </button>
+
+                        <!--Dropdown-->
+                        <div class="dropdown">
+                            <button class="btn image-btn dropdown-toggle" type="button" id="imageDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-image"></i> Générer une image
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="imageDropdown">
+                                <li>
+                                    <a class="dropdown-item" href="#" id="generateImageByCategoryBtn">
+                                        <i class="fas fa-layer-group me-2"></i> Par catégories
+                                        <small class="d-block text-muted">Organisé par catégories comme l'interface</small>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="#" id="generateImageByPreferenceBtn">
+                                        <i class="fas fa-heart me-2"></i> Par types de préférences  
+                                        <small class="d-block text-muted">Groupé par Adore, Aime, Curiosité...</small>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+
                         <button class="btn import-btn" id="importBtn">
                             <i class="fas fa-upload"></i> Importer mes préférences
                         </button>
