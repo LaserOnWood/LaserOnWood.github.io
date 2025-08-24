@@ -1,5 +1,6 @@
 /**
  * Module de gestion des événements pour l'application de gestion des préférences Kink
+ * Modifié pour supporter les deux types de génération d'image
  */
 import { CONFIG } from './config.js';
 import { debounce } from './utils.js';
@@ -8,11 +9,11 @@ import { debounce } from './utils.js';
  * Classe responsable de la gestion des événements
  */
 export class EventManager {
-    constructor(preferencesManager, statsManager, importExportManager, imageGenerator, kinkData) {
+    constructor(preferencesManager, statsManager, importExportManager, imageGenerators, kinkData) {
         this.preferencesManager = preferencesManager;
         this.statsManager = statsManager;
         this.importExportManager = importExportManager;
-        this.imageGenerator = imageGenerator;
+        this.imageGenerators = imageGenerators; // Objet avec byCategory et byPreference
         this.kinkData = kinkData;
         
         // Références liées pour add/removeEventListener
@@ -94,12 +95,36 @@ export class EventManager {
             return;
         }
 
-        // Gestion du bouton de génération d'image
+        // Gestion du bouton de génération d'image par catégorie
+        if (e.target.closest('#generateImageByCategoryBtn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🖼️ Clic détecté sur le bouton de génération d\'image par catégorie');
+            if (this.imageGenerators.byCategory) {
+                this.imageGenerators.byCategory.generatePreferencesImage();
+            }
+            return;
+        }
+
+        // Gestion du bouton de génération d'image par préférence
+        if (e.target.closest('#generateImageByPreferenceBtn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🖼️ Clic détecté sur le bouton de génération d\'image par préférence');
+            if (this.imageGenerators.byPreference) {
+                this.imageGenerators.byPreference.generatePreferencesImage();
+            }
+            return;
+        }
+
+        // Ancien bouton unique (maintien de la compatibilité)
         if (e.target.closest('#generateImageBtn')) {
             e.preventDefault();
             e.stopPropagation();
-            console.log('🖼️ Clic détecté sur le bouton de génération d\'image');
-            this.imageGenerator.generatePreferencesImage();
+            console.log('🖼️ Clic détecté sur l\'ancien bouton de génération d\'image');
+            if (this.imageGenerators.byCategory) {
+                this.imageGenerators.byCategory.generatePreferencesImage();
+            }
             return;
         }
     }
@@ -149,4 +174,3 @@ export class EventManager {
         this.removeExistingEventListeners();
     }
 }
-

@@ -1,6 +1,7 @@
 /**
  * Module principal de l'application de gestion des préférences Kink
  * Version modulaire - Amélioration de la maintenabilité et lisibilité
+ * Modifié pour supporter les deux types de génération d'image
  */
 import { DataLoader } from './data-loader.js';
 import { UIGenerator } from './ui-generator.js';
@@ -8,7 +9,8 @@ import { PreferencesManager } from './preferences-manager.js';
 import { StatsManager } from './stats-manager.js';
 import { EventManager } from './event-manager.js';
 import { ImportExportManager } from './import-export-manager.js';
-import { ImageGenerator } from './image-generator.js';
+import { ImageGeneratorByCategory } from './image-generator-categories.js';
+import { ImageGeneratorByPreference } from './image-generator-preferences.js';
 import { ToastManager } from './toast-manager.js';
 
 /**
@@ -24,7 +26,8 @@ export class KinkPreferencesApp {
         this.statsManager = null;
         this.eventManager = null;
         this.importExportManager = null;
-        this.imageGenerator = null;
+        this.imageGeneratorByCategory = null;
+        this.imageGeneratorByPreference = null;
         this.uiGenerator = null;
     }
 
@@ -82,12 +85,19 @@ export class KinkPreferencesApp {
         this.uiGenerator = new UIGenerator(this.kinkData);
         this.statsManager = new StatsManager(this.kinkData, this.preferencesManager);
         this.importExportManager = new ImportExportManager(this.preferencesManager, this.statsManager);
-        this.imageGenerator = new ImageGenerator(this.preferencesManager, this.kinkData);
+        
+        // Initialisation des deux générateurs d'image
+        this.imageGeneratorByCategory = new ImageGeneratorByCategory(this.preferencesManager, this.kinkData);
+        this.imageGeneratorByPreference = new ImageGeneratorByPreference(this.preferencesManager, this.kinkData);
+        
         this.eventManager = new EventManager(
             this.preferencesManager, 
             this.statsManager, 
             this.importExportManager,
-            this.imageGenerator,
+            {
+                byCategory: this.imageGeneratorByCategory,
+                byPreference: this.imageGeneratorByPreference
+            },
             this.kinkData
         );
     }
@@ -153,4 +163,3 @@ export class KinkPreferencesApp {
         this.isInitialized = false;
     }
 }
-
