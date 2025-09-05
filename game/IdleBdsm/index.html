@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔗 BDSM Idle Clicker - Version Étendue 🔗</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome pour les icônes -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <!-- CSS personnalisé -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-12 col-xl-10">
+                <!-- En-tête -->
+                <header class="text-center py-4">
+                    <h1 class="display-4 fw-bold mb-3">🔗 BDSM Idle Clicker - Version Étendue 🔗</h1>
+                    <div class="phase-indicator">
+                        <span class="badge bg-gradient-primary fs-6" id="phaseIndicator">Phase 1: L'Éveil</span>
+                    </div>
+                </header>
+
+                <!-- Statistiques principales -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="stats-container p-4 rounded-3">
+                            <div class="row text-center">
+                                <div class="col-6 col-md-3">
+                                    <div class="stat-item">
+                                        <i class="fas fa-eye mb-2"></i>
+                                        <div class="stat-label">Curiosité</div>
+                                        <div class="stat-value" id="curiosity">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="stat-item">
+                                        <i class="fas fa-fire mb-2"></i>
+                                        <div class="stat-label">Kinky</div>
+                                        <div class="stat-value" id="kinky">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="stat-item">
+                                        <i class="fas fa-clock mb-2"></i>
+                                        <div class="stat-label">Curiosité/sec</div>
+                                        <div class="stat-value" id="cps">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-md-3">
+                                    <div class="stat-item">
+                                        <i class="fas fa-times mb-2"></i>
+                                        <div class="stat-label">Multiplicateur</div>
+                                        <div class="stat-value">x<span id="multiplier">1</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Ressources avancées -->
+                <div class="row mb-4" id="advancedResources" style="display: none;">
+                    <div class="col-12">
+                        <div class="advanced-stats-container p-3 rounded-3">
+                            <h5 class="text-center mb-3">
+                                <i class="fas fa-gem me-2"></i>Ressources Avancées
+                            </h5>
+                            <div class="row text-center">
+                                <div class="col-6 col-lg-3 mb-2">
+                                    <div class="advanced-stat-item">
+                                        <i class="fas fa-graduation-cap"></i>
+                                        <div class="advanced-stat-label">Élèves</div>
+                                        <div class="advanced-stat-value" id="eleves">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 mb-2">
+                                    <div class="advanced-stat-item">
+                                        <i class="fas fa-lightbulb"></i>
+                                        <div class="advanced-stat-label">Innovations</div>
+                                        <div class="advanced-stat-value" id="innovations">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 mb-2">
+                                    <div class="advanced-stat-item">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <div class="advanced-stat-label">Profits</div>
+                                        <div class="advanced-stat-value" id="profits">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 mb-2">
+                                    <div class="advanced-stat-item">
+                                        <i class="fas fa-globe"></i>
+                                        <div class="advanced-stat-label">Territoires</div>
+                                        <div class="advanced-stat-value" id="territoires">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 mb-2">
+                                    <div class="advanced-stat-item">
+                                        <i class="fas fa-certificate"></i>
+                                        <div class="advanced-stat-label">Diplômés</div>
+                                        <div class="advanced-stat-value" id="diplomes">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 mb-2">
+                                    <div class="advanced-stat-item">
+                                        <i class="fas fa-atom"></i>
+                                        <div class="advanced-stat-label">Découvertes</div>
+                                        <div class="advanced-stat-value" id="decouvertes">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 mb-2">
+                                    <div class="advanced-stat-item">
+                                        <i class="fas fa-portal"></i>
+                                        <div class="advanced-stat-label">Dimensions</div>
+                                        <div class="advanced-stat-value" id="dimensions">0</div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-3 mb-2">
+                                    <div class="advanced-stat-item">
+                                        <i class="fas fa-ghost"></i>
+                                        <div class="advanced-stat-label">Âmes</div>
+                                        <div class="advanced-stat-value" id="ames">0</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Événements actifs -->
+                <div class="row mb-4" id="activeEventsContainer" style="display: none;">
+                    <div class="col-12">
+                        <div class="events-container p-3 rounded-3">
+                            <h5 class="text-center mb-3">
+                                <i class="fas fa-magic me-2"></i>Événements Actifs
+                            </h5>
+                            <div id="activeEvents"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Narration -->
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <div class="narration-container p-3 rounded-3">
+                            <div id="narration" class="text-center fst-italic">
+                                Ton voyage commence. Tu es curieux, mais encore innocent...
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions principales -->
+                <div class="row mb-4">
+                    <div class="col-12 col-md-6 mb-3">
+                        <button class="btn btn-primary btn-lg w-100 main-action-btn" id="mainBtn">
+                            <i class="fas fa-book me-2"></i>Se documenter (+1)
+                        </button>
+                    </div>
+                    <div class="col-12 col-md-6 mb-3">
+                        <button class="btn btn-secondary btn-lg w-100 main-action-btn" id="convertBtn">
+                            <i class="fas fa-exchange-alt me-2"></i>Convertir 100 curiosité → 1 kinky
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Onglets pour les améliorations -->
+                <div class="row">
+                    <div class="col-12">
+                        <ul class="nav nav-tabs mb-4" id="upgradesTabs" role="tablist">
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link active" id="curiosity-tab" data-bs-toggle="tab" data-bs-target="#curiosity-upgrades" type="button" role="tab">
+                                    <i class="fas fa-level-up-alt me-2"></i>Améliorations (Curiosité)
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="kinky-tab" data-bs-toggle="tab" data-bs-target="#kinky-upgrades" type="button" role="tab">
+                                    <i class="fas fa-star me-2"></i>Améliorations spéciales (Kinky)
+                                </button>
+                            </li>
+                            <li class="nav-item" role="presentation">
+                                <button class="nav-link" id="prestige-tab" data-bs-toggle="tab" data-bs-target="#prestige-panel" type="button" role="tab" style="display: none;">
+                                    <i class="fas fa-crown me-2"></i>Prestige
+                                </button>
+                            </li>
+                        </ul>
+
+                        <div class="tab-content" id="upgradesTabContent">
+                            <!-- Onglet Améliorations Curiosité -->
+                            <div class="tab-pane fade show active" id="curiosity-upgrades" role="tabpanel">
+                                <div class="upgrade-section">
+                                    <div id="upgrades" class="upgrades-container"></div>
+                                </div>
+                            </div>
+
+                            <!-- Onglet Améliorations Kinky -->
+                            <div class="tab-pane fade" id="kinky-upgrades" role="tabpanel">
+                                <div class="special-section">
+                                    <div id="specials" class="specials-container"></div>
+                                </div>
+                            </div>
+
+                            <!-- Onglet Prestige -->
+                            <div class="tab-pane fade" id="prestige-panel" role="tabpanel">
+                                <div class="prestige-section">
+                                    <div class="text-center mb-4">
+                                        <h4>Système de Prestige Cosmique</h4>
+                                        <p class="text-muted">Recommence ton voyage avec des bonus permanents</p>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="prestige-info p-3 rounded-3 mb-3">
+                                                <h5>Points Cosmiques disponibles</h5>
+                                                <div class="display-6 text-primary" id="cosmicPoints">0</div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="prestige-info p-3 rounded-3 mb-3">
+                                                <h5>Niveau de Prestige</h5>
+                                                <div class="display-6 text-secondary" id="prestigeLevel">0</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button class="btn btn-warning btn-lg" id="prestigeBtn" disabled>
+                                            <i class="fas fa-redo me-2"></i>Reset Cosmique
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Informations de progression -->
+                <div class="row mt-5">
+                    <div class="col-12">
+                        <div class="progress-info p-3 rounded-3">
+                            <h5 class="text-center mb-3">
+                                <i class="fas fa-chart-line me-2"></i>Progression
+                            </h5>
+                            <div class="row text-center">
+                                <div class="col-md-4">
+                                    <div class="progress-item">
+                                        <div class="progress-label">Phase Actuelle</div>
+                                        <div class="progress-value" id="currentPhaseText">Phase 1: L'Éveil</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="progress-item">
+                                        <div class="progress-label">Prochaine Phase</div>
+                                        <div class="progress-value" id="nextPhaseText">Phase 2: L'Exploration</div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="progress-item">
+                                        <div class="progress-label">Objectif</div>
+                                        <div class="progress-value" id="phaseObjective">1K Curiosité</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- JavaScript du jeu étendu -->
+    <script src="js/game.js"></script>
+</body>
+</html>
+
