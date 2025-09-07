@@ -777,9 +777,19 @@
         try {
             const oldPhase = gameState.currentPhase;
             
+            // Progression séquentielle des phases
             if (gameState.curiosity >= 1000 && gameState.currentPhase < 2) {
                 gameState.currentPhase = 2;
                 showNarration("🎉 Phase 2 débloquée : L'Exploration ! De nouvelles améliorations sont disponibles.");
+            } else if (gameState.curiosity >= 10000 && gameState.currentPhase < 3) {
+                gameState.currentPhase = 3;
+                showNarration("🎉 Phase 3 débloquée : La Maîtrise ! Tu peux maintenant enseigner et innover.");
+            } else if (gameState.curiosity >= 100000 && gameState.currentPhase < 4) {
+                gameState.currentPhase = 4;
+                showNarration("🎉 Phase 4 débloquée : L'Empire ! Ton influence s'étend à travers le monde.");
+            } else if (gameState.curiosity >= 1000000 && gameState.currentPhase < 5) {
+                gameState.currentPhase = 5;
+                showNarration("🎉 Phase 5 débloquée : La Transcendance ! Tu explores les dimensions supérieures.");
             } else if (gameState.curiosity >= 10000000 && gameState.currentPhase < 6) {
                 gameState.currentPhase = 6;
                 showNarration("🎉 Phase 6 débloquée : L'Infini ! Tu deviens créateur d'univers.");
@@ -788,6 +798,7 @@
             if (oldPhase !== gameState.currentPhase) {
                 renderUpgrades();
                 renderSpecials();
+                showAdvancedResources();
                 console.log(`Phase mise à jour : ${oldPhase} -> ${gameState.currentPhase}. Curiosité: ${gameState.curiosity}`);
             }
         } catch (error) {
@@ -1397,6 +1408,12 @@
                 gameState.amesMultiplier = gameState.amesMultiplier || 1;
                 gameState.tempsMultiplier = gameState.tempsMultiplier || 1;
                 
+                // S'assurer que les tableaux sont définis
+                gameState.activeEvents = gameState.activeEvents || [];
+                gameState.artefacts = gameState.artefacts || [];
+                gameState.connaissances = gameState.connaissances || [];
+                gameState.essences = gameState.essences || [];
+                
                 // S'assurer que lastEventTime est défini
                 gameState.lastEventTime = gameState.lastEventTime || Date.now();
             }
@@ -1730,4 +1747,4 @@
         initializeGame();
     }
 
-})
+})();
