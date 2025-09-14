@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
         3: {
             title: "Accessoire",
             color: "#28A745", // Vert
-            options: ["Paddle", "Cravache",  "Plumeau", "Fouet", "Martinet"]
+            options: ["Paddle", "Cravache", "Plumeau", "Fouet", "Martinet"]
         },
         4: {
             title: "Position",
@@ -44,15 +44,15 @@ document.addEventListener("DOMContentLoaded", () => {
         5: {
             title: "Joker",
             color: "#DC3545", // Rouge
-            options: ["Choix du joueur", "Double le gain précédent", "Annule le gain précédent", "Rejouer un lancer","Les yeux bandés", "Passe ton tour"]
+            options: ["Choix du joueur", "Double l'intensité'", "Divise l'intensité", "Rejouer un lancer","Les yeux bandés", "Passe ton tour"]
         }
     };
 
     // Générer les picots en quinconce
     const generatePins = () => {
         pachinkoPinsDiv.innerHTML = ''; // Clear existing pins
-        const rows = 8;
-        const pinsPerRow = 6;
+        const rows = 12;
+        const pinsPerRow = 8;
         const boardWidth = pachinkoPinsDiv.offsetWidth;
         const boardHeight = pachinkoPinsDiv.offsetHeight;
 
@@ -127,7 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Simple animation de chute avec un peu de mouvement latéral aléatoire
             const progress = elapsedTime / animationDuration;
-            const newY = 10 + (80 * progress); // De 10% à 90% de la hauteur
+            const newY = 5 + (80 * progress); // De 5% à 85% de la hauteur
             const newX = 50 + (Math.sin(progress * Math.PI * 4) * 5); // Mouvement latéral sinusoïdal
 
             animatedBallDiv.style.left = `${newX}%`;
@@ -197,29 +197,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 historyListDiv.appendChild(historyItem);
             });
         }
-
-        // Mise à jour des résultats de cette partie
-        if (balls.length > 0) {
-            currentResultsDiv.style.display = "block";
-            resultsGridDiv.innerHTML = "";
-            balls.forEach((result, index) => {
-                const resultItem = document.createElement("div");
-                resultItem.classList.add("col");
-                resultItem.innerHTML = `
-                    <div class="result-item" style="border-color: ${result.color};">
-                        <div class="d-flex justify-content-between align-items-center mb-2">
-                            <span class="fw-bold">Lancer ${result.ballNumber}</span>
-                            <small class="text-muted">${result.timestamp}</small>
-                        </div>
-                        <div class="small text-muted mb-1">${result.roundTitle}</div>
-                        <div class="badge text-white w-100" style="background-color: ${result.color};">${result.prize}</div>
-                    </div>
-                `;
-                resultsGridDiv.appendChild(resultItem);
-            });
-        } else {
-            currentResultsDiv.style.display = "none";
-        }
     };
 
     // Initialiser le guide des lancers
@@ -232,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="rounded-circle d-flex justify-content-center align-items-center me-3" style="width: 30px; height: 30px; background-color: ${data.color}; color: white; font-weight: bold;">${round}</div>
                 <div>
                     <div class="fw-semibold">${data.title}</div>
-                    <div class="small text-muted">${data.options.slice(0, 3).join(", ")}...</div>
+                    <div class="small text-muted">${data.options}</div>
                 </div>
             `;
             guideListDiv.appendChild(guideItem);
