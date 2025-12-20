@@ -14,6 +14,7 @@ import { ImageGeneratorByPreference } from './image-generator-preferences.js';
 import { ToastManager } from './toast-manager.js';
 import { CustomDataManager } from './custom-data-manager.js';
 import { CustomUIManager } from './custom-ui-manager.js';
+import { ModalManager } from './modal-manager.js';
 
 /**
  * Classe principale de l'application
