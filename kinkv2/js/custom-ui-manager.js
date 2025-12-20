@@ -9,7 +9,8 @@ import { ToastManager } from './toast-manager.js';
 export class CustomUIManager {
     constructor() {
         this.customDataManager = new CustomDataManager();
-        this.toastManager = ToastManager.getInstance();
+        // ❌ CORRECTION : ToastManager n'a pas de getInstance(), on utilise directement les méthodes statiques
+        // this.toastManager = ToastManager.getInstance();
     }
 
     /**
@@ -97,12 +98,12 @@ export class CustomUIManager {
             const description = document.getElementById('categoryDescription').value.trim();
 
             if (!id || !name || !icon) {
-                this.toastManager.show('Veuillez remplir tous les champs obligatoires', 'error');
+                ToastManager.showToast('Veuillez remplir tous les champs obligatoires', 'danger');
                 return;
             }
 
             if (id.includes(' ')) {
-                this.toastManager.show('L\'ID ne doit pas contenir d\'espaces', 'error');
+                ToastManager.showToast('L\'ID ne doit pas contenir d\'espaces', 'danger');
                 return;
             }
 
@@ -114,13 +115,13 @@ export class CustomUIManager {
             });
 
             if (success) {
-                this.toastManager.show('Catégorie personnalisée ajoutée avec succès !', 'success');
+                ToastManager.showToast('Catégorie personnalisée ajoutée avec succès !', 'success');
                 const bsModal = bootstrap.Modal.getInstance(modal);
                 bsModal.hide();
                 modal.remove();
                 window.location.reload(); // Recharger pour voir les changements
             } else {
-                this.toastManager.show('Erreur lors de l\'ajout de la catégorie', 'error');
+                ToastManager.showToast('Erreur lors de l\'ajout de la catégorie', 'danger');
             }
         });
 
@@ -182,7 +183,7 @@ export class CustomUIManager {
             const description = document.getElementById('itemDescription').value.trim();
 
             if (!name) {
-                this.toastManager.show('Veuillez entrer un nom pour l\'item', 'error');
+                ToastManager.showToast('Veuillez entrer un nom pour l\'item', 'danger');
                 return;
             }
 
@@ -200,13 +201,13 @@ export class CustomUIManager {
             }
 
             if (success) {
-                this.toastManager.show('Item personnalisé ajouté avec succès !', 'success');
+                ToastManager.showToast('Item personnalisé ajouté avec succès !', 'success');
                 const bsModal = bootstrap.Modal.getInstance(modal);
                 bsModal.hide();
                 modal.remove();
                 window.location.reload(); // Recharger pour voir les changements
             } else {
-                this.toastManager.show('Erreur lors de l\'ajout de l\'item', 'error');
+                ToastManager.showToast('Erreur lors de l\'ajout de l\'item', 'danger');
             }
         });
 
@@ -315,7 +316,7 @@ export class CustomUIManager {
                 const categoryId = e.currentTarget.dataset.categoryId;
                 if (confirm('Êtes-vous sûr de vouloir supprimer cette catégorie ?')) {
                     this.customDataManager.removeCategory(categoryId);
-                    this.toastManager.show('Catégorie supprimée', 'success');
+                    ToastManager.showToast('Catégorie supprimée', 'success');
                     const bsModal = bootstrap.Modal.getInstance(modal);
                     bsModal.hide();
                     modal.remove();
@@ -331,7 +332,7 @@ export class CustomUIManager {
                 const itemName = e.currentTarget.dataset.itemName;
                 if (confirm('Êtes-vous sûr de vouloir supprimer cet item ?')) {
                     this.customDataManager.removeItem(categoryId, itemName);
-                    this.toastManager.show('Item supprimé', 'success');
+                    ToastManager.showToast('Item supprimé', 'success');
                     const bsModal = bootstrap.Modal.getInstance(modal);
                     bsModal.hide();
                     modal.remove();
@@ -350,7 +351,7 @@ export class CustomUIManager {
             a.download = 'kinkv2-custom-data.json';
             a.click();
             URL.revokeObjectURL(url);
-            this.toastManager.show('Données exportées', 'success');
+            ToastManager.showToast('Données exportées', 'success');
         });
 
         // Gestion de l'import
@@ -366,16 +367,16 @@ export class CustomUIManager {
                         try {
                             const success = this.customDataManager.importCustomData(event.target.result);
                             if (success) {
-                                this.toastManager.show('Données importées avec succès', 'success');
+                                ToastManager.showToast('Données importées avec succès', 'success');
                                 const bsModal = bootstrap.Modal.getInstance(modal);
                                 bsModal.hide();
                                 modal.remove();
                                 window.location.reload();
                             } else {
-                                this.toastManager.show('Erreur lors de l\'import', 'error');
+                                ToastManager.showToast('Erreur lors de l\'import', 'danger');
                             }
                         } catch (error) {
-                            this.toastManager.show('Fichier JSON invalide', 'error');
+                            ToastManager.showToast('Fichier JSON invalide', 'danger');
                         }
                     };
                     reader.readAsText(file);
@@ -388,7 +389,7 @@ export class CustomUIManager {
         document.getElementById('clearAllCustomDataBtn').addEventListener('click', () => {
             if (confirm('Êtes-vous absolument sûr ? Cette action est irréversible.')) {
                 this.customDataManager.clearAllCustomData();
-                this.toastManager.show('Toutes les données personnalisées ont été supprimées', 'success');
+                ToastManager.showToast('Toutes les données personnalisées ont été supprimées', 'success');
                 const bsModal = bootstrap.Modal.getInstance(modal);
                 bsModal.hide();
                 modal.remove();
