@@ -1,1 +1,11 @@
-{"theme_color":"#8936FF","background_color":"#2EC6FE","orientation":"any","display":"standalone","dir":"auto","lang":"fr","name":"KinkList","short_name":"KinkList","description":"Mon site personnel de kinklists"}
+{
+    "theme_color":"#8936FF",
+    "background_color":"#2EC6FE",
+    "orientation":"any",
+    "display":"standalone",
+    "dir":"auto",
+    "lang":"fr",
+    "name":"KinkList",
+    "short_name":"KinkList",
+    "description":"Mon site personnel de kinklists"
+}
