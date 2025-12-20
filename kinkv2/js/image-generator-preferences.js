@@ -1,9 +1,10 @@
 /**
  * Module de génération d'image récapitulative pour l'application de gestion des préférences Kink
- * Version organisée par types de préférences
+ * Version organisée par types de préférences avec personnalisation du pseudo
  */
 import { getDateString } from './utils.js';
 import { ToastManager } from './toast-manager.js';
+import { ModalManager } from './modal-manager.js';
 
 /**
  * Classe responsable de la génération d'images récapitulatives des préférences (organisées par type)
@@ -24,19 +25,32 @@ export class ImageGeneratorByPreference {
             return;
         }
 
+        const preferences = this.preferencesManager.getAllPreferences();
+        
+        if (preferences.size === 0) {
+            ToastManager.showToast('Aucune préférence sélectionnée pour générer l\'image', 'warning');
+            return;
+        }
+
+        // Afficher la modale pour demander le pseudo
+        ModalManager.showPseudoModal(async (pseudo) => {
+            await this.generateImageWithPseudo(pseudo);
+        });
+    }
+
+    /**
+     * Génération de l'image avec le pseudo fourni
+     * @param {string|null} pseudo - Pseudo de l'utilisateur (ou null)
+     */
+    async generateImageWithPseudo(pseudo) {
         this.isGenerating = true;
         console.log('🖼️ Début de la génération d\'image (par préférences)...');
 
         try {
             const preferences = this.preferencesManager.getAllPreferences();
-            
-            if (preferences.size === 0) {
-                ToastManager.showToast('Aucune préférence sélectionnée pour générer l\'image', 'warning');
-                return;
-            }
 
             // Créer le conteneur temporaire pour l'image
-            const imageContainer = this.createImageContainer(preferences);
+            const imageContainer = this.createImageContainer(preferences, pseudo);
             
             // Ajouter temporairement au DOM (invisible)
             document.body.appendChild(imageContainer);
@@ -50,8 +64,13 @@ export class ImageGeneratorByPreference {
             // Supprimer le conteneur temporaire
             document.body.removeChild(imageContainer);
 
+            // Nom du fichier personnalisé
+            const filename = pseudo 
+                ? `Liste_de_kink_de_${pseudo.replace(/\s+/g, '_')}_par_preferences_${getDateString()}.png`
+                : `Ma_liste_de_kink_par_preferences_${getDateString()}.png`;
+
             // Télécharger l'image
-            this.downloadImage(canvas, `Ma_liste_de_kink_par_preferences_${getDateString()}.png`);
+            this.downloadImage(canvas, filename);
             
             ToastManager.showToast('Image générée et téléchargée avec succès !', 'success');
             console.log('✅ Génération d\'image terminée avec succès');
@@ -67,9 +86,10 @@ export class ImageGeneratorByPreference {
     /**
      * Création du conteneur HTML pour l'image
      * @param {Map} preferences - Map des préférences
+     * @param {string|null} pseudo - Pseudo de l'utilisateur
      * @returns {HTMLElement} Conteneur de l'image
      */
-    createImageContainer(preferences) {
+    createImageContainer(preferences, pseudo) {
         const container = document.createElement('div');
         container.className = 'preferences-image-container';
         container.style.cssText = `
@@ -84,9 +104,11 @@ export class ImageGeneratorByPreference {
             box-sizing: border-box;
         `;
 
-        // Titre principal
+        // Titre principal personnalisé
         const title = document.createElement('h1');
-        title.textContent = 'Ma liste de Kink - Par préférences';
+        title.textContent = pseudo 
+            ? `La liste de Kink de ${pseudo} - Par préférences`
+            : 'Ma liste de Kink - Par préférences';
         title.style.cssText = `
             text-align: center;
             margin: 0 0 30px 0;
