@@ -12,6 +12,8 @@ import { ImportExportManager } from './import-export-manager.js';
 import { ImageGeneratorByCategory } from './image-generator-categories.js';
 import { ImageGeneratorByPreference } from './image-generator-preferences.js';
 import { ToastManager } from './toast-manager.js';
+import { CustomDataManager } from './custom-data-manager.js';
+import { CustomUIManager } from './custom-ui-manager.js';
 
 /**
  * Classe principale de l'application
@@ -29,6 +31,8 @@ export class KinkPreferencesApp {
         this.imageGeneratorByCategory = null;
         this.imageGeneratorByPreference = null;
         this.uiGenerator = null;
+        this.customDataManager = new CustomDataManager();
+        this.customUIManager = new CustomUIManager();
     }
 
     /**
@@ -75,7 +79,9 @@ export class KinkPreferencesApp {
      * Chargement des données JSON
      */
     async loadKinkData() {
-        this.kinkData = await DataLoader.loadKinkData();
+        const originalData = await DataLoader.loadKinkData();
+        // Fusionner avec les données personnalisées
+        this.kinkData = this.customDataManager.mergeWithOriginalData(originalData);
     }
 
     /**
@@ -108,6 +114,8 @@ export class KinkPreferencesApp {
     generateInterface() {
         this.uiGenerator.generateInterface();
         this.statsManager.calculateCacheData();
+        // Initialiser les boutons d'ajout d'item personnalisé
+        UIGenerator.initializeCustomItemButtons(this.customUIManager);
     }
 
     /**
@@ -122,6 +130,8 @@ export class KinkPreferencesApp {
      */
     updateInterface() {
         this.statsManager.updateInterface();
+        // Ajouter le bouton de personnalisation
+        this.customUIManager.addCustomizationButton();
     }
 
     /**

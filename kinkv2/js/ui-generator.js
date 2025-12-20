@@ -140,17 +140,38 @@ export class UIGenerator {
             bodyContent.appendChild(alert);
         }
 
-        if (category.hasSubcategories && category.subcategories) {
-            const subAccordion = this.createSubcategoriesAccordion(category);
+        // Bouton d'ajout d'item personnalisé
+        const addItemBtn = document.createElement('button');
+        addItemBtn.className = 'btn btn-sm btn-outline-success mb-3 w-100 add-custom-item-btn';
+        addItemBtn.setAttribute('data-category-id', category.id);
+        addItemBtn.setAttribute('data-is-custom', category.isCustom ? 'true' : 'false');
+        addItemBtn.innerHTML = '<i class="fas fa-plus"></i> Ajouter un item personnalisé';
+        bodyContent.appendChild(addItemBtn);
+
+        if (category.hasSubcategories && category.subcategories) {            const subAccordion = this.createSubcategoriesAccordion(category);
             bodyContent.appendChild(subAccordion);
         } else if (category.items) {
             const itemsGrid = this.createItemsGrid(category.items, category.id);
             bodyContent.appendChild(itemsGrid);
         }
 
-        bodyElement.appendChild(bodyContent);
-        return bodyElement;
-    }
+	        bodyElement.appendChild(bodyContent);
+	        return bodyElement;
+	    }
+
+	    /**
+	     * Ajoute les event listeners pour les boutons d'ajout d'item personnalisé
+	     * @param {CustomUIManager} customUIManager - Instance du CustomUIManager
+	     */
+	    static initializeCustomItemButtons(customUIManager) {
+	        document.querySelectorAll('.add-custom-item-btn').forEach(button => {
+	            button.addEventListener('click', (e) => {
+	                const categoryId = e.currentTarget.dataset.categoryId;
+	                const isCustom = e.currentTarget.dataset.isCustom === 'true';
+	                customUIManager.showAddItemModal(categoryId, isCustom);
+	            });
+	        });
+	    }
 
     /**
      * Création de l'accordéon pour les sous-catégories
