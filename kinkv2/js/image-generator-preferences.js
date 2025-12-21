@@ -139,11 +139,11 @@ export class ImageGeneratorByPreference {
             margin-top: 30px;
             text-align: center;
             font-size: 12px;
-            color: #7f8c8d;
+            color: #586263ff;
             border-top: 1px solid #ecf0f1;
             padding-top: 15px;
         `;
-        footer.textContent = `Généré avec beaucoup d'amour le ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR')}`;
+        footer.textContent = `Généré avec beaucoup d'amour le ${new Date().toLocaleDateString('fr-FR')} à ${new Date().toLocaleTimeString('fr-FR')} sur kinklist.azarothis.fr`;
         container.appendChild(footer);
 
         return container;
