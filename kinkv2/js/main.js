@@ -4,6 +4,27 @@
  */
 import { KinkPreferencesApp } from './app.js';
 
+// Vérifier si c'est un lien de partage
+const urlParams = new URLSearchParams(window.location.search);
+const shareId = urlParams.get('share');
+const shareKey = window.location.hash.replace('#key=', '');
+
+if (shareId) {
+    try {
+        const sharedData = await kinkApp.shareManager.loadFromShare(shareId, shareKey);
+        
+        if (sharedData && sharedData.preferences) {
+            const validPrefs = new Map(Object.entries(sharedData.preferences));
+            kinkApp.preferencesManager.applyImportedPreferences(validPrefs);
+            kinkApp.statsManager.updateInterface();
+            
+            ToastManager.showToast('Préférences partagées chargées !', 'success');
+        }
+    } catch (error) {
+        ToastManager.showToast('Erreur lors du chargement du partage', 'danger');
+    }
+}
+
 // Variables globales pour l'application
 let kinkApp = null;
 let isAppInitialized = false;
