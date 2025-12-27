@@ -94,30 +94,30 @@ export class StatsManager {
     updateStats() {
         if (!this.kinkData?.preferenceTypes) return;
 
-        const stats = new Map();
+        const stats = {};
         const preferences = this.preferencesManager.getAllPreferences();
 
         // Initialiser les compteurs
         this.kinkData.preferenceTypes.forEach(type => {
-            stats.set(type.id, 0);
+            stats[type.id] = 0;
         });
 
         // Compter les préférences
         preferences.forEach(pref => {
-            if (stats.has(pref)) {
-                stats.set(pref, stats.get(pref) + 1);
+            if (stats.hasOwnProperty(pref)) {
+                stats[pref]++;
             }
         });
 
         // Calculer les non sélectionnés
-        const selectedCount = Array.from(stats.values()).reduce((sum, count) => sum + count, 0);
-        const unselectedCount = this.cache.totalItems - selectedCount;
+        const selectedCount = Object.values(stats).reduce((sum, count) => sum + count, 0);
+        const unselectedCount = Math.max(0, this.cache.totalItems - selectedCount);
 
         // Mise à jour de l'interface
         this.kinkData.preferenceTypes.forEach(type => {
             const element = document.getElementById(`${type.id}-count`);
             if (element) {
-                element.textContent = stats.get(type.id) || 0;
+                element.textContent = stats[type.id] || 0;
             }
         });
 
@@ -238,7 +238,7 @@ export class StatsManager {
         const stats = {
             total: preferences.size,
             totalAvailable: this.cache.totalItems,
-            percentageCompleted: ((preferences.size / this.cache.totalItems) * 100).toFixed(1),
+            percentageCompleted: this.cache.totalItems > 0 ? ((preferences.size / this.cache.totalItems) * 100).toFixed(1) : 0,
             byType: {},
             byCategory: {}
         };

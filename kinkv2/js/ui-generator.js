@@ -56,10 +56,18 @@ export class UIGenerator {
         const badge = document.createElement('div');
         badge.className = 'stat-badge';
         badge.style.background = color;
-        badge.innerHTML = `
-            <span>${escapeHtml(name)}</span>
-            <span class="count" id="${id}-count">0</span>
-        `;
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = name;
+        
+        const countSpan = document.createElement('span');
+        countSpan.className = 'count';
+        countSpan.id = `${id}-count`;
+        countSpan.textContent = '0';
+        
+        badge.appendChild(nameSpan);
+        badge.appendChild(countSpan);
+        
         return badge;
     }
 
@@ -107,15 +115,29 @@ export class UIGenerator {
     createCategoryHeader(category) {
         const headerElement = document.createElement('h2');
         headerElement.className = 'accordion-header';
-        headerElement.innerHTML = `
-            <button class="accordion-button collapsed" type="button" 
-                    data-bs-toggle="collapse" data-bs-target="#${category.id}" 
-                    aria-expanded="false">
-                <i class="${category.icon} me-2"></i>
-                <span>${escapeHtml(category.name)}</span>
-                <span class="category-counter" id="counter-${category.id}"></span>
-            </button>
-        `;
+        
+        const button = document.createElement('button');
+        button.className = 'accordion-button collapsed';
+        button.type = 'button';
+        button.dataset.bsToggle = 'collapse';
+        button.dataset.bsTarget = `#${category.id}`;
+        button.setAttribute('aria-expanded', 'false');
+        
+        const icon = document.createElement('i');
+        icon.className = `${category.icon} me-2`;
+        
+        const title = document.createElement('span');
+        title.textContent = category.name;
+        
+        const counter = document.createElement('span');
+        counter.className = 'category-counter';
+        counter.id = `counter-${category.id}`;
+        
+        button.appendChild(icon);
+        button.appendChild(title);
+        button.appendChild(counter);
+        headerElement.appendChild(button);
+        
         return headerElement;
     }
 
@@ -148,30 +170,31 @@ export class UIGenerator {
         addItemBtn.innerHTML = '<i class="fas fa-plus"></i> Ajouter un item personnalisé';
         bodyContent.appendChild(addItemBtn);
 
-        if (category.hasSubcategories && category.subcategories) {            const subAccordion = this.createSubcategoriesAccordion(category);
+        if (category.hasSubcategories && category.subcategories) {
+            const subAccordion = this.createSubcategoriesAccordion(category);
             bodyContent.appendChild(subAccordion);
         } else if (category.items) {
             const itemsGrid = this.createItemsGrid(category.items, category.id);
             bodyContent.appendChild(itemsGrid);
         }
 
-	        bodyElement.appendChild(bodyContent);
-	        return bodyElement;
-	    }
+        bodyElement.appendChild(bodyContent);
+        return bodyElement;
+    }
 
-	    /**
-	     * Ajoute les event listeners pour les boutons d'ajout d'item personnalisé
-	     * @param {CustomUIManager} customUIManager - Instance du CustomUIManager
-	     */
-	    static initializeCustomItemButtons(customUIManager) {
-	        document.querySelectorAll('.add-custom-item-btn').forEach(button => {
-	            button.addEventListener('click', (e) => {
-	                const categoryId = e.currentTarget.dataset.categoryId;
-	                const isCustom = e.currentTarget.dataset.isCustom === 'true';
-	                customUIManager.showAddItemModal(categoryId, isCustom);
-	            });
-	        });
-	    }
+    /**
+     * Ajoute les event listeners pour les boutons d'ajout d'item personnalisé
+     * @param {CustomUIManager} customUIManager - Instance du CustomUIManager
+     */
+    static initializeCustomItemButtons(customUIManager) {
+        document.querySelectorAll('.add-custom-item-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                const categoryId = e.currentTarget.dataset.categoryId;
+                const isCustom = e.currentTarget.dataset.isCustom === 'true';
+                customUIManager.showAddItemModal(categoryId, isCustom);
+            });
+        });
+    }
 
     /**
      * Création de l'accordéon pour les sous-catégories
@@ -207,15 +230,28 @@ export class UIGenerator {
         // En-tête de la sous-catégorie
         const header = document.createElement('h2');
         header.className = 'accordion-header';
-        header.innerHTML = `
-            <button class="accordion-button collapsed" type="button" 
-                    data-bs-toggle="collapse" data-bs-target="#${subcat.id}" 
-                    aria-expanded="false">
-                <i class="${subcat.icon} me-2"></i>
-                <span>${escapeHtml(subcat.name)}</span>
-                <span class="category-counter" id="counter-${subcat.id}"></span>
-            </button>
-        `;
+        
+        const button = document.createElement('button');
+        button.className = 'accordion-button collapsed';
+        button.type = 'button';
+        button.dataset.bsToggle = 'collapse';
+        button.dataset.bsTarget = `#${subcat.id}`;
+        button.setAttribute('aria-expanded', 'false');
+        
+        const icon = document.createElement('i');
+        icon.className = `${subcat.icon} me-2`;
+        
+        const title = document.createElement('span');
+        title.textContent = subcat.name;
+        
+        const counter = document.createElement('span');
+        counter.className = 'category-counter';
+        counter.id = `counter-${subcat.id}`;
+        
+        button.appendChild(icon);
+        button.appendChild(title);
+        button.appendChild(counter);
+        header.appendChild(button);
 
         // Corps de la sous-catégorie
         const body = document.createElement('div');
@@ -288,4 +324,3 @@ export class UIGenerator {
         return itemElement;
     }
 }
-

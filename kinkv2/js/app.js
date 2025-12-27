@@ -118,7 +118,6 @@ export class KinkPreferencesApp {
         this.shareManager = new SecureShareManager(this.preferencesManager, this.kinkData);
         this.lazyLoadingManager = new LazyLoadingManager(this.kinkData, this.uiGenerator, this.preferencesManager, this.statsManager);
 
-        // Doute
         this.statsManager.setLazyLoadingManager(this.lazyLoadingManager);
 
         this.quizManager = new GuidedQuizManager(this.kinkData, this.preferencesManager, this.statsManager);
