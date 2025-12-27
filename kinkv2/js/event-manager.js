@@ -1,6 +1,6 @@
 /**
  * Module de gestion des événements pour l'application de gestion des préférences Kink
- * Modifié pour supporter les deux types de génération d'image
+ * Version complète avec historique, IndexedDB et partage
  */
 import { CONFIG } from './config.js';
 import { debounce } from './utils.js';
@@ -9,12 +9,24 @@ import { debounce } from './utils.js';
  * Classe responsable de la gestion des événements
  */
 export class EventManager {
-    constructor(preferencesManager, statsManager, importExportManager, imageGenerators, kinkData) {
+    constructor(
+        preferencesManager, 
+        statsManager, 
+        importExportManager, 
+        imageGenerators, 
+        kinkData, 
+        historyManager = null,
+        dbManager = null,
+        shareManager = null
+    ) {
         this.preferencesManager = preferencesManager;
         this.statsManager = statsManager;
         this.importExportManager = importExportManager;
-        this.imageGenerators = imageGenerators; // Objet avec byCategory et byPreference
+        this.imageGenerators = imageGenerators;
         this.kinkData = kinkData;
+        this.historyManager = historyManager;
+        this.dbManager = dbManager;
+        this.shareManager = shareManager;
         
         // Références liées pour add/removeEventListener
         this._boundHandleDocumentClick = this.handleDocumentClick.bind(this);
@@ -24,6 +36,20 @@ export class EventManager {
         this.debouncedUpdateInterface = debounce(() => {
             this.statsManager.updateInterface();
         }, CONFIG.debounceDelay);
+
+        // Debounced history save (pour grouper les modifications rapides)
+        this.debouncedHistorySave = debounce((itemName) => {
+            if (this.historyManager && !this.historyManager.isRestoring) {
+                this.saveToHistory(`Modification: ${itemName}`);
+            }
+        }, 500);
+
+        // Debounced IndexedDB save
+        this.debouncedSaveToIndexedDB = debounce(async () => {
+            if (this.dbManager) {
+                await this.preferencesManager.saveToIndexedDB(this.dbManager);
+            }
+        }, 1000);
     }
 
     /**
@@ -77,7 +103,6 @@ export class EventManager {
         if (e.target.closest('#exportBtn')) {
             e.preventDefault();
             e.stopPropagation();
-            
             console.log('🔤 Clic détecté sur le bouton export');
             this.importExportManager.exportResults(this.kinkData.preferenceTypes);
             return;
@@ -92,6 +117,28 @@ export class EventManager {
             if (importFile) {
                 importFile.click();
             }
+            return;
+        }
+
+        // Gestion du bouton de partage
+        if (e.target.closest('#shareBtn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🔗 Clic détecté sur le bouton partage');
+            if (this.shareManager) {
+                this.shareManager.showShareModal();
+            }
+            return;
+        }
+
+        // Gestion du bouton de questionnaire
+        if (e.target.closest('#startQuizBtn')) {
+            e.preventDefault();
+            e.stopPropagation();
+            console.log('🧭 Clic détecté sur le bouton questionnaire');
+            // Le quizManager est géré depuis app.js
+            const event = new CustomEvent('startQuiz');
+            document.dispatchEvent(event);
             return;
         }
 
@@ -127,6 +174,19 @@ export class EventManager {
             }
             return;
         }
+
+        // Gestion des clics sur les items dans la vue tableau
+        const tableItemBtn = e.target.closest('.table-item-btn');
+        if (tableItemBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const itemName = tableItemBtn.dataset.item;
+            const itemElement = document.querySelector(`[data-item="${itemName}"]`);
+            if (itemElement) {
+                this.handleItemClick(itemElement);
+            }
+            return;
+        }
     }
 
     /**
@@ -148,6 +208,15 @@ export class EventManager {
 
         // Mise à jour des stats avec debounce
         this.debouncedUpdateInterface();
+
+        // Sauvegarder dans l'historique (avec debounce pour grouper les clics rapides)
+        this.debouncedHistorySave(itemName);
+
+        // Sauvegarder dans IndexedDB (avec debounce)
+        this.debouncedSaveToIndexedDB();
+
+        // Animation de feedback
+        this.addFeedbackAnimation(item);
     }
 
     /**
@@ -164,6 +233,50 @@ export class EventManager {
         // Ajouter la nouvelle classe si nécessaire
         if (newState !== 'none') {
             item.classList.add(newState);
+        }
+
+        // Mettre à jour tous les éléments avec le même data-item (pour les vues multiples)
+        const allItemElements = document.querySelectorAll(`[data-item="${item.dataset.item}"]`);
+        allItemElements.forEach(el => {
+            if (el !== item) {
+                CONFIG.validImportStates.forEach(state => {
+                    el.classList.remove(state);
+                });
+                if (newState !== 'none') {
+                    el.classList.add(newState);
+                }
+            }
+        });
+    }
+
+    /**
+     * Ajoute une animation de feedback
+     * @param {HTMLElement} item - Élément item
+     */
+    addFeedbackAnimation(item) {
+        item.classList.add('state-changing');
+        setTimeout(() => {
+            item.classList.remove('state-changing');
+        }, 400);
+    }
+
+    /**
+     * Sauvegarde l'état actuel dans l'historique
+     * @param {string} action - Description de l'action
+     */
+    saveToHistory(action) {
+        if (this.historyManager && !this.historyManager.isRestoring) {
+            const currentState = this.preferencesManager.getAllPreferences();
+            this.historyManager.saveState(currentState, action);
+        }
+    }
+
+    /**
+     * Force une sauvegarde immédiate dans IndexedDB
+     */
+    async forceSaveToIndexedDB() {
+        if (this.dbManager) {
+            await this.preferencesManager.saveToIndexedDB(this.dbManager);
         }
     }
 
