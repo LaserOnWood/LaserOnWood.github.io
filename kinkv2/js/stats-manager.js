@@ -1,5 +1,6 @@
 /**
  * Module de gestion des statistiques pour l'application de gestion des préférences Kink
+ * Version mise à jour avec support du lazy loading
  */
 
 /**
@@ -9,6 +10,7 @@ export class StatsManager {
     constructor(kinkData, preferencesManager) {
         this.kinkData = kinkData;
         this.preferencesManager = preferencesManager;
+        this.lazyLoadingManager = null; // Sera défini plus tard si nécessaire
         this.cache = {
             totalItems: 0,
             categoryItems: new Map()
@@ -16,22 +18,74 @@ export class StatsManager {
     }
 
     /**
+     * Définit le gestionnaire de lazy loading (optionnel)
+     * @param {LazyLoadingManager} lazyLoadingManager
+     */
+    setLazyLoadingManager(lazyLoadingManager) {
+        this.lazyLoadingManager = lazyLoadingManager;
+    }
+
+    /**
      * Calcul des données en cache
      */
     calculateCacheData() {
-        this.cache.totalItems = document.querySelectorAll('.item').length;
+        this.cache.totalItems = this.getTotalItemsCount();
 
         this.kinkData.categories.forEach(category => {
-            const items = document.querySelectorAll(`[data-category="${category.id}"]`);
-            this.cache.categoryItems.set(category.id, items.length);
+            const itemsCount = this.getCategoryItemsCount(category);
+            this.cache.categoryItems.set(category.id, itemsCount);
 
             if (category.subcategories) {
                 category.subcategories.forEach(subcat => {
-                    const subcatItems = document.querySelectorAll(`[data-category="${subcat.id}"]`);
-                    this.cache.categoryItems.set(subcat.id, subcatItems.length);
+                    const subcatCount = this.getSubcategoryItemsCount(subcat);
+                    this.cache.categoryItems.set(subcat.id, subcatCount);
                 });
             }
         });
+    }
+
+    /**
+     * Compte le nombre total d'items dans les données
+     * @returns {number}
+     */
+    getTotalItemsCount() {
+        let count = 0;
+        this.kinkData.categories.forEach(category => {
+            if (category.hasSubcategories && category.subcategories) {
+                category.subcategories.forEach(subcat => {
+                    count += (subcat.items || []).length;
+                });
+            } else {
+                count += (category.items || []).length;
+            }
+        });
+        return count;
+    }
+
+    /**
+     * Compte les items d'une catégorie
+     * @param {Object} category
+     * @returns {number}
+     */
+    getCategoryItemsCount(category) {
+        let count = 0;
+        if (category.hasSubcategories && category.subcategories) {
+            category.subcategories.forEach(subcat => {
+                count += (subcat.items || []).length;
+            });
+        } else {
+            count = (category.items || []).length;
+        }
+        return count;
+    }
+
+    /**
+     * Compte les items d'une sous-catégorie
+     * @param {Object} subcategory
+     * @returns {number}
+     */
+    getSubcategoryItemsCount(subcategory) {
+        return (subcategory.items || []).length;
     }
 
     /**
@@ -97,7 +151,7 @@ export class StatsManager {
         let totalItems = 0;
 
         category.subcategories.forEach(subcat => {
-            const items = document.querySelectorAll(`[data-category="${subcat.id}"]`);
+            const items = this.getItemsForCategory(subcat);
             const subcatSelected = this.countSelectedItems(items);
 
             totalItems += items.length;
@@ -122,7 +176,7 @@ export class StatsManager {
      * @param {Object} category - Données de la catégorie
      */
     updateSingleCategoryCounter(category) {
-        const items = document.querySelectorAll(`[data-category="${category.id}"]`);
+        const items = this.getItemsForCategory(category);
         const selectedItems = this.countSelectedItems(items);
 
         const counter = document.getElementById(`counter-${category.id}`);
@@ -132,20 +186,33 @@ export class StatsManager {
     }
 
     /**
-     * Comptage des items sélectionnés
-     * @param {NodeList} items - Liste des items
-     * @returns {number} Nombre d'items sélectionnés
+     * Récupère les items d'une catégorie/sous-catégorie
+     * @param {Object} category
+     * @returns {Array}
+     */
+    getItemsForCategory(category) {
+        if (category.items && Array.isArray(category.items)) {
+            return category.items;
+        }
+        return [];
+    }
+
+    /**
+     * Compte les items sélectionnés dans une liste
+     * @param {Array} items - Liste des items
+     * @returns {number}
      */
     countSelectedItems(items) {
         let count = 0;
         const preferences = this.preferencesManager.getAllPreferences();
         
         items.forEach(item => {
-            const itemName = item.dataset.item;
+            const itemName = typeof item === 'string' ? item : item.name;
             if (itemName && preferences.has(itemName)) {
                 count++;
             }
         });
+        
         return count;
     }
 
@@ -155,6 +222,63 @@ export class StatsManager {
     updateInterface() {
         this.updateStats();
         this.updateCategoryCounters();
+        
+        // Si le lazy loading est activé, mettre à jour ses compteurs aussi
+        if (this.lazyLoadingManager) {
+            this.lazyLoadingManager.updateAllCounters();
+        }
+    }
+
+    /**
+     * Obtenir des statistiques détaillées
+     * @returns {Object}
+     */
+    getDetailedStats() {
+        const preferences = this.preferencesManager.getAllPreferences();
+        const stats = {
+            total: preferences.size,
+            totalAvailable: this.cache.totalItems,
+            percentageCompleted: ((preferences.size / this.cache.totalItems) * 100).toFixed(1),
+            byType: {},
+            byCategory: {}
+        };
+
+        // Stats par type
+        this.kinkData.preferenceTypes.forEach(type => {
+            stats.byType[type.id] = {
+                name: type.name,
+                count: 0,
+                percentage: 0
+            };
+        });
+
+        preferences.forEach(pref => {
+            if (stats.byType[pref]) {
+                stats.byType[pref].count++;
+            }
+        });
+
+        // Calculer les pourcentages
+        Object.keys(stats.byType).forEach(typeId => {
+            if (preferences.size > 0) {
+                stats.byType[typeId].percentage = 
+                    ((stats.byType[typeId].count / preferences.size) * 100).toFixed(1);
+            }
+        });
+
+        // Stats par catégorie
+        this.kinkData.categories.forEach(category => {
+            const items = this.getItemsForCategory(category);
+            const selected = this.countSelectedItems(items);
+            
+            stats.byCategory[category.id] = {
+                name: category.name,
+                total: items.length,
+                selected: selected,
+                percentage: items.length > 0 ? ((selected / items.length) * 100).toFixed(1) : 0
+            };
+        });
+
+        return stats;
     }
 }
-
