@@ -1,0 +1,18 @@
+.quiz-mode-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.quiz-mode-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.quiz-answer-btn {
+    transition: all 0.2s ease;
+}
+
+.quiz-answer-btn:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
