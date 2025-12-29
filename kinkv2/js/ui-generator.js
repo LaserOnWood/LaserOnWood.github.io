@@ -20,7 +20,7 @@ export class UIGenerator {
     }
 
     /**
-     * Génération de la section statistiques
+     * Génération de la section statistiques (Légende classique)
      */
     generateStatsSection() {
         const statsContainer = document.querySelector('.stats-badges');
@@ -187,13 +187,18 @@ export class UIGenerator {
      * @param {CustomUIManager} customUIManager - Instance du CustomUIManager
      */
     static initializeCustomItemButtons(customUIManager) {
-        document.querySelectorAll('.add-custom-item-btn').forEach(button => {
-            button.addEventListener('click', (e) => {
-                const categoryId = e.currentTarget.dataset.categoryId;
-                const isCustom = e.currentTarget.dataset.isCustom === 'true';
-                customUIManager.showAddItemModal(categoryId, isCustom);
+        // Utiliser la délégation d'événements sur le conteneur principal pour plus de fiabilité
+        const accordion = document.getElementById('categoriesAccordion');
+        if (accordion) {
+            accordion.addEventListener('click', (e) => {
+                const button = e.target.closest('.add-custom-item-btn');
+                if (button) {
+                    const categoryId = button.dataset.categoryId;
+                    const isCustom = button.dataset.isCustom === 'true';
+                    customUIManager.showAddItemModal(categoryId, isCustom);
+                }
             });
-        });
+        }
     }
 
     /**

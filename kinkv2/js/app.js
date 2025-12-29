@@ -13,18 +13,16 @@ import { ModalManager } from './modal-manager.js';
 import { HistoryManager } from './history-manager.js';
 import { HistoryUIManager } from './history-ui-manager.js';
 
-// NOUVEAUX IMPORTS
-import { ViewManager } from './view-manager.js';
+// IMPORTS ESSENTIELS
 import { IndexedDBManager } from './indexed-db-manager.js';
 import { SecureShareManager } from './secure-share-manager.js';
-import { LazyLoadingManager } from './lazy-loading-manager.js';
 import { GuidedQuizManager } from './guided-quiz-manager.js';
 
 export class KinkPreferencesApp {
     constructor() {
         this.kinkData = null;
         this.isInitialized = false;
-        this.enableLazyLoading = true; // Toggle lazy loading
+        this.enableLazyLoading = false; // Désactivé à la demande de l'utilisateur
         
         // Managers existants
         this.preferencesManager = new PreferencesManager();
@@ -41,11 +39,9 @@ export class KinkPreferencesApp {
         this.uiGenerator = null;
         this.historyUIManager = null;
         
-        // NOUVEAUX MANAGERS
+        // MANAGERS ACTIFS
         this.dbManager = null;
-        this.viewManager = null;
         this.shareManager = null;
-        this.lazyLoadingManager = null;
         this.quizManager = null;
     }
 
@@ -58,14 +54,14 @@ export class KinkPreferencesApp {
 
             console.log('🚀 Début de l\'initialisation...');
 
-            // NOUVEAU: Initialiser IndexedDB en premier
+            // Initialiser IndexedDB en premier
             this.dbManager = new IndexedDBManager();
             await this.dbManager.init();
 
             // Chargement des données
             await this.loadKinkData();
             
-            // NOUVEAU: Charger les préférences depuis IndexedDB
+            // Charger les préférences depuis IndexedDB
             await this.preferencesManager.loadFromIndexedDB(this.dbManager);
             
             // Initialisation des managers
@@ -83,10 +79,10 @@ export class KinkPreferencesApp {
             // Sauvegarder l'état initial dans l'historique
             this.saveCurrentStateToHistory('État initial');
             
-            // NOUVEAU: Vérifier les liens partagés
+            // Vérifier les liens partagés
             await this.checkSharedLink();
             
-            // NOUVEAU: Nettoyer le cache expiré
+            // Nettoyer le cache expiré
             await this.dbManager.cleanExpiredCache();
 
             this.isInitialized = true;
@@ -114,25 +110,15 @@ export class KinkPreferencesApp {
         this.imageGeneratorByPreference = new ImageGeneratorByPreference(this.preferencesManager, this.kinkData);
         this.historyUIManager = new HistoryUIManager(this.historyManager, this.preferencesManager, this.statsManager);
         
-        this.viewManager = new ViewManager(this.kinkData, this.preferencesManager);
         this.shareManager = new SecureShareManager(this.preferencesManager, this.kinkData);
-        this.lazyLoadingManager = new LazyLoadingManager(this.kinkData, this.uiGenerator, this.preferencesManager, this.statsManager);
-
-        this.statsManager.setLazyLoadingManager(this.lazyLoadingManager);
-
         this.quizManager = new GuidedQuizManager(this.kinkData, this.preferencesManager, this.statsManager);
         
         this.eventManager = new EventManager(this.preferencesManager, this.statsManager, this.importExportManager, { byCategory: this.imageGeneratorByCategory, byPreference: this.imageGeneratorByPreference},this.kinkData, this.historyManager, this.dbManager, this.shareManager);
     }
 
     generateInterface() {
-        // NOUVEAU: Choisir entre lazy loading ou génération normale
-        if (this.enableLazyLoading) {
-            this.lazyLoadingManager.initialize();
-        } else {
-            this.uiGenerator.generateInterface();
-        }
-        
+        // Génération normale (système de vues multiples et lazy loading retirés)
+        this.uiGenerator.generateInterface();
         this.statsManager.calculateCacheData();
         UIGenerator.initializeCustomItemButtons(this.customUIManager);
     }
@@ -140,7 +126,6 @@ export class KinkPreferencesApp {
     initializeEventListeners() {
         this.eventManager.initializeEventListeners();
         this.historyUIManager.initialize();
-        this.viewManager.initialize(); // NOUVEAU
     }
 
     updateInterface() {
@@ -153,7 +138,6 @@ export class KinkPreferencesApp {
         this.historyManager.saveState(currentState, action);
     }
     
-    // NOUVELLE MÉTHODE: Vérifier les liens partagés
     async checkSharedLink() {
         const urlParams = new URLSearchParams(window.location.search);
         const shareId = urlParams.get('share');
@@ -208,9 +192,6 @@ export class KinkPreferencesApp {
         }
         if (this.historyUIManager) {
             this.historyUIManager.cleanup();
-        }
-        if (this.lazyLoadingManager) {
-            this.lazyLoadingManager.disconnect();
         }
         if (this.dbManager) {
             this.dbManager.close();
