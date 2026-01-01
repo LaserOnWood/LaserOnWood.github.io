@@ -1,470 +1,189 @@
+:root {
+    --primary-font: 'Montserrat', sans-serif;
+    --secondary-font: 'Inter', sans-serif;
+    --main-gradient: linear-gradient(135deg, #667eea 0%, #764ba8 100%);
+    --header-gradient: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    --glass-bg: rgba(255, 255, 255, 0.92);
+    --shadow-sm: 0 4px 12px rgba(0,0,0,0.05);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.1);
+}
+
 body {
-    background: linear-gradient(135deg, #667eea 0%, #764ba8 100%);
+    background: var(--main-gradient);
     min-height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: var(--secondary-font);
+    color: #2d3436;
+    line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6, .accordion-button {
+    font-family: var(--primary-font);
+    font-weight: 700;
 }
 
 .main-container {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-    backdrop-filter: blur(10px);
+    background: var(--glass-bg);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    backdrop-filter: blur(12px);
     margin: 2rem 0;
+    border: 1px solid rgba(255,255,255,0.3);
+    overflow: hidden;
 }
 
 .header {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: var(--header-gradient);
     color: white;
-    border-radius: 20px 20px 0 0;
-    padding: 2rem;
+    padding: 3rem 2rem;
     text-align: center;
+    position: relative;
 }
 
-.legend {
-    background: #f8f9fa;
-    border-radius: 15px;
-    padding: 1.5rem;
-    margin: 2rem 0;
-    border-left: 5px solid #4facfe;
-}
-
-.legend-item {
-    display: flex;
-    align-items: center;
-    margin: 0.5rem 0;
-    font-weight: 500;
-}
-
-.legend-color {
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    margin-right: 10px;
-    border: 2px solid #fff;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+.header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .stats {
     background: white;
-    border-radius: 15px;
-    padding: 1.5rem;
+    border-radius: 20px;
+    padding: 2rem;
     margin: 2rem 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-}
-
-.stats-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #f1f2f6;
 }
 
 .stat-badge {
     display: flex;
     align-items: center;
-    padding: 0.75rem 1.25rem;
-    border-radius: 25px;
+    padding: 0.8rem 1.5rem;
+    border-radius: 30px;
     color: white;
-    font-weight: bold;
-    font-size: 0.95rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    transition: all 0.3s ease;
-    min-width: 120px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    min-width: 140px;
     justify-content: center;
+    border: 2px solid rgba(255,255,255,0.1);
 }
 
 .stat-badge:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
 }
 
 .stat-badge .count {
-    background: rgba(255,255,255,0.25);
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    margin-left: 8px;
-    font-size: 0.9rem;
-    font-weight: bold;
+    background: rgba(255,255,255,0.2);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    margin-left: 10px;
+    font-family: var(--primary-font);
 }
 
-/* Styles pour l'accordéon personnalisé */
+/* Accordéon Amélioré */
+.accordion-item {
+    margin-bottom: 1.2rem;
+    border-radius: 18px !important;
+    border: 1px solid #f1f2f6;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s ease;
+}
+
+.accordion-item:hover {
+    box-shadow: var(--shadow-md);
+}
+
 .accordion-button {
-    background: linear-gradient(135deg, #667eea 0%, #764ba8 100%);
-    color: white;
-    font-weight: bold;
-    font-size: 1.1rem;
-    border: none;
-    padding: 1rem 1.5rem;
+    background: white;
+    color: #2d3436;
+    padding: 1.2rem 1.5rem;
+    border-radius: 18px !important;
+    transition: all 0.3s ease;
 }
 
 .accordion-button:not(.collapsed) {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    background: var(--header-gradient);
     color: white;
     box-shadow: none;
 }
 
-.accordion-button:focus {
-    box-shadow: none;
-    border: none;
-}
-
-.accordion-button::after {
+.accordion-button:not(.collapsed)::after {
     filter: brightness(0) invert(1);
 }
 
-.accordion-item {
-    margin: 1rem 0;
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    overflow: hidden;
-}
-
-.accordion-header button {
-    border-radius: 15px 15px 0 0;
-}
-
-.accordion-button.collapsed {
-    border-radius: 15px;
-}
-
-.accordion-body {
-    padding: 1.5rem;
-    background: white;
-}
-
+/* Grille d'items et Feedbacks */
 .items-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 0.75rem;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
 }
 
 .item {
     background: #f8f9fa;
-    border: 2px solid transparent;
-    border-radius: 10px;
-    padding: 0.75rem 1rem;
+    border: 2px solid #edf2f7;
+    border-radius: 14px;
+    padding: 1rem;
     cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     text-align: center;
-    position: relative;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 80px;
 }
 
 .item:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.item.adore {
-    background: linear-gradient(135deg, #7d2e79, #7a3077);
-    color: white;
-    border-color: #7d2e79;
-}
-
-.item.aime {
-    background: linear-gradient(135deg, #4CAF50, #45a049);
-    color: white;
-    border-color: #4CAF50;
-}
-
-.item.curiosité {
-    background: linear-gradient(135deg, #FF9800, #f57c00);
-    color: white;
-    border-color: #FF9800;
-}
-
-.item.dislike {
-    background: linear-gradient(135deg, #FF5722, #d84315);
-    color: white;
-    border-color: #FF5722;
-}
-
-.item.non_strict {
-    background: linear-gradient(135deg, #f44336, #d32f2f);
-    color: white;
-    border-color: #f44336;
-}
-
-.export-btn {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    border: none;
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.export-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
-    color: white;
-}
-.image-btn {
-    background:#00f2fe;
-    border: none;
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.image-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
-    background:#00f2fe;
-    color: white;
-}
-.dropdown-menu {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    border-radius: 15px;
-    border: none;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-    padding: 0.5rem 0;
-}
-
-.dropdown-item {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    border: none;
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.dropdown-item:hover {
-    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
-    color: white;
-}
-
-.dropdown-item:hover small {
-    color: rgba(255, 255, 255, 0.8);
-}
-
-.dropdown-item small {
-    font-size: 0.75rem;
-    margin-top: 0.25rem;
-    color: #6c757d;
-}
-
-.dropdown-item i {
-    width: 20px;
-    text-align: center;
-}
-
-.dropdown-toggle::after {
-    margin-left: 0.5rem;
-}
-
-/* Animation du dropdown */
-.dropdown-menu {
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    display: block !important;
-    visibility: hidden;
-}
-
-.dropdown-menu.show {
-    opacity: 1;
-    transform: translateY(0);
-    visibility: visible;
-}
-
-.import-btn {
-    background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%);
-    border: none;
-    color: white;
-    padding: 0.75rem 2rem;
-    border-radius: 25px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-}
-
-.import-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
-    color: white;
-}
-
-/* Badge de compteur dans l'en-tête */
-.category-counter {
-    background: rgba(255,255,255,0.2);
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    font-size: 0.9rem;
-    margin-left: 10px;
-}
-
-@media (max-width: 768px) {
-    .items-grid {
-        grid-template-columns: 1fr;
-    }
-    
-    .main-container {
-        margin: 1rem;
-        border-radius: 15px;
-    }
-    
-    .header {
-        border-radius: 15px 15px 0 0;
-        padding: 1.5rem;
-    }
-
-    .stats-badges {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .stat-badge {
-        min-width: 200px;
-    }
-}
-
-
-/* Skeleton loaders pour lazy loading */
-.skeleton-loader {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    gap: 1rem;
-}
-
-.skeleton-icon {
-    width: 24px;
-    height: 24px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: loading 1.5s ease-in-out infinite;
-}
-
-.skeleton-text {
-    flex: 1;
-    height: 16px;
-    border-radius: 4px;
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: loading 1.5s ease-in-out infinite;
-}
-
-@keyframes loading {
-    0% { background-position: 200% 0; }
-    100% { background-position: -200% 0; }
-}
-
-
-
-/* ========================================
-   FIX POUR LES STATISTIQUES/LÉGENDES
-   Ajouter à la fin de style.css
-======================================== */
-
-/* S'assurer que les stats sont toujours visibles */
-.stats {
+    transform: translateY(-3px);
+    border-color: #4facfe;
     background: white;
-    border-radius: 15px;
-    padding: 1.5rem;
-    margin: 2rem 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    position: relative;
-    z-index: 1;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.05);
 }
 
-/* Les badges de stats doivent rester visibles */
-.stats-badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 0; /* Pas de marge si le view-switcher suit */
+.item:active {
+    transform: scale(0.95);
 }
 
-/* Le view-switcher vient APRÈS les badges */
-.view-switcher {
-    margin-top: 1.5rem !important;
-    padding-top: 1.5rem;
-    border-top: 1px solid #e0e0e0;
-}
-
-/* S'assurer que les stat-badges sont visibles */
-.stat-badge {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem 1.25rem;
-    border-radius: 25px;
-    color: white;
-    font-weight: bold;
+.item-name {
+    font-weight: 600;
+    font-family: var(--primary-font);
     font-size: 0.95rem;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.item.adore { background: linear-gradient(135deg, #7d2e79, #7a3077); color: white; border-color: transparent; }
+.item.aime { background: linear-gradient(135deg, #4CAF50, #45a049); color: white; border-color: transparent; }
+.item.curiosité { background: linear-gradient(135deg, #FF9800, #f57c00); color: white; border-color: transparent; }
+.item.dislike { background: linear-gradient(135deg, #FF5722, #d84315); color: white; border-color: transparent; }
+.item.non_strict { background: linear-gradient(135deg, #f44336, #d32f2f); color: white; border-color: transparent; }
+
+/* Boutons d'action */
+.btn {
+    font-family: var(--primary-font);
+    font-weight: 600;
+    border-radius: 12px;
+    padding: 0.8rem 1.5rem;
     transition: all 0.3s ease;
-    min-width: 120px;
-    justify-content: center;
-    opacity: 1 !important;
-    visibility: visible !important;
 }
 
-.stat-badge:hover {
+.export-btn, .import-btn, .image-btn {
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.export-btn { background: var(--header-gradient); }
+.import-btn { background: linear-gradient(135deg, #00f2fe 0%, #4facfe 100%); }
+.image-btn { background: #00f2fe; }
+
+.btn:hover {
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+    filter: brightness(1.05);
 }
 
-.stat-badge .count {
-    background: rgba(255,255,255,0.25);
-    padding: 0.25rem 0.75rem;
-    border-radius: 15px;
-    margin-left: 8px;
-    font-size: 0.9rem;
-    font-weight: bold;
-}
-
-/* Animation d'apparition pour les stats */
-@keyframes fadeInStats {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.stats-badges {
-    animation: fadeInStats 0.5s ease-out;
-}
-
-/* Responsive pour les stats */
 @media (max-width: 768px) {
-    .stats {
-        padding: 1rem;
-        margin: 1rem 0;
-    }
-
-    .stats-badges {
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-
-    .stat-badge {
-        min-width: 200px;
-        width: 100%;
-    }
-
-    .view-switcher {
-        margin-top: 1rem !important;
-        padding-top: 1rem;
-    }
-}
-
-/* S'assurer que rien ne cache les stats */
-.stats * {
-    position: relative;
-    z-index: auto;
+    .header h1 { font-size: 1.8rem; }
+    .main-container { margin: 1rem; border-radius: 16px; }
+    .stat-badge { min-width: 100%; }
 }

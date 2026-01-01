@@ -1,6 +1,6 @@
 /**
  * Module de questionnaire guidé pour l'application KinkList
- * Aide les nouveaux utilisateurs à explorer leurs préférences
+ * Version Focus Immersive
  */
 import { ToastManager } from './toast-manager.js';
 
@@ -12,11 +12,9 @@ export class GuidedQuizManager {
         this.currentStep = 0;
         this.quizData = [];
         this.answers = new Map();
-        this.quizMode = 'discovery';
     }
 
     async startQuiz(mode = 'discovery') {
-        this.quizMode = mode;
         this.currentStep = 0;
         this.answers.clear();
         this.quizData = this.generateQuestions(mode);
@@ -72,19 +70,24 @@ export class GuidedQuizManager {
 
         modal.innerHTML = `
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-primary text-white">
-                        <h5 class="modal-title"><i class="fas fa-compass"></i> Questionnaire Guidé</h5>
+                <div class="modal-content border-0 shadow-lg rounded-4">
+                    <div class="modal-header border-0 bg-primary text-white p-4">
+                        <h5 class="modal-title fw-bold"><i class="fas fa-compass me-2"></i> Mode Focus</h5>
                     </div>
-                    <div class="modal-body text-center">
-                        <p>Explorez vos préférences en répondant à quelques questions.</p>
-                        <div class="alert alert-info text-start">
-                            <small>Cliquez sur le niveau d'intérêt pour chaque pratique proposée.</small>
+                    <div class="modal-body p-4 text-center">
+                        <div class="mb-4">
+                            <i class="fas fa-magic fa-3x text-primary opacity-25"></i>
+                        </div>
+                        <h4 class="fw-bold mb-3">Prêt pour l'exploration ?</h4>
+                        <p class="text-muted">Le mode Focus vous permet de vous concentrer sur une pratique à la fois pour une expérience plus immersive.</p>
+                        <div class="alert alert-light border-0 rounded-3 text-start mt-4">
+                            <small class="d-block mb-2 fw-bold text-primary"><i class="fas fa-info-circle me-1"></i> Comment ça marche :</small>
+                            <small class="text-muted">Répondez à chaque question en cliquant sur votre niveau d'intérêt. Vos préférences sont appliquées en temps réel.</small>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                        <button type="button" class="btn btn-primary" id="confirmStartQuiz">Commencer</button>
+                    <div class="modal-footer border-0 p-4">
+                        <button type="button" class="btn btn-light px-4" data-bs-dismiss="modal">Plus tard</button>
+                        <button type="button" class="btn btn-primary px-4 fw-bold" id="confirmStartQuiz">C'est parti !</button>
                     </div>
                 </div>
             </div>
@@ -124,33 +127,57 @@ export class GuidedQuizManager {
         modal.setAttribute('data-bs-backdrop', 'static');
 
         modal.innerHTML = `
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
+            <div class="modal-dialog modal-fullscreen-sm-down modal-dialog-centered modal-lg">
+                <div class="modal-content border-0 shadow-2xl rounded-4 overflow-hidden">
+                    <div class="modal-header border-0 bg-light px-4 py-3">
                         <div class="w-100">
                             <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h6 class="mb-0"><i class="${question.icon || 'fas fa-question-circle'}"></i> ${this.escapeHtml(question.category)}</h6>
-                                <span class="badge bg-primary">${this.currentStep + 1} / ${this.quizData.length}</span>
+                                <span class="text-uppercase tracking-wider small fw-bold text-muted">
+                                    <i class="${question.icon || 'fas fa-question-circle'} me-1"></i> ${this.escapeHtml(question.category)}
+                                </span>
+                                <span class="badge bg-white text-primary border border-primary-subtle rounded-pill px-3">
+                                    ${this.currentStep + 1} / ${this.quizData.length}
+                                </span>
                             </div>
-                            <div class="progress" style="height: 5px;">
-                                <div class="progress-bar" style="width: ${progress}%"></div>
+                            <div class="progress rounded-pill" style="height: 6px; background-color: #e9ecef;">
+                                <div class="progress-bar progress-bar-striped progress-bar-animated rounded-pill" 
+                                     style="width: ${progress}%; background: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);"></div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-body text-center">
-                        <h4 class="mb-3">${this.escapeHtml(question.item)}</h4>
-                        ${question.description ? `<p class="text-muted small">${this.escapeHtml(question.description)}</p>` : ''}
-                        <div class="d-grid gap-2 mt-4">
-                            ${this.kinkData.preferenceTypes.map(type => `
-                                <button class="btn btn-lg quiz-answer-btn" data-preference="${type.id}" style="background: ${type.color}; color: white; border: none;">
-                                    ${type.name}
-                                </button>
-                            `).join('')}
-                            <button class="btn btn-outline-secondary mt-2" id="skipQuestion">Passer</button>
+                    <div class="modal-body p-5 text-center">
+                        <div class="quiz-focus-content animate__animated animate__fadeIn">
+                            <h2 class="fw-bold mb-4 display-6">${this.escapeHtml(question.item)}</h2>
+                            ${question.description ? `
+                                <div class="bg-light p-4 rounded-4 mb-5 border-0">
+                                    <p class="text-muted mb-0 lead" style="font-size: 1.1rem;">${this.escapeHtml(question.description)}</p>
+                                </div>
+                            ` : '<div class="mb-5"></div>'}
+                            
+                            <div class="quiz-options-grid">
+                                ${this.kinkData.preferenceTypes.map((type, idx) => `
+                                    <button class="btn btn-lg quiz-answer-btn w-100 mb-3 py-3 rounded-4 shadow-sm border-0 animate__animated animate__fadeInUp" 
+                                            style="animation-delay: ${idx * 0.05}s; background: ${type.color}; color: white;"
+                                            data-preference="${type.id}">
+                                        <span class="fw-bold">${type.name}</span>
+                                    </button>
+                                `).join('')}
+                                
+                                <div class="d-flex gap-2 mt-4">
+                                    <button class="btn btn-light flex-grow-1 py-3 rounded-4 fw-bold text-muted" id="skipQuestion">
+                                        <i class="fas fa-forward me-1"></i> Passer
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-link text-danger" id="quitQuiz">Arrêter le questionnaire</button>
+                    <div class="modal-footer border-0 bg-light px-4 py-3 justify-content-between">
+                        <button type="button" class="btn btn-link text-muted text-decoration-none fw-bold" id="quitQuiz">
+                            <i class="fas fa-times me-1"></i> Quitter
+                        </button>
+                        <div class="text-muted small fw-medium">
+                            <i class="fas fa-keyboard me-1"></i> Utilisez les boutons pour répondre
+                        </div>
                     </div>
                 </div>
             </div>
@@ -173,7 +200,7 @@ export class GuidedQuizManager {
         });
 
         document.getElementById('quitQuiz').addEventListener('click', () => {
-            if (confirm('Arrêter le questionnaire ? Vos réponses actuelles seront appliquées.')) {
+            if (confirm('Voulez-vous vraiment quitter le mode Focus ? Vos réponses actuelles seront conservées.')) {
                 this.applyAnswers();
                 bsModal.hide();
                 modal.addEventListener('hidden.bs.modal', () => modal.remove(), { once: true });
@@ -184,12 +211,21 @@ export class GuidedQuizManager {
     }
 
     nextStep(bsModal, modalElement) {
-        bsModal.hide();
-        modalElement.addEventListener('hidden.bs.modal', () => {
-            modalElement.remove();
-            this.currentStep++;
-            this.showQuestionModal();
-        }, { once: true });
+        // Animation de sortie
+        const content = modalElement.querySelector('.quiz-focus-content');
+        if (content) {
+            content.classList.remove('animate__fadeIn');
+            content.classList.add('animate__fadeOutLeft');
+        }
+
+        setTimeout(() => {
+            bsModal.hide();
+            modalElement.addEventListener('hidden.bs.modal', () => {
+                modalElement.remove();
+                this.currentStep++;
+                this.showQuestionModal();
+            }, { once: true });
+        }, 300);
     }
 
     applyAnswers() {
@@ -198,7 +234,6 @@ export class GuidedQuizManager {
             this.preferencesManager.setPreference(item, pref);
         });
         this.statsManager.updateInterface();
-        // Sauvegarder dans IndexedDB si disponible
         const app = window.getKinkApp ? window.getKinkApp() : null;
         if (app && app.dbManager) {
             this.preferencesManager.saveToIndexedDB(app.dbManager);
@@ -217,16 +252,20 @@ export class GuidedQuizManager {
 
         modal.innerHTML = `
             <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header bg-success text-white">
-                        <h5 class="modal-title"><i class="fas fa-check-circle"></i> Terminé !</h5>
+                <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+                    <div class="modal-header border-0 bg-success text-white p-4">
+                        <h5 class="modal-title fw-bold"><i class="fas fa-check-circle me-2"></i> Exploration terminée !</h5>
                     </div>
-                    <div class="modal-body text-center">
-                        <div class="display-1 mb-3">🎉</div>
-                        <p>Vos préférences ont été mises à jour avec succès.</p>
+                    <div class="modal-body p-5 text-center">
+                        <div class="display-1 mb-4">✨</div>
+                        <h3 class="fw-bold mb-3">Bravo !</h3>
+                        <p class="text-muted mb-4">Vous avez complété votre exploration. Vos préférences ont été mises à jour et vos statistiques sont prêtes.</p>
+                        <div class="bg-light p-3 rounded-3 mb-4">
+                            <span class="fw-bold text-success">${this.answers.size}</span> pratiques évaluées
+                        </div>
                     </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Voir mes résultats</button>
+                    <div class="modal-footer border-0 p-4">
+                        <button type="button" class="btn btn-success w-100 py-3 fw-bold rounded-3" data-bs-dismiss="modal">Découvrir mes résultats</button>
                     </div>
                 </div>
             </div>

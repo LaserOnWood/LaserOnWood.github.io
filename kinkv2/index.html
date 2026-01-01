@@ -45,6 +45,11 @@
     <meta name="msapplication-TileImage" content="favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
 
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
     <!-- CSS -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" rel="stylesheet">
@@ -85,17 +90,50 @@
 
             
             <div class="container-fluid p-4">
-                <div class="stats">
+                <div class="row">
+                    <!-- Sidebar de navigation rapide -->
+                    <div class="col-lg-3 d-none d-lg-block">
+                        <div class="sticky-top pt-2" style="top: 20px; z-index: 100;">
+                            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
+                                <div class="card-header bg-primary text-white border-0 py-3">
+                                    <h6 class="mb-0"><i class="fas fa-list-ul me-2"></i> Catégories</h6>
+                                </div>
+                                <div class="list-group list-group-flush" id="quickNav">
+                                    <!-- Généré dynamiquement -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-9">
+                        <div class="stats">
                     <h5 class="mb-3 text-center"><i class="fas fa-chart-bar"></i>Légende & Statistiques</h5>
                     <div class="stats-badges">
                         <!-- Les badges seront générés dynamiquement par JavaScript -->
                     </div>
                 </div>
                 
-                <!-- Accordéon des catégories -->
-                <div class="accordion" id="categoriesAccordion">
-                    <!-- Les catégories seront générées dynamiquement par JavaScript -->
+                <!-- Barre de recherche -->
+                <div class="search-container mb-4">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
+                        <input type="text" id="globalSearch" class="form-control border-start-0 ps-0" 
+                               placeholder="Rechercher une pratique, une catégorie..." aria-label="Rechercher">
+                        <button class="btn btn-outline-secondary" type="button" id="clearSearch" title="Effacer la recherche">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
                 </div>
+
+                        <!-- Accordéon des catégories -->
+                        <div class="accordion" id="categoriesAccordion">
+                            <!-- Les catégories seront générées dynamiquement par JavaScript -->
+                        </div>
+
+                    </div> <!-- Fin col-lg-9 -->
+                </div> <!-- Fin row -->
 
                 <!-- Boutons d'export et d'import -->
                 <div class="text-center mt-4">

@@ -17,6 +17,7 @@ export class UIGenerator {
     generateInterface() {
         this.generateStatsSection();
         this.generateCategoriesAccordion();
+        this.generateQuickNav();
     }
 
     /**
@@ -327,5 +328,62 @@ export class UIGenerator {
         }
 
         return itemElement;
+    }
+
+    /**
+     * Génération de la navigation rapide latérale
+     */
+    generateQuickNav() {
+        const navContainer = document.getElementById('quickNav');
+        if (!navContainer) return;
+
+        const fragment = document.createDocumentFragment();
+
+        this.kinkData.categories.forEach(category => {
+            const link = document.createElement('a');
+            link.href = `#${category.id}`;
+            link.className = 'list-group-item list-group-item-action border-0 py-3 d-flex align-items-center';
+            link.style.fontSize = '0.9rem';
+            link.style.fontWeight = '500';
+            link.style.transition = 'all 0.2s ease';
+            
+            const icon = document.createElement('i');
+            icon.className = `${category.icon} me-3 text-primary`;
+            icon.style.width = '20px';
+            icon.style.textAlign = 'center';
+            
+            const text = document.createElement('span');
+            text.textContent = category.name;
+            
+            link.appendChild(icon);
+            link.appendChild(text);
+            
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.getElementById(category.id);
+                if (target) {
+                    // Ouvrir l'accordéon si fermé
+                    const button = document.querySelector(`[data-bs-target="#${category.id}"]`);
+                    if (button && button.classList.contains('collapsed')) {
+                        button.click();
+                    }
+                    
+                    // Scroll doux
+                    const headerOffset = 100;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: "smooth"
+                    });
+                }
+            });
+            
+            fragment.appendChild(link);
+        });
+
+        navContainer.innerHTML = '';
+        navContainer.appendChild(fragment);
     }
 }
