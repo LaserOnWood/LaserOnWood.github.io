@@ -22,7 +22,7 @@ export class KinkPreferencesApp {
     constructor() {
         this.kinkData = null;
         this.isInitialized = false;
-        this.enableLazyLoading = false; // Désactivé à la demande de l'utilisateur
+        this.enableLazyLoading = false;
         
         // Managers existants
         this.preferencesManager = new PreferencesManager();
@@ -117,7 +117,6 @@ export class KinkPreferencesApp {
     }
 
     generateInterface() {
-        // Génération normale (système de vues multiples et lazy loading retirés)
         this.uiGenerator.generateInterface();
         this.statsManager.calculateCacheData();
         UIGenerator.initializeCustomItemButtons(this.customUIManager);
@@ -126,6 +125,14 @@ export class KinkPreferencesApp {
     initializeEventListeners() {
         this.eventManager.initializeEventListeners();
         this.historyUIManager.initialize();
+        
+        // Écouter l'événement de démarrage du quiz
+        document.addEventListener('startQuiz', () => {
+            console.log('🎯 Événement startQuiz reçu, lancement du questionnaire...');
+            if (this.quizManager) {
+                this.quizManager.startQuiz('discovery');
+            }
+        });
     }
 
     updateInterface() {
