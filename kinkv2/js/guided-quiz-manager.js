@@ -175,9 +175,6 @@ export class GuidedQuizManager {
                         <button type="button" class="btn btn-link text-muted text-decoration-none fw-bold" id="quitQuiz">
                             <i class="fas fa-times me-1"></i> Quitter
                         </button>
-                        <div class="text-muted small fw-medium">
-                            <i class="fas fa-keyboard me-1"></i> Utilisez les boutons pour répondre
-                        </div>
                     </div>
                 </div>
             </div>
