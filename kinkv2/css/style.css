@@ -213,3 +213,56 @@ h1, h2, h3, h4, h5, h6, .accordion-button {
 .item:not(.adore):not(.aime):not(.curiosité):not(.dislike):not(.non_strict) .item-description {
     color: #6c757d;
 }
+
+/* Optimisation des modales pour éviter le scroll */
+.modal-dialog-centered {
+    max-height: 95vh;
+}
+
+.modal-content {
+    max-height: 95vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    overflow-y: auto;
+    scrollbar-width: thin;
+}
+
+@media (max-height: 800px) {
+    .modal-body {
+        padding: 1.5rem !important;
+    }
+    .quiz-focus-content h2 {
+        font-size: 1.5rem !important;
+        margin-bottom: 1rem !important;
+    }
+    .quiz-focus-content .bg-light {
+        padding: 1rem !important;
+        margin-bottom: 1.5rem !important;
+    }
+    .quiz-focus-content .bg-light p {
+        font-size: 0.95rem !important;
+    }
+    .quiz-answer-btn {
+        padding: 0.6rem !important;
+        margin-bottom: 0.5rem !important;
+        font-size: 0.9rem !important;
+    }
+    .quiz-options-grid .mt-4 {
+        margin-top: 1rem !important;
+    }
+    #skipQuestion {
+        padding: 0.6rem !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-body {
+        padding: 1rem !important;
+    }
+    .quiz-answer-btn {
+        font-size: 0.85rem !important;
+    }
+}

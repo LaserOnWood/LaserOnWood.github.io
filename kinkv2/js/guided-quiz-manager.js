@@ -145,26 +145,26 @@ export class GuidedQuizManager {
                             </div>
                         </div>
                     </div>
-                    <div class="modal-body p-5 text-center">
+                    <div class="modal-body p-4 p-md-5 text-center">
                         <div class="quiz-focus-content animate__animated animate__fadeIn">
-                            <h2 class="fw-bold mb-4 display-6">${this.escapeHtml(question.item)}</h2>
+                            <h2 class="fw-bold mb-3 mb-md-4 display-6">${this.escapeHtml(question.item)}</h2>
                             ${question.description ? `
-                                <div class="bg-light p-4 rounded-4 mb-5 border-0">
-                                    <p class="text-muted mb-0 lead" style="font-size: 1.1rem;">${this.escapeHtml(question.description)}</p>
+                                <div class="bg-light p-3 p-md-4 rounded-4 mb-4 mb-md-5 border-0">
+                                    <p class="text-muted mb-0 lead" style="font-size: 1.05rem;">${this.escapeHtml(question.description)}</p>
                                 </div>
-                            ` : '<div class="mb-5"></div>'}
+                            ` : '<div class="mb-4 mb-md-5"></div>'}
                             
                             <div class="quiz-options-grid">
                                 ${this.kinkData.preferenceTypes.map((type, idx) => `
-                                    <button class="btn btn-lg quiz-answer-btn w-100 mb-3 py-3 rounded-4 shadow-sm border-0 animate__animated animate__fadeInUp" 
+                                    <button class="btn btn-lg quiz-answer-btn w-100 mb-2 mb-md-3 py-2 py-md-3 rounded-4 shadow-sm border-0 animate__animated animate__fadeInUp" 
                                             style="animation-delay: ${idx * 0.05}s; background: ${type.color}; color: white;"
                                             data-preference="${type.id}">
                                         <span class="fw-bold">${type.name}</span>
                                     </button>
                                 `).join('')}
                                 
-                                <div class="d-flex gap-2 mt-4">
-                                    <button class="btn btn-light flex-grow-1 py-3 rounded-4 fw-bold text-muted" id="skipQuestion">
+                                <div class="d-flex gap-2 mt-3 mt-md-4">
+                                    <button class="btn btn-light flex-grow-1 py-2 py-md-3 rounded-4 fw-bold text-muted" id="skipQuestion">
                                         <i class="fas fa-forward me-1"></i> Passer
                                     </button>
                                 </div>
