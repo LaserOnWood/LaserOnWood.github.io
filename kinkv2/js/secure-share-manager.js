@@ -2,7 +2,7 @@
  * Module de partage sécurisé et chiffré pour l'application KinkList
  * Génère des liens temporaires avec chiffrement côté client
  */
-import { ToastManager } from './toast-manager.js';
+import { ToastManager } from './core-utils.js';
 
 export class SecureShareManager {
     constructor(preferencesManager, kinkData) {

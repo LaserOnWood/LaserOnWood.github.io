@@ -3,7 +3,7 @@
  * Version complète avec historique, IndexedDB et partage
  */
 import { CONFIG } from './config.js';
-import { debounce } from './utils.js';
+import { debounce } from './core-utils.js';
 
 /**
  * Classe responsable de la gestion des événements

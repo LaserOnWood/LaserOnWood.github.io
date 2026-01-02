@@ -2,9 +2,9 @@
  * Module de gestion d'import/export pour l'application de gestion des préférences Kink
  */
 import { CONFIG } from './config.js';
-import { readFileAsJson, downloadJsonFile, getDateString } from './utils.js';
+import { readFileAsJson, downloadJsonFile, getDateString } from './core-utils.js';
 import { DataLoader } from './data-loader.js';
-import { ToastManager } from './toast-manager.js';
+import { ToastManager } from './core-utils.js';
 
 /**
  * Classe responsable de la gestion des imports et exports

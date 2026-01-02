@@ -4,7 +4,7 @@
  */
 
 import { CustomDataManager } from './custom-data-manager.js';
-import { ToastManager } from './toast-manager.js';
+import { ToastManager } from './core-utils.js';
 
 export class CustomUIManager {
     constructor() {

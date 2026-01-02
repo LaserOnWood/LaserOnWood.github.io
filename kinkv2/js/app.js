@@ -6,10 +6,10 @@ import { EventManager } from './event-manager.js';
 import { ImportExportManager } from './import-export-manager.js';
 import { ImageGeneratorByCategory } from './image-generator-categories.js';
 import { ImageGeneratorByPreference } from './image-generator-preferences.js';
-import { ToastManager } from './toast-manager.js';
+import { ToastManager } from './core-utils.js';
 import { CustomDataManager } from './custom-data-manager.js';
 import { CustomUIManager } from './custom-ui-manager.js';
-import { ModalManager } from './modal-manager.js';
+import { ModalManager } from './core-utils.js';
 import { HistoryManager } from './history-manager.js';
 import { HistoryUIManager } from './history-ui-manager.js';
 

@@ -1,7 +1,7 @@
 /**
  * Module de génération d'interface utilisateur pour l'application de gestion des préférences Kink
  */
-import { escapeHtml } from './utils.js';
+import { escapeHtml } from './core-utils.js';
 
 /**
  * Classe responsable de la génération de l'interface utilisateur

@@ -187,3 +187,29 @@ h1, h2, h3, h4, h5, h6, .accordion-button {
     .main-container { margin: 1rem; border-radius: 16px; }
     .stat-badge { min-width: 100%; }
 }
+
+/* Animations essentielles fusionnées */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeOutLeft { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(-20px); } }
+
+.animate__animated { animation-duration: 0.4s; animation-fill-mode: both; }
+.animate__fadeIn { animation-name: fadeIn; }
+.animate__fadeInUp { animation-name: fadeInUp; }
+.animate__fadeOutLeft { animation-name: fadeOutLeft; }
+
+/* Styles de description fusionnés */
+.item-description {
+    font-size: 0.75rem;
+    color: rgba(255,255,255,0.8);
+    margin-top: 4px;
+    font-weight: 400;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.item:not(.adore):not(.aime):not(.curiosité):not(.dislike):not(.non_strict) .item-description {
+    color: #6c757d;
+}

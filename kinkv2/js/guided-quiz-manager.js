@@ -2,7 +2,7 @@
  * Module de questionnaire guidé pour l'application KinkList
  * Version Focus Immersive
  */
-import { ToastManager } from './toast-manager.js';
+import { ToastManager } from './core-utils.js';
 
 export class GuidedQuizManager {
     constructor(kinkData, preferencesManager, statsManager) {

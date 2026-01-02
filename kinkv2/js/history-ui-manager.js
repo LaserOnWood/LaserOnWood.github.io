@@ -2,7 +2,7 @@
  * Module de gestion de l'interface utilisateur pour l'historique
  * Gère les boutons, raccourcis clavier et modale d'historique
  */
-import { ToastManager } from './toast-manager.js';
+import { ToastManager } from './core-utils.js';
 
 export class HistoryUIManager {
     constructor(historyManager, preferencesManager, statsManager) {

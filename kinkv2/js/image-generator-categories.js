@@ -2,9 +2,9 @@
  * Module de génération d'image récapitulative pour l'application de gestion des préférences Kink
  * Version modifiée : Organisation par catégories avec personnalisation du pseudo
  */
-import { getDateString } from './utils.js';
-import { ToastManager } from './toast-manager.js';
-import { ModalManager } from './modal-manager.js';
+import { getDateString } from './core-utils.js';
+import { ToastManager } from './core-utils.js';
+import { ModalManager } from './core-utils.js';
 
 /**
  * Classe responsable de la génération d'images récapitulatives des préférences
