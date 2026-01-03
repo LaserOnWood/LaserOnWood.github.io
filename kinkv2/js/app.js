@@ -44,6 +44,7 @@ export class KinkPreferencesApp {
         this.dbManager = null;
         this.shareManager = null;
         this.quizManager = null;
+        this.searchManager = null;
     }
 
     async init() {
@@ -115,6 +116,7 @@ export class KinkPreferencesApp {
         this.quizManager = new GuidedQuizManager(this.kinkData, this.preferencesManager, this.statsManager);
         
         this.eventManager = new EventManager(this.preferencesManager, this.statsManager, this.importExportManager, { byCategory: this.imageGeneratorByCategory, byPreference: this.imageGeneratorByPreference},this.kinkData, this.historyManager, this.dbManager, this.shareManager);
+        this.searchManager = new SearchManager(this.kinkData);
     }
 
     generateInterface() {
@@ -126,6 +128,7 @@ export class KinkPreferencesApp {
     initializeEventListeners() {
         this.eventManager.initializeEventListeners();
         this.historyUIManager.initialize();
+        this.searchManager.initialize();
         
         // Écouter l'événement de démarrage du quiz
         document.addEventListener('startQuiz', () => {
@@ -200,6 +203,9 @@ export class KinkPreferencesApp {
         }
         if (this.historyUIManager) {
             this.historyUIManager.cleanup();
+        }
+        if (this.searchManager) {
+            this.searchManager.cleanup();
         }
         if (this.dbManager) {
             this.dbManager.close();
