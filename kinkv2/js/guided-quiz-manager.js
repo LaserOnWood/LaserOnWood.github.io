@@ -227,14 +227,42 @@ export class GuidedQuizManager {
 
     applyAnswers() {
         if (this.answers.size === 0) return;
+        
+        // Appliquer chaque préférence
         this.answers.forEach((pref, item) => {
             this.preferencesManager.setPreference(item, pref);
+            
+            // Mettre à jour visuellement tous les éléments correspondants
+            const itemElements = document.querySelectorAll(`[data-item="${item}"]`);
+            itemElements.forEach(element => {
+                // Retirer toutes les anciennes classes de préférence
+                ['adore', 'aime', 'curiosité', 'dislike', 'non_strict'].forEach(state => {
+                    element.classList.remove(state);
+                });
+                
+                // Ajouter la nouvelle classe si ce n'est pas "none"
+                if (pref !== 'none') {
+                    element.classList.add(pref);
+                }
+            });
         });
+        
+        // Mettre à jour les statistiques
         this.statsManager.updateInterface();
+        
+        // Sauvegarder dans IndexedDB si disponible
         const app = window.getKinkApp ? window.getKinkApp() : null;
         if (app && app.dbManager) {
             this.preferencesManager.saveToIndexedDB(app.dbManager);
         }
+        
+        // Sauvegarder dans l'historique si disponible
+        if (app && app.historyManager) {
+            const currentState = this.preferencesManager.getAllPreferences();
+            app.historyManager.saveState(currentState, 'Questionnaire guidé terminé');
+        }
+        
+        console.log(`✅ ${this.answers.size} préférences appliquées et affichées`);
     }
 
     showCompletionModal() {
