@@ -197,11 +197,7 @@ export class GuidedQuizManager {
         });
 
         document.getElementById('quitQuiz').addEventListener('click', () => {
-            if (confirm('Voulez-vous vraiment quitter le mode Focus ? Vos réponses actuelles seront conservées.')) {
-                this.applyAnswers();
-                bsModal.hide();
-                modal.addEventListener('hidden.bs.modal', () => modal.remove(), { once: true });
-            }
+            this.showQuitConfirmationModal(bsModal, modal);
         });
 
         bsModal.show();
@@ -263,6 +259,84 @@ export class GuidedQuizManager {
         }
         
         console.log(`✅ ${this.answers.size} préférences appliquées et affichées`);
+    }
+
+    showQuitConfirmationModal(quizModal, quizModalElement) {
+        const confirmModalId = 'quitConfirmModal';
+        let confirmModal = document.getElementById(confirmModalId);
+        if (confirmModal) confirmModal.remove();
+
+        confirmModal = document.createElement('div');
+        confirmModal.className = 'modal fade';
+        confirmModal.id = confirmModalId;
+        confirmModal.setAttribute('data-bs-backdrop', 'static');
+        confirmModal.style.zIndex = '1060'; // Au-dessus de la modal du quiz
+
+        confirmModal.innerHTML = `
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content border-0 shadow-lg rounded-4">
+                    <div class="modal-header border-0 bg-warning text-white p-4">
+                        <h5 class="modal-title fw-bold">
+                            <i class="fas fa-exclamation-triangle me-2"></i> Quitter le mode Focus ?
+                        </h5>
+                    </div>
+                    <div class="modal-body p-4 text-center">
+                        <div class="mb-3">
+                            <i class="fas fa-question-circle fa-3x text-warning opacity-50"></i>
+                        </div>
+                        <p class="lead mb-3">Voulez-vous vraiment quitter le questionnaire ?</p>
+                        <div class="alert alert-light border-0 rounded-3">
+                            <small class="text-muted">
+                                <i class="fas fa-info-circle me-1"></i>
+                                Vos <strong>${this.answers.size}</strong> réponse(s) actuelle(s) seront conservées et appliquées.
+                            </small>
+                        </div>
+                    </div>
+                    <div class="modal-footer border-0 p-4">
+                        <button type="button" class="btn btn-light px-4" id="cancelQuitBtn">
+                            <i class="fas fa-arrow-left me-1"></i> Continuer le quiz
+                        </button>
+                        <button type="button" class="btn btn-warning px-4 fw-bold" id="confirmQuitBtn">
+                            <i class="fas fa-sign-out-alt me-1"></i> Quitter
+                        </button>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(confirmModal);
+
+        const bsConfirmModal = new window.bootstrap.Modal(confirmModal);
+
+        // Bouton Annuler
+        document.getElementById('cancelQuitBtn').addEventListener('click', () => {
+            bsConfirmModal.hide();
+        });
+
+        // Bouton Quitter
+        document.getElementById('confirmQuitBtn').addEventListener('click', () => {
+            bsConfirmModal.hide();
+            
+            confirmModal.addEventListener('hidden.bs.modal', () => {
+                confirmModal.remove();
+                
+                // Appliquer les réponses et fermer le quiz
+                this.applyAnswers();
+                quizModal.hide();
+                quizModalElement.addEventListener('hidden.bs.modal', () => {
+                    quizModalElement.remove();
+                }, { once: true });
+            }, { once: true });
+        });
+
+        // Nettoyage
+        confirmModal.addEventListener('hidden.bs.modal', () => {
+            if (document.body.contains(confirmModal)) {
+                confirmModal.remove();
+            }
+        });
+
+        bsConfirmModal.show();
     }
 
     showCompletionModal() {
