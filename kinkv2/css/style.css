@@ -132,6 +132,62 @@ h1, h2, h3, h4, h5, h6, .accordion-button {
     color: white;
 }
 
+/* Barre de recherche */
+.search-container {
+    position: relative;
+}
+
+#globalSearch {
+    transition: all 0.3s ease;
+    border-radius: 12px;
+}
+
+#globalSearch:focus {
+    border-color: #4facfe;
+    box-shadow: 0 0 0 0.2rem rgba(79, 172, 254, 0.25);
+}
+
+#globalSearch.active {
+    border-color: #00f2fe;
+    background-color: #f0f9ff;
+}
+
+#clearSearch {
+    transition: all 0.2s ease;
+    border-radius: 0 12px 12px 0;
+}
+
+#clearSearch:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+}
+
+.search-highlight {
+    animation: highlight-pulse 1s ease-in-out;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.3) !important;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes highlight-pulse {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(79, 172, 254, 0);
+    }
+    50% {
+        box-shadow: 0 0 0 5px rgba(79, 172, 254, 0.4);
+    }
+}
+
+#searchResultMessage {
+    margin-bottom: 1rem;
+    border-radius: 12px;
+}
+
+.input-group-text {
+    border-radius: 12px 0 0 12px;
+}
+
 /* Grille d'items et Feedbacks */
 .items-grid {
     display: grid;
