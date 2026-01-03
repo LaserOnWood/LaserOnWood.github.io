@@ -17,6 +17,7 @@ import { HistoryUIManager } from './history-ui-manager.js';
 import { IndexedDBManager } from './indexed-db-manager.js';
 import { SecureShareManager } from './secure-share-manager.js';
 import { GuidedQuizManager } from './guided-quiz-manager.js';
+import { SearchManager } from './search-manager.js';
 
 export class KinkPreferencesApp {
     constructor() {
