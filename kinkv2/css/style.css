@@ -101,6 +101,9 @@ h1, h2, h3, h4, h5, h6, .accordion-button {
     padding: 1.2rem 1.5rem;
     border-radius: 18px !important;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .accordion-button:not(.collapsed) {
@@ -111,6 +114,22 @@ h1, h2, h3, h4, h5, h6, .accordion-button {
 
 .accordion-button:not(.collapsed)::after {
     filter: brightness(0) invert(1);
+}
+
+/* Compteur de catégorie */
+.category-counter {
+    margin-left: 12px;
+    padding: 0.25rem 0.75rem;
+    background: rgba(0, 0, 0, 0.20);
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: var(--primary-font);
+}
+
+.accordion-button:not(.collapsed) .category-counter {
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
 }
 
 /* Grille d'items et Feedbacks */
