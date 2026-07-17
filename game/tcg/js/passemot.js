@@ -24,15 +24,6 @@ const CARTES = [
   },
   {
     id: 2,
-    passwordHash: "ee11fce9c63ebf368bca90f069806c881404f70708e6be19173d1467868462e0", // "miroir"
-    hint: "Là où l'on se regarde avant de sortir.",
-    title: "Le Reflet",
-    image: "https://picsum.photos/seed/carte2/500/700",
-    description: "Choisissez la tenue de votre partenaire pour le reste de la soirée.",
-    rarity: "Commun"
-  },
-  {
-    id: 3,
     passwordHash: "bd7cf4d0b57ebfdd5a030ae10bc49c4ec1e69dfacf1feeb45e4d0b21c3fcbadb", // "velours"
     hint: "Doux au toucher, souvent sur un canapé.",
     title: "Le Velours",
@@ -41,7 +32,7 @@ const CARTES = [
     rarity: "Rare"
   },
   {
-    id: 4,
+    id: 3,
     passwordHash: "c9e249076b83a1040a351fe9cf42c9bdc60d24eac7568500737f26890420ec70", // "boussole"
     hint: "Elle indique toujours une direction.",
     title: "La Direction",
@@ -60,29 +51,11 @@ const CARTES = [
   },
   {
     id: 6,
-    passwordHash: "5e34d5179c13deb3177625e922456b154c8fb3a3dfd7490f7aff798f23a853e2", // "ruban"
-    hint: "On l'utilise pour attacher un cadeau.",
-    title: "Le Lien",
-    image: "https://picsum.photos/seed/carte6/500/700",
-    description: "Un tour de rôle où l'un des deux ne peut utiliser que ses mains… ou pas.",
-    rarity: "Épique"
-  },
-  {
-    id: 7,
     passwordHash: "e49ec5f68827a836467c4f3e3a54fa7b10a2acbd949d6aa79f85f629be684f23", // "sablier"
     hint: "Le temps s'écoule grain par grain.",
     title: "Le Compte à Rebours",
     image: "https://picsum.photos/seed/carte7/500/700",
     description: "Trois minutes chrono pour convaincre votre partenaire de céder à votre requête.",
-    rarity: "Légendaire"
-  },
-  {
-    id: 8,
-    passwordHash: "80b1509ea37643250da601f2d24fe9b236b76fd3a3d7d18498d760cdd38813b2", // "eclipse"
-    hint: "Quand la lune cache le soleil.",
-    title: "L'Éclipse",
-    image: "https://picsum.photos/seed/carte8/500/700",
-    description: "La carte finale : un souhait, sans limite ni condition, à exaucer ce soir.",
     rarity: "Légendaire"
   }
 ];
