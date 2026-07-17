@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Pass-Card • Chasse aux Trésors</title>
+<style>
+/* ==========================================================================
+   TOKENS — palette, typographie, rythmes
+   ========================================================================== */
+:root{
+  --bg-void:      #0d0509;
+  --bg-panel:     #1a0b14;
+  --bg-panel-2:   #240f1c;
+  --velvet:       #5c1228;
+  --magenta:      #ff2f7e;
+  --gold:         #d9a94f;
+  --gold-soft:    #f0d68a;
+  --ink:          #f3e6ea;
+  --ink-muted:    #a9899a;
+  --line:         rgba(217,169,79,0.18);
+  --shadow-deep:  0 20px 50px rgba(0,0,0,0.55);
+  --r-lg: 20px;
+  --r-md: 14px;
+  --ff-display: 'Cormorant Garamond', Georgia, serif;
+  --ff-body: 'Poppins', system-ui, sans-serif;
+}
+
+*{ box-sizing:border-box; }
+html,body{
+  margin:0; padding:0;
+  background:
+    radial-gradient(circle at 15% -10%, rgba(255,47,126,0.14), transparent 45%),
+    radial-gradient(circle at 85% 0%, rgba(217,169,79,0.10), transparent 40%),
+    var(--bg-void);
+  color:var(--ink);
+  font-family:var(--ff-body);
+  -webkit-tap-highlight-color:transparent;
+  min-height:100%;
+}
+body{ padding-bottom:120px; }
+
+::selection{ background:var(--magenta); color:#fff; }
+
+/* ==========================================================================
+   HEADER
+   ========================================================================== */
+header.top{
+  position:sticky; top:0; z-index:20;
+  padding:22px 20px 16px;
+  background:linear-gradient(180deg, rgba(13,5,9,0.97) 70%, rgba(13,5,9,0));
+  backdrop-filter:blur(6px);
+}
+.eyebrow{
+  font-size:11px; letter-spacing:0.28em; text-transform:uppercase;
+  color:var(--gold); opacity:0.85; margin:0 0 4px; font-weight:600;
+}
+h1{
+  font-family:var(--ff-display);
+  font-weight:600; font-style:italic;
+  font-size:clamp(28px,8vw,38px);
+  margin:0 0 14px; line-height:1;
+  background:linear-gradient(100deg, var(--ink) 30%, var(--gold-soft) 55%, var(--ink) 75%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.progress-wrap{
+  display:flex; align-items:center; gap:12px;
+}
+.progress-track{
+  flex:1; height:6px; border-radius:99px;
+  background:var(--bg-panel-2);
+  border:1px solid var(--line);
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%; border-radius:99px;
+  background:linear-gradient(90deg, var(--velvet), var(--magenta), var(--gold));
+  width:0%;
+  transition:width .6s cubic-bezier(.4,0,.2,1);
+  box-shadow:0 0 10px rgba(255,47,126,0.6);
+}
+.progress-label{
+  font-size:12px; font-variant-numeric:tabular-nums;
+  color:var(--ink-muted); white-space:nowrap;
+}
+
+/* ==========================================================================
+   GRILLE DE CARTES
+   ========================================================================== */
+main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
+.grid{
+  display:grid;
+  grid-template-columns:repeat(2, 1fr);
+  gap:14px;
+}
+@media (min-width:560px){
+  .grid{ grid-template-columns:repeat(3, 1fr); }
+}
+
+.card-slot{ perspective:1200px; }
+.card{
+  position:relative;
+  width:100%;
+  aspect-ratio:5/7.3;
+  transform-style:preserve-3d;
+  transition:transform .8s cubic-bezier(.22,1,.36,1);
+  cursor:default;
+}
+.card.unlocked{ transform:rotateY(180deg); }
+.card.just-unlocked{ animation:pop .8s cubic-bezier(.22,1,.36,1); }
+@keyframes pop{
+  0%{ filter:brightness(1); }
+  55%{ filter:brightness(1.5) drop-shadow(0 0 22px rgba(255,47,126,0.8)); }
+  100%{ filter:brightness(1); }
+}
+
+.face{
+  position:absolute; inset:0;
+  border-radius:var(--r-md);
+  backface-visibility:hidden;
+  overflow:hidden;
+  display:flex; flex-direction:column;
+  box-shadow:var(--shadow-deep);
+}
+
+/* ---- DOS (verrouillé) ---- */
+.back{
+  background:
+    repeating-linear-gradient(135deg, rgba(217,169,79,0.05) 0 2px, transparent 2px 14px),
+    linear-gradient(160deg, var(--bg-panel-2), var(--bg-panel) 60%, #150810);
+  border:1px solid var(--line);
+  align-items:center; justify-content:center;
+  padding:14px; text-align:center;
+  gap:10px;
+}
+.seal{
+  width:44px; height:44px; border-radius:50%;
+  background:radial-gradient(circle at 35% 30%, var(--gold-soft), var(--gold) 45%, var(--velvet) 100%);
+  display:flex; align-items:center; justify-content:center;
+  font-size:18px; color:var(--bg-void);
+  box-shadow:0 0 0 3px rgba(217,169,79,0.15), 0 4px 14px rgba(0,0,0,0.5);
+  animation:breathe 3.2s ease-in-out infinite;
+}
+@keyframes breathe{
+  0%,100%{ box-shadow:0 0 0 3px rgba(217,169,79,0.15), 0 4px 14px rgba(0,0,0,0.5); }
+  50%{ box-shadow:0 0 0 7px rgba(217,169,79,0.28), 0 4px 22px rgba(255,47,126,0.35); }
+}
+.back .num{
+  font-family:var(--ff-display); font-style:italic;
+  color:var(--ink-muted); font-size:12px; letter-spacing:0.1em;
+}
+.back .hint{
+  font-size:11.5px; line-height:1.4; color:var(--ink-muted);
+  padding-top:2px; max-width:14ch;
+}
+.back .hint::before{ content:"— indice — "; display:block; color:var(--gold); font-size:9.5px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:4px; }
+
+/* ---- FACE (déverrouillée) ---- */
+.front{
+  transform:rotateY(180deg);
+  background:var(--bg-panel);
+  display:flex; flex-direction:column;
+}
+.art{
+  position:relative; flex:1 1 60%;
+  background-size:cover; background-position:center;
+  min-height:0;
+}
+.art::after{
+  content:""; position:absolute; inset:0;
+  background:linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(13,5,9,0.92) 100%);
+}
+.rarity-tag{
+  position:absolute; top:8px; left:8px; z-index:2;
+  font-size:9.5px; font-weight:700; letter-spacing:0.08em; text-transform:uppercase;
+  padding:3px 8px; border-radius:99px;
+  color:var(--bg-void);
+}
+.info{
+  padding:10px 11px 12px;
+  display:flex; flex-direction:column; gap:4px;
+  flex:1 1 40%; min-height:0;
+}
+.info .title{
+  font-family:var(--ff-display); font-weight:600; font-size:16px;
+  line-height:1.15; margin:0;
+}
+.info .desc{
+  font-size:11px; line-height:1.4; color:var(--ink-muted);
+  overflow-y:auto;
+}
+
+/* Bordures + halo selon rareté */
+.front[data-rarity="Commun"]     { border:1.5px solid #7b8a94; box-shadow:var(--shadow-deep); }
+.front[data-rarity="Rare"]       { border:1.5px solid #4fb3d9; box-shadow:0 0 16px rgba(79,179,217,0.35), var(--shadow-deep); }
+.front[data-rarity="Épique"]     { border:1.5px solid var(--magenta); box-shadow:0 0 20px rgba(255,47,126,0.45), var(--shadow-deep); }
+.front[data-rarity="Légendaire"] { border:1.5px solid var(--gold); box-shadow:0 0 24px rgba(217,169,79,0.55), var(--shadow-deep); }
+
+.rarity-tag[data-r="Commun"]{ background:#7b8a94; }
+.rarity-tag[data-r="Rare"]{ background:#4fb3d9; }
+.rarity-tag[data-r="Épique"]{ background:var(--magenta); color:#fff; }
+.rarity-tag[data-r="Légendaire"]{ background:linear-gradient(90deg,var(--gold),var(--gold-soft)); }
+
+/* Effet holographique — uniquement Épique / Légendaire */
+.front.holo::before{
+  content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
+  background:linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.35) 42%, rgba(255,47,126,0.35) 50%, rgba(217,169,79,0.35) 58%, transparent 80%);
+  background-size:250% 250%;
+  mix-blend-mode:overlay;
+  animation:shimmer 3.5s linear infinite;
+  opacity:0.85;
+}
+@keyframes shimmer{
+  0%{ background-position:0% 0%; }
+  100%{ background-position:100% 100%; }
+}
+
+/* ==========================================================================
+   BARRE DE SAISIE (sticky bas d'écran, pouce-friendly)
+   ========================================================================== */
+.entry-bar{
+  position:fixed; left:0; right:0; bottom:0; z-index:30;
+  padding:14px 16px calc(16px + env(safe-area-inset-bottom));
+  background:linear-gradient(0deg, rgba(13,5,9,0.98) 65%, rgba(13,5,9,0));
+}
+.entry-inner{
+  max-width:640px; margin:0 auto;
+  display:flex; gap:8px;
+  background:var(--bg-panel);
+  border:1px solid var(--line);
+  border-radius:99px;
+  padding:6px;
+  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+}
+.entry-inner.shake{ animation:shake .4s; border-color:#ff4d4d; }
+@keyframes shake{
+  0%,100%{ transform:translateX(0); }
+  20%{ transform:translateX(-8px); }
+  40%{ transform:translateX(7px); }
+  60%{ transform:translateX(-5px); }
+  80%{ transform:translateX(3px); }
+}
+#pwd-input{
+  flex:1; min-width:0;
+  background:transparent; border:none; outline:none;
+  color:var(--ink); font-family:var(--ff-body);
+  font-size:16px; /* empêche le zoom iOS */
+  padding:12px 16px;
+}
+#pwd-input::placeholder{ color:var(--ink-muted); }
+#submit-btn{
+  flex-shrink:0;
+  border:none; cursor:pointer;
+  padding:0 22px;
+  border-radius:99px;
+  font-family:var(--ff-body); font-weight:600; font-size:14px;
+  color:#180509;
+  background:linear-gradient(100deg, var(--gold-soft), var(--gold));
+  transition:transform .15s ease;
+}
+#submit-btn:active{ transform:scale(0.94); }
+.feedback{
+  max-width:640px; margin:0 auto 8px; padding:0 6px;
+  font-size:12px; min-height:16px; text-align:center;
+  transition:color .2s;
+}
+.feedback.err{ color:#ff6b6b; }
+.feedback.ok{ color:var(--gold-soft); }
+
+/* Modale de fin */
+.overlay{
+  position:fixed; inset:0; z-index:50;
+  background:rgba(8,3,6,0.88); backdrop-filter:blur(4px);
+  display:none; align-items:center; justify-content:center;
+  padding:24px;
+}
+.overlay.show{ display:flex; }
+.overlay .box{
+  max-width:360px; text-align:center;
+  background:var(--bg-panel); border:1px solid var(--line);
+  border-radius:var(--r-lg); padding:32px 24px;
+  box-shadow:var(--shadow-deep);
+}
+.overlay h2{ font-family:var(--ff-display); font-style:italic; font-size:28px; margin:0 0 10px; color:var(--gold-soft); }
+.overlay p{ font-size:13px; color:var(--ink-muted); line-height:1.5; margin:0 0 18px; }
+.overlay button{
+  border:none; cursor:pointer; padding:10px 20px; border-radius:99px;
+  background:transparent; border:1px solid var(--gold); color:var(--gold-soft);
+  font-family:var(--ff-body); font-size:13px;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .card, .front.holo::before, .seal, .progress-fill{ animation:none !important; transition:none !important; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <p class="eyebrow">Chasse aux trésors</p>
+  <h1>Pass-Card</h1>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-label" id="progress-label">0 / 0</div>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="entry-bar">
+  <p class="feedback" id="feedback">&nbsp;</p>
+  <div class="entry-inner" id="entry-inner">
+    <input id="pwd-input" type="text" placeholder="Entrer le mot de passe…" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button id="submit-btn">Valider</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="box">
+    <h2>Collection complète</h2>
+    <p>Toutes les cartes ont été révélées. La soirée peut vraiment commencer…</p>
+    <button id="overlay-close">Fermer</button>
+  </div>
+</div>
+
+<script>
+/* ==========================================================================
+   1. DONNÉES DES CARTES
+   --------------------------------------------------------------------------
+   Chaque carte = { id, passwordHash, hint, title, image, description, rarity }
+   - passwordHash : hash SHA-256 du mot de passe EN MINUSCULES et sans espaces.
+   - rarity : "Commun" | "Rare" | "Épique" | "Légendaire"
+   - image : chemin relatif ("images/carte1.jpg") ou URL absolue.
+
+   ⚠️ Les mots de passe ci-dessous sont des EXEMPLES DE DÉMONSTRATION
+   ("clef", "miroir", "velours", "boussole", "lanterne", "ruban",
+   "sablier", "eclipse"). Remplacez passwordHash par le hash de vos
+   propres mots de passe avant de jouer (voir l'outil de génération
+   de hash tout en bas de ce script).
+   ========================================================================== */
+const CARTES = [
+  {
+    id: 1,
+    passwordHash: "87d6ad049783f68f509a18094d29b7e994d86983fa39a2620cfb0f86ec8dfcb0", // "clef"
+    hint: "Sous l'objet qui ouvre les portes.",
+    title: "Le Prélude",
+    image: "https://picsum.photos/seed/carte1/500/700",
+    description: "Un massage lent, à la lumière des bougies, pour ouvrir le jeu en douceur.",
+    rarity: "Commun"
+  },
+  {
+    id: 2,
+    passwordHash: "ee11fce9c63ebf368bca90f069806c881404f70708e6be19173d1467868462e0", // "miroir"
+    hint: "Là où l'on se regarde avant de sortir.",
+    title: "Le Reflet",
+    image: "https://picsum.photos/seed/carte2/500/700",
+    description: "Choisissez la tenue de votre partenaire pour le reste de la soirée.",
+    rarity: "Commun"
+  },
+  {
+    id: 3,
+    passwordHash: "bd7cf4d0b57ebfdd5a030ae10bc49c4ec1e69dfacf1feeb45e4d0b21c3fcbadb", // "velours"
+    hint: "Doux au toucher, souvent sur un canapé.",
+    title: "Le Velours",
+    image: "https://picsum.photos/seed/carte3/500/700",
+    description: "Un privilège d'une durée de dix minutes, à réclamer quand bon vous semble ce soir.",
+    rarity: "Rare"
+  },
+  {
+    id: 4,
+    passwordHash: "c9e249076b83a1040a351fe9cf42c9bdc60d24eac7568500737f26890420ec70", // "boussole"
+    hint: "Elle indique toujours une direction.",
+    title: "La Direction",
+    image: "https://picsum.photos/seed/carte4/500/700",
+    description: "Votre partenaire vous guide, les yeux fermés, vers une surprise.",
+    rarity: "Rare"
+  },
+  {
+    id: 5,
+    passwordHash: "23df2ca41316489504d44f3adad8b2d9752bc0cd7e65045d51810c5c8c879c47", // "lanterne"
+    hint: "Elle éclaire dans l'obscurité.",
+    title: "La Lueur",
+    image: "https://picsum.photos/seed/carte5/500/700",
+    description: "Un gage à réaliser lumières éteintes uniquement.",
+    rarity: "Épique"
+  },
+  {
+    id: 6,
+    passwordHash: "5e34d5179c13deb3177625e922456b154c8fb3a3dfd7490f7aff798f23a853e2", // "ruban"
+    hint: "On l'utilise pour attacher un cadeau.",
+    title: "Le Lien",
+    image: "https://picsum.photos/seed/carte6/500/700",
+    description: "Un tour de rôle où l'un des deux ne peut utiliser que ses mains… ou pas.",
+    rarity: "Épique"
+  },
+  {
+    id: 7,
+    passwordHash: "e49ec5f68827a836467c4f3e3a54fa7b10a2acbd949d6aa79f85f629be684f23", // "sablier"
+    hint: "Le temps s'écoule grain par grain.",
+    title: "Le Compte à Rebours",
+    image: "https://picsum.photos/seed/carte7/500/700",
+    description: "Trois minutes chrono pour convaincre votre partenaire de céder à votre requête.",
+    rarity: "Légendaire"
+  },
+  {
+    id: 8,
+    passwordHash: "80b1509ea37643250da601f2d24fe9b236b76fd3a3d7d18498d760cdd38813b2", // "eclipse"
+    hint: "Quand la lune cache le soleil.",
+    title: "L'Éclipse",
+    image: "https://picsum.photos/seed/carte8/500/700",
+    description: "La carte finale : un souhait, sans limite ni condition, à exaucer ce soir.",
+    rarity: "Légendaire"
+  }
+];
+
+const STORAGE_KEY = "kinky_tcg_progress_v1";
+
+/* ==========================================================================
+   2. UTILITAIRES
+   ========================================================================== */
+
+// Calcule le hash SHA-256 (hexadécimal) d'une chaîne, via l'API native du navigateur.
+async function sha256(message){
+  const data = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
+}
+
+// Normalise la saisie : minuscules + suppression des espaces superflus.
+function normaliser(texte){
+  return texte.trim().toLowerCase();
+}
+
+function chargerProgression(){
+  try{
+    const brut = localStorage.getItem(STORAGE_KEY);
+    return brut ? new Set(JSON.parse(brut)) : new Set();
+  }catch(e){
+    return new Set();
+  }
+}
+
+function sauverProgression(setDebloquees){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify([...setDebloquees]));
+}
+
+/* ==========================================================================
+   3. ÉTAT & RENDU
+   ========================================================================== */
+let debloquees = chargerProgression();
+
+function iconeRarete(r){
+  return { "Commun":"🔒", "Rare":"🔒", "Épique":"🔒", "Légendaire":"🔒" }[r] || "🔒";
+}
+
+function creerCarteHTML(carte){
+  const estDebloquee = debloquees.has(carte.id);
+  const holo = (carte.rarity === "Épique" || carte.rarity === "Légendaire") ? "holo" : "";
+
+  return `
+    <div class="card-slot">
+      <div class="card ${estDebloquee ? 'unlocked' : ''}" data-id="${carte.id}">
+        <div class="face back">
+          <div class="seal">✦</div>
+          <div class="num">Carte n°${String(carte.id).padStart(2,'0')}</div>
+          ${carte.hint ? `<div class="hint">${carte.hint}</div>` : ''}
+        </div>
+        <div class="face front ${holo}" data-rarity="${carte.rarity}">
+          <div class="rarity-tag" data-r="${carte.rarity}">${carte.rarity}</div>
+          <div class="art" style="background-image:url('${carte.image}')"></div>
+          <div class="info">
+            <p class="title">${carte.title}</p>
+            <p class="desc">${carte.description}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function rendreGrille(){
+  const grid = document.getElementById("grid");
+  grid.innerHTML = CARTES.map(creerCarteHTML).join("");
+}
+
+function rendreProgression(){
+  const total = CARTES.length;
+  const n = debloquees.size;
+  document.getElementById("progress-label").textContent = `${n} / ${total}`;
+  document.getElementById("progress-fill").style.width = `${(n/total)*100}%`;
+  if(n === total){
+    document.getElementById("overlay").classList.add("show");
+  }
+}
+
+/* ==========================================================================
+   4. LOGIQUE DE SAISIE DU MOT DE PASSE
+   ========================================================================== */
+const input = document.getElementById("pwd-input");
+const btn = document.getElementById("submit-btn");
+const entryInner = document.getElementById("entry-inner");
+const feedback = document.getElementById("feedback");
+
+async function tenterDeverrouillage(){
+  const saisie = normaliser(input.value);
+  if(!saisie){ return; }
+
+  const hash = await sha256(saisie);
+  const carteTrouvee = CARTES.find(c => c.passwordHash === hash && !debloquees.has(c.id));
+
+  if(carteTrouvee){
+    debloquees.add(carteTrouvee.id);
+    sauverProgression(debloquees);
+    input.value = "";
+    feedback.textContent = `✦ « ${carteTrouvee.title} » révélée !`;
+    feedback.className = "feedback ok";
+
+    rendreGrille();
+    rendreProgression();
+
+    // relance l'animation de pop sur la carte concernée
+    requestAnimationFrame(() => {
+      const el = document.querySelector(`.card[data-id="${carteTrouvee.id}"]`);
+      if(el){
+        el.classList.add("just-unlocked");
+        setTimeout(() => el.classList.remove("just-unlocked"), 900);
+      }
+    });
+  } else {
+    // déjà débloquée avec ce mot de passe, ou mot de passe invalide
+    const dejaFait = CARTES.some(c => c.passwordHash === hash && debloquees.has(c.id));
+    feedback.textContent = dejaFait ? "Cette carte est déjà révélée." : "Mot de passe incorrect.";
+    feedback.className = "feedback err";
+    entryInner.classList.remove("shake");
+    void entryInner.offsetWidth; // force le reflow pour rejouer l'animation
+    entryInner.classList.add("shake");
+  }
+}
+
+btn.addEventListener("click", tenterDeverrouillage);
+input.addEventListener("keydown", (e) => {
+  if(e.key === "Enter"){ tenterDeverrouillage(); }
+});
+document.getElementById("overlay-close").addEventListener("click", () => {
+  document.getElementById("overlay").classList.remove("show");
+});
+
+/* ==========================================================================
+   5. INITIALISATION
+   ========================================================================== */
+rendreGrille();
+rendreProgression();
+
+/* ==========================================================================
+   6. OUTIL — Générateur de hash SHA-256 (pour l'organisateur)
+   --------------------------------------------------------------------------
+   Pour générer le hash d'un nouveau mot de passe :
+   1. Ouvrez la console du navigateur (F12) sur cette page.
+   2. Tapez : await genererHash("mon-mot-de-passe")
+   3. Copiez le résultat dans le champ "passwordHash" de la carte voulue.
+   ========================================================================== */
+async function genererHash(motDePasse){
+  const h = await sha256(normaliser(motDePasse));
+  console.log(`"${motDePasse}" → ${h}`);
+  return h;
+}
+window.genererHash = genererHash; // rend la fonction accessible depuis la console
+</script>
+</body>
+</html>
