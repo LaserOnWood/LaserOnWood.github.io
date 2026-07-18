@@ -9,8 +9,12 @@
   --magenta:      #ff2f7e;
   --gold:         #d9a94f;
   --gold-soft:    #f0d68a;
-  --platinum: #8da6ec80;
-  --platinum-soft: #8ddeecab;
+  
+  /* Nouveau Platinum Métallique */
+  --platinum:      #e5e4e2; 
+  --platinum-soft: #fcfcfc;
+  --platinum-glow: rgba(229, 228, 226, 0.5);
+  
   --ink:          #f3e6ea;
   --ink-muted:    #a9899a;
   --line:         rgba(217,169,79,0.18);
@@ -190,15 +194,27 @@ main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
 .front[data-rarity="Rare"]       { border:1.5px solid #4fb3d9; box-shadow:0 0 16px rgba(79,179,217,0.35), var(--shadow-deep); }
 .front[data-rarity="Épique"]     { border:1.5px solid var(--magenta); box-shadow:0 0 20px rgba(255,47,126,0.45), var(--shadow-deep); }
 .front[data-rarity="Légendaire"] { border:1.5px solid var(--gold); box-shadow:0 0 24px rgba(217,169,79,0.55), var(--shadow-deep); }
-.front[data-rarity="Mythique"] { border:1.5px solid var(--platinum); box-shadow:0 0 24px rgba(217,169,79,0.55), var(--shadow-deep); }
+
+/* Amélioration Mythique (Platinum) */
+.front[data-rarity="Mythique"] { 
+  border: 1.5px solid var(--platinum); 
+  box-shadow: 0 0 24px var(--platinum-glow), inset 0 0 15px rgba(255, 255, 255, 0.1), var(--shadow-deep); 
+}
 
 .rarity-tag[data-r="Commun"]{ background:#7b8a94; }
 .rarity-tag[data-r="Rare"]{ background:#4fb3d9; }
 .rarity-tag[data-r="Épique"]{ background:var(--magenta); color:#fff; }
 .rarity-tag[data-r="Légendaire"]{ background:linear-gradient(90deg,var(--gold),var(--gold-soft)); }
-.rarity-tag[data-r="Mythique"]{ background:linear-gradient(90deg,var(--platinum),var(--platinum-soft)); }
 
-/* Effet holographique — uniquement Épique / Légendaire / Mythique*/
+/* Badge Mythique amélioré */
+.rarity-tag[data-r="Mythique"]{ 
+  background: linear-gradient(135deg, #d3d3d3 0%, #ffffff 50%, #e5e4e2 100%); 
+  color: #1a0b14;
+  box-shadow: 0 0 10px var(--platinum-glow);
+  border: 0.5px solid rgba(255,255,255,0.5);
+}
+
+/* Effet holographique — Épique / Légendaire */
 .front.holo::before{
   content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
   background:linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.35) 42%, rgba(255,47,126,0.35) 50%, rgba(217,169,79,0.35) 58%, transparent 80%);
@@ -207,9 +223,26 @@ main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
   animation:shimmer 3.5s linear infinite;
   opacity:0.85;
 }
+
+/* Texture Métallique Spécifique pour Mythique */
+.front[data-rarity="Mythique"].holo::before {
+  background: 
+    linear-gradient(115deg, transparent 10%, rgba(255,255,255,0.5) 30%, rgba(200,200,255,0.4) 45%, rgba(255,255,255,0.6) 50%, rgba(200,200,255,0.4) 55%, rgba(255,255,255,0.5) 70%, transparent 90%),
+    repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0px, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 3px);
+  background-size: 200% 200%, 100% 100%;
+  mix-blend-mode: color-dodge;
+  animation: shimmer-mythic 4s ease-in-out infinite alternate;
+  opacity: 0.6;
+}
+
 @keyframes shimmer{
   0%{ background-position:0% 0%; }
   100%{ background-position:100% 100%; }
+}
+
+@keyframes shimmer-mythic{
+  0%{ background-position: 0% 50%; filter: brightness(1); }
+  100%{ background-position: 100% 50%; filter: brightness(1.3); }
 }
 
 /* ==========================================================================
