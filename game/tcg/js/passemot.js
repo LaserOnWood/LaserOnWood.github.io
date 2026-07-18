@@ -69,7 +69,7 @@ const CARTES = [
   }
 ];
 
-const STORAGE_KEY = "kinky_tcg_progress_v1";
+const STORAGE_KEY = "kinky_tcg_progress_v2";
 
 /* ==========================================================================
    2. UTILITAIRES
@@ -107,18 +107,18 @@ function sauverProgression(setDebloquees){
 let debloquees = chargerProgression();
 
 function iconeRarete(r){
-  return { "Commun":"🔒", "Rare":"🔒", "Épique":"🔒", "Légendaire":"🔒" }[r] || "🔒";
+  return { "Commun":"🔒", "Rare":"🔒", "Épique":"🔒", "Légendaire":"🔒", "Mythique":"🔒" }[r] || "🔒";
 }
 
 function creerCarteHTML(carte){
   const estDebloquee = debloquees.has(carte.id);
-  const holo = (carte.rarity === "Épique" || carte.rarity === "Légendaire") ? "holo" : "";
+  const holo = (carte.rarity === "Épique" || carte.rarity === "Légendaire" || carte.rarity === "Mythique") ? "holo" : "";
 
   return `
     <div class="card-slot">
       <div class="card ${estDebloquee ? 'unlocked' : ''}" data-id="${carte.id}">
         <div class="face back">
-          <div class="seal">✦</div>
+          <div class="seal">🔞</div>
           <div class="num">Carte n°${String(carte.id).padStart(2,'0')}</div>
           ${carte.hint ? `<div class="hint">${carte.hint}</div>` : ''}
         </div>
