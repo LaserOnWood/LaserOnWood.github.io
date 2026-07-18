@@ -18,7 +18,7 @@ const CARTES = [
     passwordHash: "9d0f44502d8625d3a501b4c7ef6e4db63c82de325376f0745ed6afc77383135b", // "robe"
     hint: "S'enfile par le haut, je glisse jusqu'aux genoux.",
     title: "La Seconde Peau",
-    image: "https://picsum.photos/seed/carte1/500/700",
+    image: "https://img.ltwebstatic.com/images3_pi/2025/02/27/f2/17406641011f974f116466a332b9ad6ea56a0c944b_thumbnail_900x.webp",
     description: "Tu doit porter la robe blanche uniquement. Pas de sous-vetement",
     rarity: "Commun"
   },
@@ -69,7 +69,7 @@ const CARTES = [
   }
 ];
 
-const STORAGE_KEY = "kinky_tcg_progress_v2.1";
+const STORAGE_KEY = "kinky_tcg_progress_v2.2";
 
 /* ==========================================================================
    2. UTILITAIRES
