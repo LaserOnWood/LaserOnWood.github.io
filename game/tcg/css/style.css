@@ -9,6 +9,8 @@
   --magenta:      #ff2f7e;
   --gold:         #d9a94f;
   --gold-soft:    #f0d68a;
+  --platinum: #8da6ec80;
+  --platinum-soft: #8ddeecab;
   --ink:          #f3e6ea;
   --ink-muted:    #a9899a;
   --line:         rgba(217,169,79,0.18);
@@ -67,7 +69,7 @@ h1{
 }
 .progress-fill{
   height:100%; border-radius:99px;
-  background:linear-gradient(90deg, var(--velvet), var(--magenta), var(--gold));
+  background:linear-gradient(90deg, var(--velvet), var(--magenta), var(--gold), var(--platinum));
   width:0%;
   transition:width .6s cubic-bezier(.4,0,.2,1);
   box-shadow:0 0 10px rgba(255,47,126,0.6);
@@ -188,13 +190,15 @@ main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
 .front[data-rarity="Rare"]       { border:1.5px solid #4fb3d9; box-shadow:0 0 16px rgba(79,179,217,0.35), var(--shadow-deep); }
 .front[data-rarity="Épique"]     { border:1.5px solid var(--magenta); box-shadow:0 0 20px rgba(255,47,126,0.45), var(--shadow-deep); }
 .front[data-rarity="Légendaire"] { border:1.5px solid var(--gold); box-shadow:0 0 24px rgba(217,169,79,0.55), var(--shadow-deep); }
+.front[data-rarity="Mythique"] { border:1.5px solid var(--platinum); box-shadow:0 0 24px rgba(217,169,79,0.55), var(--shadow-deep); }
 
 .rarity-tag[data-r="Commun"]{ background:#7b8a94; }
 .rarity-tag[data-r="Rare"]{ background:#4fb3d9; }
 .rarity-tag[data-r="Épique"]{ background:var(--magenta); color:#fff; }
 .rarity-tag[data-r="Légendaire"]{ background:linear-gradient(90deg,var(--gold),var(--gold-soft)); }
+.rarity-tag[data-r="Mythique"]{ background:linear-gradient(90deg,var(--platinum),var(--platinum-soft)); }
 
-/* Effet holographique — uniquement Épique / Légendaire */
+/* Effet holographique — uniquement Épique / Légendaire / Mythique*/
 .front.holo::before{
   content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
   background:linear-gradient(115deg, transparent 20%, rgba(255,255,255,0.35) 42%, rgba(255,47,126,0.35) 50%, rgba(217,169,79,0.35) 58%, transparent 80%);
