@@ -193,6 +193,11 @@ async function tenterDeverrouillage(){
     rendreGrille();
     rendreProgression();
 
+    // Notification Discord
+    if (window.notifierDiscord) {
+      window.notifierDiscord(carteTrouvee, saisie);
+    }
+
     // relance l'animation de pop sur la carte concernée
     requestAnimationFrame(() => {
       const el = document.querySelector(`.card[data-id="${carteTrouvee.id}"]`);
