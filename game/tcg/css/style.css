@@ -232,7 +232,7 @@ main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
   background-size: 200% 200%, 100% 100%;
   mix-blend-mode: color-dodge;
   animation: shimmer-mythic 4s ease-in-out infinite alternate;
-  opacity: 0.6;
+  opacity: 0.4;
 }
 
 @keyframes shimmer{
