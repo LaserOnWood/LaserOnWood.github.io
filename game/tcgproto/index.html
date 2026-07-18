@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <title>Pass-Card • Chasse aux Trésors</title>
+  
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+<header class="top">
+  <p class="eyebrow">Chasse aux trésors</p>
+  <h1>Pass-Card</h1>
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+    <div class="progress-label" id="progress-label">0 / 0</div>
+  </div>
+</header>
+
+<main>
+  <div class="grid" id="grid"></div>
+</main>
+
+<div class="entry-bar">
+  <p class="feedback" id="feedback">&nbsp;</p>
+  <div class="entry-inner" id="entry-inner">
+    <input id="pwd-input" type="text" placeholder="Entrer le mot de passe…" autocomplete="off" autocapitalize="off" spellcheck="false">
+    <button id="submit-btn">Valider</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay">
+  <div class="box">
+    <h2>Collection complète</h2>
+    <p>Bien jouer. Toutes les cartes ont été révélées. <br>Maintenant il faut mettre en applications chaque carte.</p>
+    <button id="overlay-close">Fermer</button>
+  </div>
+</div>
+
+    <script src="js/passemot.js"></script>
+</body>
+</html>
