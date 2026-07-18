@@ -15,48 +15,57 @@
 const CARTES = [
   {
     id: 1,
-    passwordHash: "87d6ad049783f68f509a18094d29b7e994d86983fa39a2620cfb0f86ec8dfcb0", // "clef"
-    hint: "Sous l'objet qui ouvre les portes.",
-    title: "Le Prélude",
+    passwordHash: "9d0f44502d8625d3a501b4c7ef6e4db63c82de325376f0745ed6afc77383135b", // "robe"
+    hint: "S'enfile par le haut, je glisse jusqu'aux genoux.",
+    title: "La Seconde Peau",
     image: "https://picsum.photos/seed/carte1/500/700",
-    description: "Un massage lent, à la lumière des bougies, pour ouvrir le jeu en douceur.",
+    description: "Tu doit porter la robe blanche uniquement. Pas de sous-vetement",
     rarity: "Commun"
   },
   {
     id: 2,
-    passwordHash: "bd7cf4d0b57ebfdd5a030ae10bc49c4ec1e69dfacf1feeb45e4d0b21c3fcbadb", // "velours"
-    hint: "Doux au toucher, souvent sur un canapé.",
-    title: "Le Velours",
-    image: "https://picsum.photos/seed/carte3/500/700",
-    description: "Un privilège d'une durée de dix minutes, à réclamer quand bon vous semble ce soir.",
+    passwordHash: "d5576a4173ccb613161c147eb0587d337f5bbaeaeea27fa5a6c4867e9e7d5941", // "pince"
+    hint: "J’attrape, je serre, ou je tiens, mais je ne lâche rien.",
+    title: "L'Accessoire",
+    image: "https://boxcoquine.fr/25735-full_default/pinces-a-tetons-avec-chaine-noir.jpg",
+    description: "Te voilà maintenant habillé ; il faut agrémenter le tout pour te mettre encore plus en valeur.",
     rarity: "Rare"
   },
   {
     id: 3,
-    passwordHash: "c9e249076b83a1040a351fe9cf42c9bdc60d24eac7568500737f26890420ec70", // "boussole"
-    hint: "Elle indique toujours une direction.",
-    title: "La Direction",
-    image: "https://picsum.photos/seed/carte4/500/700",
-    description: "Votre partenaire vous guide, les yeux fermés, vers une surprise.",
+    passwordHash: "35f1b751cd9c3bfb37c23cc1897ae1e458ecb57cce08e9fa095961487574bbde", // "trepied"
+    hint: "J'ai 3 jambes sans marcher. Je fixe les meilleurs moments.",
+    title: "La Stabilité",
+    image: "https://asset.action.com/image/upload/t_digital_product_image/w_1080/3204383_8715342054872-110_01_fwjsff.webp",
+    description: "Les mains seront prises, alors autant en profiter et poser les trépieds.",
     rarity: "Rare"
   },
   {
-    id: 5,
-    passwordHash: "23df2ca41316489504d44f3adad8b2d9752bc0cd7e65045d51810c5c8c879c47", // "lanterne"
-    hint: "Elle éclaire dans l'obscurité.",
-    title: "La Lueur",
-    image: "https://picsum.photos/seed/carte5/500/700",
-    description: "Un gage à réaliser lumières éteintes uniquement.",
+    id: 4,
+    passwordHash: "671a18d627c58564a1868b3ccdbc98799b43ae9e9933b8d762d5915889341028", // "feutre"
+    hint: "Je suis l'outil idéal pour écrire sur ta peau et écrire ce que tu es.",
+    title: "Des Traces",
+    image: "https://asset.action.com/image/upload/t_digital_product_image/w_1080/3222841_8712417372701-110_01_qqdgq3.webp",
+    description: "Si tu en as le courage, laisse des trace de qui tu es, écrite sur toi.",
     rarity: "Épique"
   },
   {
-    id: 6,
-    passwordHash: "e49ec5f68827a836467c4f3e3a54fa7b10a2acbd949d6aa79f85f629be684f23", // "sablier"
-    hint: "Le temps s'écoule grain par grain.",
-    title: "Le Compte à Rebours",
-    image: "https://picsum.photos/seed/carte7/500/700",
-    description: "Trois minutes chrono pour convaincre votre partenaire de céder à votre requête.",
+    id: 5,
+    passwordHash: "5a8a59d98881c1b312a83d7d939796c842d7604982a5cf8d5ddc6d9d6c5d833f", // "verre"
+    hint: "Transparent comme tes intentions ce soir, je ne demande qu'à être rempli.",
+    title: "L'Accueil",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8p522bvKXo7Vwb-QozSYHhnF3RHLBHiYe4WgPdgJXVw&s=10",
+    description: "Dans l'entrée, il faut saluer tout le monde, même sa tige. Quelle belle raison de le sucer.",
     rarity: "Légendaire"
+  },
+  {
+    id: 6,
+    passwordHash:"d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1", // "gorge profonde"
+    hint: "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents.",
+    title: "L'Apné",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaXjLHduSLV84ofaNfb2HhCUoyyCk_mSb7Acwu4dGbtw&s=10",
+    description: "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
+    rarity: "Mythique"
   }
 ];
 
