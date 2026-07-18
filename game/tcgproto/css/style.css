@@ -86,7 +86,7 @@ h1{
 /* ==========================================================================
    GRILLE DE CARTES
    ========================================================================== */
-main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
+main{ padding:6px 16px 20px; max-width:900px; margin:0 auto; }
 .grid{
   display:grid;
   grid-template-columns: 1fr; /* 1 seule colonne par défaut sur mobile */
@@ -98,7 +98,7 @@ main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
 }
 
 @media (min-width:800px){
-  .grid{ grid-template-columns:repeat(3, 1fr); } /* 3 colonnes sur tablettes/desktop */
+  .grid{ grid-template-columns:repeat(4, 1fr); } /* 4 colonnes sur tablettes/desktop */
 }
 
 .card-slot{ perspective:1200px; }
