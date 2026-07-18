@@ -93,11 +93,11 @@ main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
   gap:20px; /* Plus d'espace entre les cartes pour une meilleure aération */
 }
 
-@media (min-width:400px){
+@media (min-width:500px){
   .grid{ grid-template-columns:repeat(2, 1fr); } /* 2 colonnes dès que l'écran est un peu plus large */
 }
 
-@media (min-width:600px){
+@media (min-width:800px){
   .grid{ grid-template-columns:repeat(3, 1fr); } /* 3 colonnes sur tablettes/desktop */
 }
 
