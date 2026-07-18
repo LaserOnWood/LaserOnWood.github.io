@@ -87,7 +87,7 @@ const CARTES = [
   }
 ];
 
-const STORAGE_KEY = "kinky_tcg_progress_v1";
+const STORAGE_KEY = "kinky_tcg_progress_v0.1.beta";
 
 /* ==========================================================================
    2. UTILITAIRES
