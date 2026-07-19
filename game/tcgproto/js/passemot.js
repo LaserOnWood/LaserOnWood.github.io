@@ -193,7 +193,7 @@ function creerCarteHTML(carte){
           <div class="seal">✦</div>
           <div class="num">Carte n°${String(carte.id).padStart(2,'0')}</div>
           ${texteIndice ? `<div class="hint">${texteIndice}</div>` : ''}
-          ${aPlusieurIndices && indiceActuel < hintsArray.length - 1 ? `<button class="hint-btn" data-card-id="${carte.id}">? Aide</button>` : ''}
+          ${aPlusieurIndices ? `<button class="hint-btn" data-card-id="${carte.id}">? Aide</button>` : ''}
         </div>
         <div class="face front ${holo}" data-rarity="${carte.rarity}">
           <div class="rarity-tag" data-r="${carte.rarity}">${carte.rarity}</div>
@@ -228,11 +228,11 @@ function afficherIndiceSupplementaire(carteId){
   const hintsArray = Array.isArray(carte.hints) ? carte.hints : [carte.hints];
   const indiceActuel = obtenirIndiceActuel(carteId, indicesReveles);
   
-  if(indiceActuel < hintsArray.length - 1){
-    indicesReveles[carteId] = indiceActuel + 1;
-    sauverIndicesReveles(indicesReveles);
-    rendreGrille();
-  }
+  // Boucle sur les indices : passe au suivant ou revient au premier
+  const prochainIndice = (indiceActuel + 1) % hintsArray.length;
+  indicesReveles[carteId] = prochainIndice;
+  sauverIndicesReveles(indicesReveles);
+  rendreGrille();
 }
 
 function rendreProgression(){
