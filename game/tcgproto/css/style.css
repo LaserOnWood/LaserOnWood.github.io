@@ -159,6 +159,24 @@ main{ padding:6px 16px 20px; max-width:900px; margin:0 auto; }
 }
 .back .hint::before{ content:"— indice — "; display:block; color:var(--gold); font-size:9.5px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:4px; }
 
+/* Bouton Aide pour indices supplémentaires */
+.hint-btn{
+  margin-top:8px; padding:6px 12px;
+  background:linear-gradient(100deg, var(--magenta), var(--gold-soft));
+  border:none; border-radius:99px;
+  color:#fff; font-size:10px; font-weight:600; letter-spacing:0.05em;
+  cursor:pointer; text-transform:uppercase;
+  transition:all .2s ease;
+  box-shadow:0 4px 12px rgba(255,47,126,0.3);
+}
+.hint-btn:active{
+  transform:scale(0.95);
+  box-shadow:0 2px 6px rgba(255,47,126,0.5);
+}
+.hint-btn:hover{
+  box-shadow:0 6px 16px rgba(255,47,126,0.5);
+}
+
 /* ---- FACE (déverrouillée) ---- */
 .front{
   transform:rotateY(180deg);
