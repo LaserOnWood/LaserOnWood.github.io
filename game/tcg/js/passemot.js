@@ -1,79 +1,30 @@
-/* ==========================================================================
-   1. DONNÉES DES CARTES
-   --------------------------------------------------------------------------
+/* ===========================================================================
+   JEU PASS-CARD — LOGIQUE
+   ---------------------------------------------------------------------------
+   Les cartes, leurs indices et leurs propriétés éditables sont dans :
+   json/cartes.json
+
    Chaque carte = { id, passwordHash, hint, title, image, description, rarity }
-   - passwordHash : hash SHA-256 du mot de passe EN MINUSCULES et sans espaces.
-   - rarity : "Commun" | "Rare" | "Épique" | "Légendaire"
-   - image : chemin relatif ("images/carte1.jpg") ou URL absolue.
+   - passwordHash : hash SHA-256 du mot de passe en minuscules, sans espaces.
+   - rarity : "Commun" | "Rare" | "Épique" | "Légendaire" | "Mythique"
+   =========================================================================== */
 
-   ⚠️ Les mots de passe ci-dessous sont des EXEMPLES DE DÉMONSTRATION
-   ("clef", "miroir", "velours", "boussole", "lanterne", "ruban",
-   "sablier", "eclipse"). Remplacez passwordHash par le hash de vos
-   propres mots de passe avant de jouer (voir l'outil de génération
-   de hash tout en bas de ce script).
-   ========================================================================== */
-const CARTES = [
-  {
-    id: 1,
-    passwordHash: "9d0f44502d8625d3a501b4c7ef6e4db63c82de325376f0745ed6afc77383135b", // "robe"
-    hint: "S'enfile par le haut, je glisse jusqu'aux genoux.",
-    title: "La Seconde Peau",
-    image: "https://img.ltwebstatic.com/images3_pi/2025/02/27/f2/17406641011f974f116466a332b9ad6ea56a0c944b_thumbnail_900x.webp",
-    description: "Tu doit porter la robe blanche uniquement. Pas de sous-vetement",
-    rarity: "Commun"
-  },
-  {
-    id: 2,
-    passwordHash: "d5576a4173ccb613161c147eb0587d337f5bbaeaeea27fa5a6c4867e9e7d5941", // "pince"
-    hint: "J’attrape, je serre, ou je tiens, mais je ne lâche rien.",
-    title: "L'Accessoire",
-    image: "https://boxcoquine.fr/25735-full_default/pinces-a-tetons-avec-chaine-noir.jpg",
-    description: "Te voilà maintenant habillé ; il faut agrémenter le tout pour te mettre encore plus en valeur.",
-    rarity: "Rare"
-  },
-  {
-    id: 3,
-    passwordHash: "35f1b751cd9c3bfb37c23cc1897ae1e458ecb57cce08e9fa095961487574bbde", // "trepied"
-    hint: "J'ai 3 jambes sans marcher. Je fixe les meilleurs moments.",
-    title: "La Stabilité",
-    image: "https://asset.action.com/image/upload/t_digital_product_image/w_1080/3204383_8715342054872-110_01_fwjsff.webp",
-    description: "Les mains seront prises, alors autant en profiter et poser les trépieds.",
-    rarity: "Rare"
-  },
-  {
-    id: 4,
-    passwordHash: "671a18d627c58564a1868b3ccdbc98799b43ae9e9933b8d762d5915889341028", // "feutre"
-    hint: "Je suis l'outil idéal pour écrire sur ta peau et écrire ce que tu es.",
-    title: "Des Traces",
-    image: "https://asset.action.com/image/upload/t_digital_product_image/w_1080/3222841_8712417372701-110_01_qqdgq3.webp",
-    description: "Si tu en as le courage, laisse des trace de qui tu es, écrite sur toi.",
-    rarity: "Épique"
-  },
-  {
-    id: 5,
-    passwordHash: "5a8a59d98881c1b312a83d7d939796c842d7604982a5cf8d5ddc6d9d6c5d833f", // "verre"
-    hint: "Transparent comme tes intentions ce soir, je ne demande qu'à être rempli.",
-    title: "L'Accueil",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8p522bvKXo7Vwb-QozSYHhnF3RHLBHiYe4WgPdgJXVw&s=10",
-    description: "Dans l'entrée, il faut saluer tout le monde, même sa tige. Quelle belle raison de le sucer.",
-    rarity: "Légendaire"
-  },
-  {
-    id: 6,
-    passwordHash:"d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1", // "gorge profonde"
-    hint: "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents.",
-    title: "L'Apné",
-    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaXjLHduSLV84ofaNfb2HhCUoyyCk_mSb7Acwu4dGbtw&s=10",
-    description: "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
-    rarity: "Mythique"
-  }
-];
-
+const CARTES_URL = "json/cartes.json";
 const STORAGE_KEY = "kinky_tcg_progress_v2.2";
+const RARETES_AUTORISEES = new Set([
+  "Commun",
+  "Rare",
+  "Épique",
+  "Légendaire",
+  "Mythique"
+]);
 
-/* ==========================================================================
-   2. UTILITAIRES
-   ========================================================================== */
+let CARTES = [];
+let debloquees = chargerProgression();
+
+/* ===========================================================================
+   UTILITAIRES
+   =========================================================================== */
 
 // Calcule le hash SHA-256 (hexadécimal) d'une chaîne, via l'API native du navigateur.
 async function sha256(message){
@@ -101,33 +52,109 @@ function sauverProgression(setDebloquees){
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...setDebloquees]));
 }
 
-/* ==========================================================================
-   3. ÉTAT & RENDU
-   ========================================================================== */
-let debloquees = chargerProgression();
-
-function iconeRarete(r){
-  return { "Commun":"🔒", "Rare":"🔒", "Épique":"🔒", "Légendaire":"🔒", "Mythique":"🔒" }[r] || "🔒";
+function echapperHTML(valeur){
+  return String(valeur ?? "").replace(/[&<>"']/g, caractere => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#039;"
+  })[caractere]);
 }
+
+function echapperUrlCSS(url){
+  return String(url ?? "").replace(/["\\\n\r]/g, "\\$&");
+}
+
+function validerCartes(donnees){
+  if(!Array.isArray(donnees) || donnees.length === 0){
+    throw new Error("Le fichier cartes.json doit contenir au moins une carte.");
+  }
+
+  const ids = new Set();
+
+  return donnees.map((carte, index) => {
+    const position = index + 1;
+
+    if(!carte || typeof carte !== "object" || Array.isArray(carte)){
+      throw new Error(`La carte n°${position} est invalide.`);
+    }
+
+    const id = Number(carte.id);
+    if(!Number.isInteger(id) || id < 1 || ids.has(id)){
+      throw new Error(`L'identifiant de la carte n°${position} doit être un entier unique.`);
+    }
+    ids.add(id);
+
+    if(typeof carte.passwordHash !== "string" || !/^[a-f0-9]{64}$/i.test(carte.passwordHash)){
+      throw new Error(`Le passwordHash de la carte n°${id} doit être un hash SHA-256 valide.`);
+    }
+
+    for(const champ of ["title", "image", "description", "rarity"]){
+      if(typeof carte[champ] !== "string" || !carte[champ].trim()){
+        throw new Error(`Le champ « ${champ} » de la carte n°${id} est obligatoire.`);
+      }
+    }
+
+    if(!RARETES_AUTORISEES.has(carte.rarity)){
+      throw new Error(`La rareté de la carte n°${id} n'est pas reconnue.`);
+    }
+
+    return {
+      id,
+      passwordHash: carte.passwordHash.toLowerCase(),
+      hint: typeof carte.hint === "string" ? carte.hint : "",
+      title: carte.title,
+      image: carte.image,
+      description: carte.description,
+      rarity: carte.rarity
+    };
+  });
+}
+
+async function chargerCartes(){
+  const reponse = await fetch(CARTES_URL, { cache: "no-store" });
+
+  if(!reponse.ok){
+    throw new Error(`Impossible de charger ${CARTES_URL} (${reponse.status}).`);
+  }
+
+  const donnees = await reponse.json();
+  CARTES = validerCartes(donnees);
+}
+
+function nettoyerProgression(){
+  const idsValides = new Set(CARTES.map(carte => carte.id));
+  debloquees = new Set(
+    [...debloquees]
+      .map(Number)
+      .filter(id => idsValides.has(id))
+  );
+  sauverProgression(debloquees);
+}
+
+/* ===========================================================================
+   ÉTAT & RENDU
+   =========================================================================== */
 
 function creerCarteHTML(carte){
   const estDebloquee = debloquees.has(carte.id);
-  const holo = (carte.rarity === "Épique" || carte.rarity === "Légendaire" || carte.rarity === "Mythique") ? "holo" : "";
+  const holo = ["Épique", "Légendaire", "Mythique"].includes(carte.rarity) ? "holo" : "";
 
   return `
     <div class="card-slot">
-      <div class="card ${estDebloquee ? 'unlocked' : ''}" data-id="${carte.id}">
+      <div class="card ${estDebloquee ? "unlocked" : ""}" data-id="${carte.id}">
         <div class="face back">
           <div class="seal">🔞</div>
-          <div class="num">Carte n°${String(carte.id).padStart(2,'0')}</div>
-          ${carte.hint ? `<div class="hint">${carte.hint}</div>` : ''}
+          <div class="num">Carte n°${String(carte.id).padStart(2, "0")}</div>
+          ${carte.hint ? `<div class="hint">${echapperHTML(carte.hint)}</div>` : ""}
         </div>
-        <div class="face front ${holo}" data-rarity="${carte.rarity}">
-          <div class="rarity-tag" data-r="${carte.rarity}">${carte.rarity}</div>
-          <div class="art" style="background-image:url('${carte.image}')"></div>
+        <div class="face front ${holo}" data-rarity="${echapperHTML(carte.rarity)}">
+          <div class="rarity-tag" data-r="${echapperHTML(carte.rarity)}">${echapperHTML(carte.rarity)}</div>
+          <div class="art" style="background-image:url(&quot;${echapperHTML(echapperUrlCSS(carte.image))}&quot;)"></div>
           <div class="info">
-            <p class="title">${carte.title}</p>
-            <p class="desc">${carte.description}</p>
+            <p class="title">${echapperHTML(carte.title)}</p>
+            <p class="desc">${echapperHTML(carte.description)}</p>
           </div>
         </div>
       </div>
@@ -144,26 +171,30 @@ function rendreProgression(){
   const total = CARTES.length;
   const n = debloquees.size;
   document.getElementById("progress-label").textContent = `${n} / ${total}`;
-  document.getElementById("progress-fill").style.width = `${(n/total)*100}%`;
-  if(n === total){
+  document.getElementById("progress-fill").style.width = `${total ? (n / total) * 100 : 0}%`;
+
+  if(total > 0 && n === total){
     document.getElementById("overlay").classList.add("show");
   }
 }
 
-/* ==========================================================================
-   4. LOGIQUE DE SAISIE DU MOT DE PASSE
-   ========================================================================== */
+/* ===========================================================================
+   LOGIQUE DE SAISIE DU MOT DE PASSE
+   =========================================================================== */
+
 const input = document.getElementById("pwd-input");
 const btn = document.getElementById("submit-btn");
 const entryInner = document.getElementById("entry-inner");
 const feedback = document.getElementById("feedback");
 
 async function tenterDeverrouillage(){
+  if(!CARTES.length){ return; }
+
   const saisie = normaliser(input.value);
   if(!saisie){ return; }
 
   const hash = await sha256(saisie);
-  const carteTrouvee = CARTES.find(c => c.passwordHash === hash && !debloquees.has(c.id));
+  const carteTrouvee = CARTES.find(carte => carte.passwordHash === hash && !debloquees.has(carte.id));
 
   if(carteTrouvee){
     debloquees.add(carteTrouvee.id);
@@ -175,36 +206,58 @@ async function tenterDeverrouillage(){
     rendreGrille();
     rendreProgression();
 
-    // relance l'animation de pop sur la carte concernée
+    // Relance l'animation de pop sur la carte concernée.
     requestAnimationFrame(() => {
-      const el = document.querySelector(`.card[data-id="${carteTrouvee.id}"]`);
-      if(el){
-        el.classList.add("just-unlocked");
-        setTimeout(() => el.classList.remove("just-unlocked"), 900);
+      const element = document.querySelector(`.card[data-id="${carteTrouvee.id}"]`);
+      if(element){
+        element.classList.add("just-unlocked");
+        setTimeout(() => element.classList.remove("just-unlocked"), 900);
       }
     });
   } else {
-    // déjà débloquée avec ce mot de passe, ou mot de passe invalide
-    const dejaFait = CARTES.some(c => c.passwordHash === hash && debloquees.has(c.id));
+    // Carte déjà débloquée avec ce mot de passe, ou mot de passe invalide.
+    const dejaFait = CARTES.some(carte => carte.passwordHash === hash && debloquees.has(carte.id));
     feedback.textContent = dejaFait ? "Cette carte est déjà révélée." : "Mot de passe incorrect.";
     feedback.className = "feedback err";
     entryInner.classList.remove("shake");
-    void entryInner.offsetWidth; // force le reflow pour rejouer l'animation
+    void entryInner.offsetWidth; // Force le reflow pour rejouer l'animation.
     entryInner.classList.add("shake");
   }
 }
 
 btn.addEventListener("click", tenterDeverrouillage);
-input.addEventListener("keydown", (e) => {
-  if(e.key === "Enter"){ tenterDeverrouillage(); }
+input.addEventListener("keydown", evenement => {
+  if(evenement.key === "Enter"){
+    tenterDeverrouillage();
+  }
 });
 document.getElementById("overlay-close").addEventListener("click", () => {
   document.getElementById("overlay").classList.remove("show");
 });
 
-/* ==========================================================================
-   5. INITIALISATION
-   ========================================================================== */
-rendreGrille();
-rendreProgression();
+/* ===========================================================================
+   INITIALISATION
+   =========================================================================== */
 
+async function initialiserJeu(){
+  input.disabled = true;
+  btn.disabled = true;
+  feedback.textContent = "Chargement des cartes…";
+  feedback.className = "feedback";
+
+  try{
+    await chargerCartes();
+    nettoyerProgression();
+    rendreGrille();
+    rendreProgression();
+    input.disabled = false;
+    btn.disabled = false;
+    feedback.textContent = "";
+  }catch(erreur){
+    console.error("Erreur de chargement des cartes :", erreur);
+    feedback.textContent = "Impossible de charger les cartes. Vérifie le fichier json/cartes.json.";
+    feedback.className = "feedback err";
+  }
+}
+
+initialiserJeu();
