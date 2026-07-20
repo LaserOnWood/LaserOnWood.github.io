@@ -52,5 +52,15 @@
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaXjLHduSLV84ofaNfb2HhCUoyyCk_mSb7Acwu4dGbtw&s=10",
     "description": "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
     "rarity": "Mythique"
-  }
+  },
+{
+"id": 7,
+"passwordHash": "d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1",
+    "hint": "Parfait pour ce reposer devant la télé.",
+    "title": "L'Arene",
+    "image": "https://www.ikea.com/fr/fr/images/products/friheten-canape-convertible-angle-rangement-skiftebo-gris-fonce__0833845_pe603738_s5.jpg?f=xl",
+    "description": "Pour profiter au mieux le canapé devra être déplié.",
+    "rarity": "Légendaire"
+
+}
 ]
