@@ -1,16 +1,18 @@
 /* ===========================================================================
-   JEU PASS-CARD — LOGIQUE
+   JEU PASS-CARD — LOGIQUE DU PROTOTYPE
    ---------------------------------------------------------------------------
    Les cartes, leurs indices et leurs propriétés éditables sont dans :
    json/cartes.json
 
-   Chaque carte = { id, passwordHash, hint, title, image, description, rarity }
+   Chaque carte = { id, passwordHash, hints, title, image, description, rarity }
    - passwordHash : hash SHA-256 du mot de passe en minuscules, sans espaces.
+   - hints : tableau d'indices ; le bouton Aide les fait défiler en boucle.
    - rarity : "Commun" | "Rare" | "Épique" | "Légendaire" | "Mythique"
    =========================================================================== */
 
 const CARTES_URL = "json/cartes.json";
-const STORAGE_KEY = "kinky_tcg_progress_v2.2";
+const STORAGE_KEY = "kinky_tcg_progress_v0.3.hints";
+const HINTS_STORAGE_KEY = "kinky_tcg_hints_revealed";
 const RARETES_AUTORISEES = new Set([
   "Commun",
   "Rare",
@@ -21,6 +23,7 @@ const RARETES_AUTORISEES = new Set([
 
 let CARTES = [];
 let debloquees = chargerProgression();
+let indicesReveles = chargerIndicesReveles();
 
 /* ===========================================================================
    UTILITAIRES
@@ -50,6 +53,20 @@ function chargerProgression(){
 
 function sauverProgression(setDebloquees){
   localStorage.setItem(STORAGE_KEY, JSON.stringify([...setDebloquees]));
+}
+
+function chargerIndicesReveles(){
+  try{
+    const brut = localStorage.getItem(HINTS_STORAGE_KEY);
+    const donnees = brut ? JSON.parse(brut) : {};
+    return donnees && typeof donnees === "object" && !Array.isArray(donnees) ? donnees : {};
+  }catch(e){
+    return {};
+  }
+}
+
+function sauverIndicesReveles(indicesObj){
+  localStorage.setItem(HINTS_STORAGE_KEY, JSON.stringify(indicesObj));
 }
 
 function echapperHTML(valeur){
@@ -90,6 +107,10 @@ function validerCartes(donnees){
       throw new Error(`Le passwordHash de la carte n°${id} doit être un hash SHA-256 valide.`);
     }
 
+    if(!Array.isArray(carte.hints) || carte.hints.length === 0 || carte.hints.some(indice => typeof indice !== "string" || !indice.trim())){
+      throw new Error(`La carte n°${id} doit contenir au moins un indice valide dans « hints ».`);
+    }
+
     for(const champ of ["title", "image", "description", "rarity"]){
       if(typeof carte[champ] !== "string" || !carte[champ].trim()){
         throw new Error(`Le champ « ${champ} » de la carte n°${id} est obligatoire.`);
@@ -103,7 +124,7 @@ function validerCartes(donnees){
     return {
       id,
       passwordHash: carte.passwordHash.toLowerCase(),
-      hint: typeof carte.hint === "string" ? carte.hint : "",
+      hints: carte.hints.map(indice => indice.trim()),
       title: carte.title,
       image: carte.image,
       description: carte.description,
@@ -133,6 +154,28 @@ function nettoyerProgression(){
   sauverProgression(debloquees);
 }
 
+function nettoyerIndicesReveles(){
+  const cartesParId = new Map(CARTES.map(carte => [carte.id, carte]));
+  const indicesNettoyes = {};
+
+  for(const [idTexte, indice] of Object.entries(indicesReveles)){
+    const carte = cartesParId.get(Number(idTexte));
+    const indiceNombre = Number(indice);
+
+    if(carte && Number.isInteger(indiceNombre) && indiceNombre >= 0){
+      indicesNettoyes[carte.id] = indiceNombre % carte.hints.length;
+    }
+  }
+
+  indicesReveles = indicesNettoyes;
+  sauverIndicesReveles(indicesReveles);
+}
+
+function obtenirIndiceActuel(carteId){
+  const indice = Number(indicesReveles[carteId]);
+  return Number.isInteger(indice) && indice >= 0 ? indice : 0;
+}
+
 /* ===========================================================================
    ÉTAT & RENDU
    =========================================================================== */
@@ -140,14 +183,18 @@ function nettoyerProgression(){
 function creerCarteHTML(carte){
   const estDebloquee = debloquees.has(carte.id);
   const holo = ["Épique", "Légendaire", "Mythique"].includes(carte.rarity) ? "holo" : "";
+  const indiceActuel = obtenirIndiceActuel(carte.id);
+  const texteIndice = carte.hints[indiceActuel] || carte.hints[0];
+  const aPlusieursIndices = carte.hints.length > 1;
 
   return `
     <div class="card-slot">
       <div class="card ${estDebloquee ? "unlocked" : ""}" data-id="${carte.id}">
         <div class="face back">
-          <div class="seal">🔞</div>
+          <div class="seal">✦</div>
           <div class="num">Carte n°${String(carte.id).padStart(2, "0")}</div>
-          ${carte.hint ? `<div class="hint">${echapperHTML(carte.hint)}</div>` : ""}
+          <div class="hint">${echapperHTML(texteIndice)}</div>
+          ${aPlusieursIndices ? `<button class="hint-btn" type="button" data-card-id="${carte.id}">? Aide</button>` : ""}
         </div>
         <div class="face front ${holo}" data-rarity="${echapperHTML(carte.rarity)}">
           <div class="rarity-tag" data-r="${echapperHTML(carte.rarity)}">${echapperHTML(carte.rarity)}</div>
@@ -165,6 +212,24 @@ function creerCarteHTML(carte){
 function rendreGrille(){
   const grid = document.getElementById("grid");
   grid.innerHTML = CARTES.map(creerCarteHTML).join("");
+
+  document.querySelectorAll(".hint-btn").forEach(bouton => {
+    bouton.addEventListener("click", evenement => {
+      evenement.stopPropagation();
+      afficherIndiceSupplementaire(Number(bouton.dataset.cardId));
+    });
+  });
+}
+
+function afficherIndiceSupplementaire(carteId){
+  const carte = CARTES.find(element => element.id === carteId);
+  if(!carte){ return; }
+
+  const indiceActuel = obtenirIndiceActuel(carteId);
+  // Boucle sur les indices : passe au suivant ou revient au premier.
+  indicesReveles[carteId] = (indiceActuel + 1) % carte.hints.length;
+  sauverIndicesReveles(indicesReveles);
+  rendreGrille();
 }
 
 function rendreProgression(){
@@ -205,6 +270,11 @@ async function tenterDeverrouillage(){
 
     rendreGrille();
     rendreProgression();
+
+    // Préserve la notification du prototype lorsqu'elle est configurée.
+    if(window.notifierDiscord){
+      window.notifierDiscord(carteTrouvee, saisie);
+    }
 
     // Relance l'animation de pop sur la carte concernée.
     requestAnimationFrame(() => {
@@ -248,6 +318,7 @@ async function initialiserJeu(){
   try{
     await chargerCartes();
     nettoyerProgression();
+    nettoyerIndicesReveles();
     rendreGrille();
     rendreProgression();
     input.disabled = false;
