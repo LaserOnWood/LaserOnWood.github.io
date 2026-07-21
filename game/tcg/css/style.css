@@ -86,14 +86,19 @@ h1{
 /* ==========================================================================
    GRILLE DE CARTES
    ========================================================================== */
-main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
+main{ padding:6px 16px 20px; max-width:900px; margin:0 auto; }
 .grid{
   display:grid;
-  grid-template-columns:repeat(2, 1fr);
-  gap:14px;
+  grid-template-columns: 1fr; /* 1 seule colonne par défaut sur mobile */
+  gap:20px; /* Plus d'espace entre les cartes pour une meilleure aération */
 }
-@media (min-width:560px){
-  .grid{ grid-template-columns:repeat(3, 1fr); }
+
+@media (min-width:500px){
+  .grid{ grid-template-columns:repeat(2, 1fr); } /* 2 colonnes dès que l'écran est un peu plus large */
+}
+
+@media (min-width:800px){
+  .grid{ grid-template-columns:repeat(4, 1fr); } /* 4 colonnes sur tablettes/desktop */
 }
 
 .card-slot{ perspective:1200px; }
@@ -154,6 +159,24 @@ main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
 }
 .back .hint::before{ content:"— indice — "; display:block; color:var(--gold); font-size:9.5px; letter-spacing:0.15em; text-transform:uppercase; margin-bottom:4px; }
 
+/* Bouton Aide pour indices supplémentaires */
+.hint-btn{
+  margin-top:8px; padding:6px 12px;
+  background:linear-gradient(100deg, var(--magenta), var(--gold-soft));
+  border:none; border-radius:99px;
+  color:#fff; font-size:10px; font-weight:600; letter-spacing:0.05em;
+  cursor:pointer; text-transform:uppercase;
+  transition:all .2s ease;
+  box-shadow:0 4px 12px rgba(255,47,126,0.3);
+}
+.hint-btn:active{
+  transform:scale(0.95);
+  box-shadow:0 2px 6px rgba(255,47,126,0.5);
+}
+.hint-btn:hover{
+  box-shadow:0 6px 16px rgba(255,47,126,0.5);
+}
+
 /* ---- FACE (déverrouillée) ---- */
 .front{
   transform:rotateY(180deg);
@@ -181,11 +204,11 @@ main{ padding:6px 16px 20px; max-width:640px; margin:0 auto; }
   flex:1 1 40%; min-height:0;
 }
 .info .title{
-  font-family:var(--ff-display); font-weight:600; font-size:16px;
+  font-family:var(--ff-display); font-weight:600; font-size:20px;
   line-height:1.15; margin:0;
 }
 .info .desc{
-  font-size:11px; line-height:1.4; color:var(--ink-muted);
+  font-size:14px; line-height:1.4; color:var(--ink-muted);
   overflow-y:auto;
 }
 
