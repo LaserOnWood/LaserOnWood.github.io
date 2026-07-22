@@ -1,6 +1,7 @@
 [
   {
     "id": 1,
+    "_comment": "Mot de passe : robe",
     "passwordHash": "9d0f44502d8625d3a501b4c7ef6e4db63c82de325376f0745ed6afc77383135b",
     "hints": [
       "S'enfile par le haut, je glisse jusqu'aux genoux.",
@@ -14,6 +15,7 @@
   },
   {
     "id": 2,
+    "_comment": "Mot de passe : pince",
     "passwordHash": "d5576a4173ccb613161c147eb0587d337f5bbaeaeea27fa5a6c4867e9e7d5941",
     "hints": [
       "J'attrape, je serre, ou je tiens, mais je ne lâche rien.",
@@ -27,6 +29,7 @@
   },
   {
     "id": 3,
+    "_comment": "Mot de passe : trepied",
     "passwordHash": "35f1b751cd9c3bfb37c23cc1897ae1e458ecb57cce08e9fa095961487574bbde",
     "hints": [
       "J'ai 3 jambes sans marcher. Je fixe les meilleurs moments.",
@@ -40,6 +43,7 @@
   },
   {
     "id": 4,
+    "_comment": "Mot de passe : feutre",
     "passwordHash": "671a18d627c58564a1868b3ccdbc98799b43ae9e9933b8d762d5915889341028",
     "hints": [
       "Je suis l'outil idéal pour écrire sur ta peau et écrire ce que tu es.",
@@ -53,6 +57,7 @@
   },
   {
     "id": 5,
+    "_comment": "Mot de passe : canape",
     "passwordHash": "06cfb470f54f7efbc904b55585d32d69dcd4148f5a975b24f17c51177e11119c",
     "hints": [
       "Parfait pour se reposer devant la télé.",
@@ -66,6 +71,7 @@
   },
   {
     "id": 6,
+    "_comment": "Mot de passe : verre",
     "passwordHash": "5a8a59d98881c1b312a83d7d939796c842d7604982a5cf8d5ddc6d9d6c5d833f",
     "hints": [
       "Transparent comme tes intentions ce soir, je ne demande qu'à être rempli.",
@@ -79,6 +85,7 @@
   },
   {
     "id": 7,
+    "_comment": "Mot de passe : gorge profonde",
     "passwordHash": "d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1",
     "hints": [
       "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents.",
