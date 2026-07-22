@@ -51,16 +51,12 @@ async function notifierDiscord(carte, motDePasseSaisi) {
         {
             name: "📜 Description",
             value: carte.description
-        }
-    ];
-
-    // Ajout du champ actions uniquement si la carte en possède un
-    if (carte.actions && carte.actions.trim()) {
-        fields.push({
+        },
+        {
             name: "⚡ Action à réaliser",
             value: carte.actions
-        });
-    }
+        }
+    ];
 
     const payload = {
         embeds: [{
