@@ -4,9 +4,22 @@
  * ==========================================================================
  * Ce fichier gère l'envoi de notifications vers Discord lorsqu'une carte
  * est déverrouillée avec succès.
+ *
+ * Le champ "actions" de la carte (défini dans cartes.json) est affiché
+ * uniquement ici, dans la notification Discord — il n'est jamais visible
+ * dans l'interface du jeu.
  */
 
 const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1529058939910623232/7fIbXsxCxgPppcVOlhq_YCbAHxzEnigcEVEqSixbpycJt9YEgVNmC9FNVbx5VLBP_e3s";
+
+// Couleur de l'embed selon la rareté de la carte.
+const COULEURS_RARETE = {
+    "Commun":    0xaaaaaa, // Gris
+    "Rare":      0x4a90e2, // Bleu
+    "Épique":    0x9b59b6, // Violet
+    "Légendaire":0xf1c40f, // Or
+    "Mythique":  0xff2f7e  // Rose Magenta
+};
 
 /**
  * Envoie un embed riche sur Discord
@@ -16,32 +29,45 @@ const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/152905893991062323
 async function notifierDiscord(carte, motDePasseSaisi) {
     if (!DISCORD_WEBHOOK_URL) return;
 
+    const couleur = COULEURS_RARETE[carte.rarity] ?? 0xff2f7e;
+
+    // Champs de base toujours présents
+    const fields = [
+        {
+            name: "🎴 Carte",
+            value: `**${carte.title}** (n°${carte.id})`,
+            inline: true
+        },
+        {
+            name: "💎 Rareté",
+            value: carte.rarity,
+            inline: true
+        },
+        {
+            name: "🔑 Code utilisé",
+            value: `\`${motDePasseSaisi}\``,
+            inline: true
+        },
+        {
+            name: "📜 Description",
+            value: carte.description
+        }
+    ];
+
+    // Ajout du champ actions uniquement si la carte en possède un
+    if (carte.actions && carte.actions.trim()) {
+        fields.push({
+            name: "⚡ Action à réaliser",
+            value: carte.actions
+        });
+    }
+
     const payload = {
         embeds: [{
-            title: "🔓 Carte Révélée !",
-            description: `Votre partenaire vient de débloquer une nouvelle carte dans **Kinky TCG**.`,
-            color: 16723838, // Rose Magenta (#ff2f7e)
-            fields: [
-                {
-                    name: "🎴 Carte",
-                    value: `**${carte.title}** (n°${carte.id})`,
-                    inline: true
-                },
-                {
-                    name: "🔑 Code utilisé",
-                    value: `\`${motDePasseSaisi}\``,
-                    inline: true
-                },
-                {
-                    name: "💎 Rareté",
-                    value: carte.rarity,
-                    inline: true
-                },
-                {
-                    name: "📜 Contenu / Gage",
-                    value: carte.description
-                }
-            ],
+            title: `🔓 Carte Révélée — ${carte.title}`,
+            description: `Une nouvelle carte vient d'être débloquée dans **Kinky TCG**.`,
+            color: couleur,
+            fields,
             image: {
                 url: carte.image.startsWith('http') ? carte.image : window.location.origin + '/' + carte.image
             },
