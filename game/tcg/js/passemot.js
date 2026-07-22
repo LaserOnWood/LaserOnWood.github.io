@@ -128,7 +128,7 @@ function validerCartes(donnees){
       title: carte.title,
       image: carte.image,
       description: carte.description,
-      actions: typeof carte.actions === "string" ? carte.actions.trim() : "",
+      actions: (typeof carte.actions === "string" && carte.actions.trim()) ? carte.actions.trim() : "(aucune action définie)",
       rarity: carte.rarity
     };
   });
@@ -274,6 +274,7 @@ async function tenterDeverrouillage(){
 
     // Préserve la notification du prototype lorsqu'elle est configurée.
     if(window.notifierDiscord){
+      console.log("[TCG] Envoi Discord — actions:", carteTrouvee.actions);
       window.notifierDiscord(carteTrouvee, saisie);
     }
 
