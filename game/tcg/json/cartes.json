@@ -4,7 +4,8 @@
     "passwordHash": "9d0f44502d8625d3a501b4c7ef6e4db63c82de325376f0745ed6afc77383135b",
     "hints": [
       "S'enfile par le haut, je glisse jusqu'aux genoux.",
-      "Parfait en été"
+      "Parfait en été",
+      "Je suis un vêtement féminin, en un seul mot."
     ],
     "title": "La Seconde Peau",
     "image": "https://img.ltwebstatic.com/images3_pi/2025/02/27/f2/17406641011f974f116466a332b9ad6ea56a0c944b_thumbnail_900x.webp",
@@ -14,7 +15,11 @@
   {
     "id": 2,
     "passwordHash": "d5576a4173ccb613161c147eb0587d337f5bbaeaeea27fa5a6c4867e9e7d5941",
-    "hints": ["J’attrape, je serre, ou je tiens, mais je ne lâche rien."],
+    "hints": [
+      "J'attrape, je serre, ou je tiens, mais je ne lâche rien.",
+      "On m'utilise pour tenir des papiers… ou autre chose.",
+      "Je suis un petit outil qui mord sans dents."
+    ],
     "title": "L'Accessoire",
     "image": "https://boxcoquine.fr/25735-full_default/pinces-a-tetons-avec-chaine-noir.jpg",
     "description": "Te voilà maintenant habillé ; il faut agrémenter le tout pour te mettre encore plus en valeur.",
@@ -22,9 +27,11 @@
   },
   {
     "id": 3,
-    "passwordHash": "35f1b751cd9c3bfb37c23cc1897ae1e458ecb57cce08e9fa095961487574bbde", 
+    "passwordHash": "35f1b751cd9c3bfb37c23cc1897ae1e458ecb57cce08e9fa095961487574bbde",
     "hints": [
-      "J'ai 3 jambes sans marcher. Je fixe les meilleurs moments."
+      "J'ai 3 jambes sans marcher. Je fixe les meilleurs moments.",
+      "Les photographes ne peuvent pas travailler sans moi.",
+      "Je supporte tout sans bouger, posé sur mes trois appuis."
     ],
     "title": "La Stabilité",
     "image": "https://asset.action.com/image/upload/t_digital_product_image/w_1080/3204383_8715342054872-110_01_fwjsff.webp",
@@ -33,9 +40,11 @@
   },
   {
     "id": 4,
-    "passwordHash": "671a18d627c58564a1868b3ccdbc98799b43ae9e9933b8d762d5915889341028",  
+    "passwordHash": "671a18d627c58564a1868b3ccdbc98799b43ae9e9933b8d762d5915889341028",
     "hints": [
-      "Je suis l'outil idéal pour écrire sur ta peau et écrire ce que tu es."
+      "Je suis l'outil idéal pour écrire sur ta peau et écrire ce que tu es.",
+      "Je ne suis pas un stylo, mais je colorie avec mes pointes douces.",
+      "Indélébile ou lavable, je laisse des marques colorées sur tout ce que je touche."
     ],
     "title": "Des Traces",
     "image": "https://asset.action.com/image/upload/t_digital_product_image/w_1080/3222841_8712417372701-110_01_qqdgq3.webp",
@@ -44,9 +53,11 @@
   },
   {
     "id": 5,
-    "passwordHash": "06cfb470f54f7efbc904b55585d32d69dcd4148f5a975b24f17c51177e11119c", 
+    "passwordHash": "06cfb470f54f7efbc904b55585d32d69dcd4148f5a975b24f17c51177e11119c",
     "hints": [
-      "Parfait pour ce reposer devant la télé."
+      "Parfait pour se reposer devant la télé.",
+      "On s'y allonge, on s'y blottit, parfois on y dort.",
+      "C'est le meuble du salon où tout le monde finit par s'affaler."
     ],
     "title": "L'Arene",
     "image": "https://www.ikea.com/fr/fr/images/products/friheten-canape-convertible-angle-rangement-skiftebo-gris-fonce__0833845_pe603738_s5.jpg?f=xl",
@@ -54,12 +65,12 @@
     "rarity": "Légendaire"
   },
   {
-    
     "id": 6,
-    "passwordHash": "5a8a59d98881c1b312a83d7d939796c842d7604982a5cf8d5ddc6d9d6c5d833f", 
+    "passwordHash": "5a8a59d98881c1b312a83d7d939796c842d7604982a5cf8d5ddc6d9d6c5d833f",
     "hints": [
       "Transparent comme tes intentions ce soir, je ne demande qu'à être rempli.",
-      "Parfois a moitier plein, parfois a moitier vide"
+      "Parfois à moitié plein, parfois à moitié vide.",
+      "Je suis un récipient en cuisine, fait pour contenir un liquide."
     ],
     "title": "L'Accueil",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8p522bvKXo7Vwb-QozSYHhnF3RHLBHiYe4WgPdgJXVw&s=10",
@@ -70,7 +81,9 @@
     "id": 7,
     "passwordHash": "d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1",
     "hints": [
-      "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents."
+      "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents.",
+      "C'est la partie du corps que l'on sent se serrer quand on avale.",
+      "Entre la bouche et l'estomac, je suis le passage étroit que tout doit franchir."
     ],
     "title": "L'Apné",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaXjLHduSLV84ofaNfb2HhCUoyyCk_mSb7Acwu4dGbtw&s=10",
