@@ -128,6 +128,7 @@ function validerCartes(donnees){
       title: carte.title,
       image: carte.image,
       description: carte.description,
+      actions: typeof carte.actions === "string" ? carte.actions.trim() : "",
       rarity: carte.rarity
     };
   });
