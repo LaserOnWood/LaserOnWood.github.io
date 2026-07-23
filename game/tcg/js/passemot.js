@@ -11,7 +11,7 @@
    =========================================================================== */
 
 const CARTES_URL = "json/cartes.json";
-const STORAGE_KEY = "kinky_tcg_progress_v0.3.hints";
+const STORAGE_KEY = "kinky_tcg_progress_v0.4.hints";
 const HINTS_STORAGE_KEY = "kinky_tcg_hints_revealed";
 const RARETES_AUTORISEES = new Set([
   "Commun",
