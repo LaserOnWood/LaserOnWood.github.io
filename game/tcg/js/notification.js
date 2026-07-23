@@ -10,7 +10,10 @@
  * dans l'interface du jeu.
  */
 
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1529058939910623232/7fIbXsxCxgPppcVOlhq_YCbAHxzEnigcEVEqSixbpycJt9YEgVNmC9FNVbx5VLBP_e3s";
+const DISCORD_WEBHOOKS = [
+    "https://discord.com/api/webhooks/1529058939910623232/7fIbXsxCxgPppcVOlhq_YCbAHxzEnigcEVEqSixbpycJt9YEgVNmC9FNVbx5VLBP_e3s", // webhook 1
+    // "https://discord.com/api/webhooks/SECOND_WEBHOOK_URL", // webhook 2 (décommenter et remplacer)
+];
 
 // Couleur de l'embed selon la rareté de la carte.
 const COULEURS_RARETE = {
@@ -27,7 +30,7 @@ const COULEURS_RARETE = {
  * @param {string} motDePasseSaisi - Le texte brut saisi par l'utilisateur
  */
 async function notifierDiscord(carte, motDePasseSaisi) {
-    if (!DISCORD_WEBHOOK_URL) return;
+    if (!DISCORD_WEBHOOKS.length) return;
 
     const couleur = COULEURS_RARETE[carte.rarity] ?? 0xff2f7e;
 
@@ -74,21 +77,23 @@ async function notifierDiscord(carte, motDePasseSaisi) {
         }]
     };
 
-    try {
-        const response = await fetch(DISCORD_WEBHOOK_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload),
-        });
+    await Promise.all(DISCORD_WEBHOOKS.map(async (url) => {
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
 
-        if (!response.ok) {
-            console.error("Erreur lors de l'envoi à Discord:", response.statusText);
+            if (!response.ok) {
+                console.error(`Erreur webhook ${url}:`, response.statusText);
+            }
+        } catch (error) {
+            console.error(`Erreur réseau webhook ${url}:`, error);
         }
-    } catch (error) {
-        console.error("Erreur réseau Discord:", error);
-    }
+    }));
 }
 
 // Exportation globale pour être utilisé par passemot.js
