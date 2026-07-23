@@ -11,7 +11,7 @@
     "title": "La Seconde Peau",
     "image": "https://img.ltwebstatic.com/images3_pi/2025/02/27/f2/17406641011f974f116466a332b9ad6ea56a0c944b_thumbnail_900x.webp",
     "description": "Tu doit porter la robe blanche uniquement. Pas de sous-vetement",
-    "actions": "Enfile la robe blanche et rien d'autre. Aucun sous-vêtement. Tu la portes jusqu'à te faire prendre ou qu'il choisisse de la retirer.",
+    "actions": "La robe ce trouve dans la salle de bain derrire la porte. Enfile la robe blanche et rien d'autre. Aucun sous-vêtement. Tu la portes jusqu'à te faire prendre ou qu'il choisisse de la retirer.",
     "rarity": "Commun"
   },
   {
@@ -26,11 +26,26 @@
     "title": "L'Accessoire",
     "image": "https://boxcoquine.fr/25735-full_default/pinces-a-tetons-avec-chaine-noir.jpg",
     "description": "Te voilà maintenant habillé ; il faut agrémenter le tout pour te mettre encore plus en valeur.",
-    "actions": "Pose les pinces à tétons et garde-les jusqu'à la prochaine carte débloquée. Elles ne s'enlèvent pas sans permission.",
+    "actions": "Les pince ce trouve dans la salle de bain dans le meuble miroir. Pose les pinces à tétons et garde-les. Elles ne s'enlèvent pas sans permission.",
     "rarity": "Rare"
   },
   {
     "id": 3,
+    "_comment": "Mot de passe : laisse",
+    "passwordHash": "dc1b96f8ecf67c4c8a145b563d00ea440dfb21fabdd2cbac6738ba2a56e42738",
+    "hints": [
+      "J'attrape, je serre, ou je tiens, mais je ne lâche rien.",
+      "On m'utilise pour tenir des papiers… ou autre chose.",
+      "Je suis un petit outil qui mord sans dents."
+    ],
+    "title": "L'Accessoire 2",
+    "image": "https://m1.laboutiqueduhard.fr/3641-medium_default/collier-et-laisse-avec-scratch.jpg",
+    "description": "Il faut completer la tenue ; il faut agrémenter le tout pour te mettre encore plus en valeur.",
+    "actions": "Le laisse ce trouve cacher sous ta robe dans le couloir. Parfait autour de ton coup. Mets la laisse avec le collier. Elle ne s'enlève pas sans permission.",
+    "rarity": "Rare"
+  },
+  {
+    "id": 4,
     "_comment": "Mot de passe : trepied",
     "passwordHash": "35f1b751cd9c3bfb37c23cc1897ae1e458ecb57cce08e9fa095961487574bbde",
     "hints": [
@@ -41,11 +56,11 @@
     "title": "La Stabilité",
     "image": "https://asset.action.com/image/upload/t_digital_product_image/w_1080/3204383_8715342054872-110_01_fwjsff.webp",
     "description": "Les mains seront prises, alors autant en profiter et poser les trépieds.",
-    "actions": "Installe le trépied et prépare l'appareil. Tu vas te mettre en scène. Trouve un angle flatteur et attends les instructions pour la pose.",
+    "actions": "Le trepied et dans l'arbre a chat. Installe le trépied et prépare l'appareil. Trouve plusieurs pose et montre que tu es prete.",
     "rarity": "Rare"
   },
   {
-    "id": 4,
+    "id": 5,
     "_comment": "Mot de passe : feutre",
     "passwordHash": "671a18d627c58564a1868b3ccdbc98799b43ae9e9933b8d762d5915889341028",
     "hints": [
@@ -56,11 +71,11 @@
     "title": "Des Traces",
     "image": "https://asset.action.com/image/upload/t_digital_product_image/w_1080/3222841_8712417372701-110_01_qqdgq3.webp",
     "description": "Si tu en as le courage, laisse des trace de qui tu es, écrite sur toi.",
-    "actions": "Prends le feutre et écris sur ta peau, là où tu veux, ce que tu es ce soir. Envoie une photo une fois que c'est fait.",
+    "actions": "Prends le feutre et écris sur ta peau, là où tu veux, ce que tu es. Envoie des photos une fois que c'est fait.",
     "rarity": "Épique"
   },
   {
-    "id": 5,
+    "id": 6,
     "_comment": "Mot de passe : canape",
     "passwordHash": "06cfb470f54f7efbc904b55585d32d69dcd4148f5a975b24f17c51177e11119c",
     "hints": [
@@ -75,7 +90,7 @@
     "rarity": "Légendaire"
   },
   {
-    "id": 6,
+    "id": 7,
     "_comment": "Mot de passe : verre",
     "passwordHash": "5a8a59d98881c1b312a83d7d939796c842d7604982a5cf8d5ddc6d9d6c5d833f",
     "hints": [
@@ -90,7 +105,7 @@
     "rarity": "Légendaire"
   },
   {
-    "id": 7,
+    "id": 8,
     "_comment": "Mot de passe : gorge profonde",
     "passwordHash": "d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1",
     "hints": [
@@ -101,7 +116,7 @@
     "title": "L'Apné",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaXjLHduSLV84ofaNfb2HhCUoyyCk_mSb7Acwu4dGbtw&s=10",
     "description": "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
-    "actions": "Tu vas le prendre en gorge profonde, sans t'arrêter avant d'avoir tout avalé. Rythme imposé, pas de pause.",
+    "actions": "Tu vas le prendre en gorge profonde, sans t'arrêter avant d'avoir tout gobé. Il impose le rythme, pas de pause.",
     "rarity": "Mythique"
   }
 ]
