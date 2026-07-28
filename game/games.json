@@ -1,0 +1,42 @@
+[
+    {
+        "name": "IdleBdsm",
+        "path": "IdleBdsm/",
+        "description": "Jeu IdleBdsm"
+    },
+    {
+        "name": "aouv",
+        "path": "aouv/",
+        "description": "Jeu aouv"
+    },
+    {
+        "name": "bdsmcard",
+        "path": "bdsmcard/",
+        "description": "Jeu bdsmcard"
+    },
+    {
+        "name": "confessions",
+        "path": "confessions/",
+        "description": "Jeu confessions"
+    },
+    {
+        "name": "cupofdeath",
+        "path": "cupofdeath/",
+        "description": "Jeu cupofdeath"
+    },
+    {
+        "name": "pachinko",
+        "path": "pachinko/",
+        "description": "Jeu pachinko"
+    },
+    {
+        "name": "tcg",
+        "path": "tcg/",
+        "description": "Jeu tcg"
+    },
+    {
+        "name": "tcgproto",
+        "path": "tcgproto/",
+        "description": "Jeu tcgproto"
+    }
+]
