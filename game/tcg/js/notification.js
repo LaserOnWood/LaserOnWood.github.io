@@ -13,6 +13,7 @@
 const DISCORD_WEBHOOKS = [
     "https://discord.com/api/webhooks/1529058939910623232/7fIbXsxCxgPppcVOlhq_YCbAHxzEnigcEVEqSixbpycJt9YEgVNmC9FNVbx5VLBP_e3s", // webhook 1
  // "https://discord.com/api/webhooks/1529669532057206867/guPPfJAkOHZz4BdMDBawCbGg1sa4DJ4bs8W5NSvDzuZQIw5JPy_FfawDqmcc3mSfMhxV", // webhook 2 (décommenter et remplacer)
+"https://discord.com/api/webhooks/1528117812051050566/udtcAhay0ioWAOA0wOW2XpGoVsE3vovey9SwQajf0HOsuN-jydjF0hlf3Hy3WtmYUGr1",
 ];
 
 // Couleur de l'embed selon la rareté de la carte.
