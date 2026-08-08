@@ -6,20 +6,22 @@
   
   <title>Pass-Card • Chasse aux Trésors</title>
   
-  <!-- Bootstrap 5 & Font Awesome -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Polices originales si nécessaires (vérifiées dans style.css) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Style Original -->
   <link rel="stylesheet" href="css/style.css">
   
   <style>
-    /* Styles pour l'écran de sélection */
+    /* Styles spécifiques pour l'écran de sélection (sans Bootstrap pour éviter les conflits) */
     #selection-screen {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #1a1a1a;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--bg-void);
       z-index: 2000;
       display: flex;
       flex-direction: column;
@@ -27,40 +29,92 @@
       justify-content: center;
       padding: 20px;
       overflow-y: auto;
+      text-align: center;
     }
-    .theme-card {
-      background: #2a2a2a;
-      border: 1px solid #444;
-      border-radius: 15px;
-      padding: 20px;
-      margin-bottom: 20px;
+    #selection-screen h1 {
+      margin-bottom: 30px;
+      background: linear-gradient(100deg, var(--ink) 30%, var(--gold-soft) 55%, var(--ink) 75%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      font-family: var(--ff-display);
+    }
+    .themes-list {
       width: 100%;
       max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .theme-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 20px;
       cursor: pointer;
-      transition: transform 0.2s, border-color 0.2s;
-      color: white;
+      transition: transform 0.3s cubic-bezier(.22,1,.36,1), border-color 0.3s;
+      position: relative;
+      text-align: left;
     }
     .theme-card:hover {
       transform: translateY(-5px);
-      border-color: #007bff;
+      border-color: var(--gold);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .theme-card h3 {
-      margin-top: 0;
-      color: #007bff;
+      margin: 0 0 8px;
+      color: var(--gold-soft);
+      font-family: var(--ff-display);
+      font-size: 24px;
     }
-    .difficulty-badge {
-      font-size: 0.8rem;
-      padding: 3px 8px;
-      border-radius: 10px;
-      background: #444;
-      margin-left: 10px;
+    .theme-card p {
+      margin: 0 0 12px;
+      color: var(--ink-muted);
+      font-size: 14px;
+      line-height: 1.4;
     }
-    .hidden {
-      display: none !important;
+    .theme-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
-    /* Ajustements pour le jeu existant */
-    body {
-      background-color: #121212;
+    .diff-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: var(--bg-panel-2);
+      border: 1px solid var(--line);
+      color: var(--gold);
+    }
+    .card-count {
+      font-size: 11px;
+      color: var(--ink-muted);
+      opacity: 0.7;
+    }
+    .hidden { display: none !important; }
+
+    /* Bouton retour personnalisé pour s'intégrer au header original */
+    #back-to-selection {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--ink-muted);
+      border-radius: 99px;
+      padding: 4px 12px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    #back-to-selection:hover {
+      border-color: var(--gold);
+      color: var(--gold-soft);
+    }
+    .header-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
     }
   </style>
 </head>
@@ -68,22 +122,21 @@
 
 <!-- Écran de sélection -->
 <div id="selection-screen">
-  <h1 class="text-white mb-4">Choisissez votre Thème</h1>
-  <div id="themes-container" class="w-100 d-flex flex-column align-items-center">
-    <!-- Les thèmes seront insérés ici par JS -->
-    <div class="text-white">Chargement des thèmes...</div>
+  <h1>Choisissez votre Thème</h1>
+  <div id="themes-container" class="themes-list">
+    <div style="color: var(--ink-muted)">Chargement des thèmes...</div>
   </div>
 </div>
 
-<!-- Contenu du jeu (caché par défaut) -->
+<!-- Contenu du jeu -->
 <div id="game-content" class="hidden">
   <header class="top">
-    <div class="d-flex justify-content-between align-items-center px-3 pt-2">
-      <button id="back-to-selection" class="btn btn-outline-light btn-sm">
-        <i class="fas fa-arrow-left"></i> Retour
+    <div class="header-controls">
+      <button id="back-to-selection">
+        <i class="fas fa-chevron-left"></i> Retour
       </button>
-      <p class="eyebrow mb-0">Chasse aux trésors</p>
-      <div style="width: 60px;"></div> <!-- Spacer -->
+      <p class="eyebrow">Chasse aux trésors</p>
+      <div style="width: 60px;"></div>
     </div>
     <h1 id="game-title">Pass-Card</h1>
     <div class="progress-wrap">

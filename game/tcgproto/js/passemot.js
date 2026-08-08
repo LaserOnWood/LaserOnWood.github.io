@@ -124,12 +124,12 @@ function afficherSelectionThemes() {
 
   container.innerHTML = THEMES.map(theme => `
     <div class="theme-card" onclick="choisirTheme('${theme.id}')">
-      <div class="d-flex justify-content-between align-items-start">
-        <h3>${echapperHTML(theme.name)}</h3>
-        <span class="difficulty-badge">${echapperHTML(theme.difficulty)}</span>
+      <h3>${echapperHTML(theme.name)}</h3>
+      <p>${echapperHTML(theme.description)}</p>
+      <div class="theme-info">
+        <span class="diff-badge">${echapperHTML(theme.difficulty)}</span>
+        <span class="card-count">${theme.cards.length} cartes</span>
       </div>
-      <p class="mb-0 text-secondary">${echapperHTML(theme.description)}</p>
-      <small class="text-muted">${theme.cards.length} cartes à découvrir</small>
     </div>
   `).join("");
 }
