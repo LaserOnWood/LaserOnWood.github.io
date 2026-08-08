@@ -6,7 +6,8 @@
  * est déverrouillée avec succès.
  */
 
-const DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1528117812051050566/udtcAhay0ioWAOA0wOW2XpGoVsE3vovey9SwQajf0HOsuN-jydjF0hlf3Hy3WtmYUGr1";
+const DISCORD_WEBHOOK_URL = "",
+// "https://discord.com/api/webhooks/1528117812051050566/udtcAhay0ioWAOA0wOW2XpGoVsE3vovey9SwQajf0HOsuN-jydjF0hlf3Hy3WtmYUGr1";
 
 /**
  * Table de correspondance Rareté -> Couleur (doit rester synchronisée
