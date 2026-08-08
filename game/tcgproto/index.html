@@ -6,37 +6,110 @@
   
   <title>Pass-Card • Chasse aux Trésors</title>
   
+  <!-- Bootstrap 5 & Font Awesome -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   
+  <style>
+    /* Styles pour l'écran de sélection */
+    #selection-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #1a1a1a;
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .theme-card {
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 15px;
+      padding: 20px;
+      margin-bottom: 20px;
+      width: 100%;
+      max-width: 500px;
+      cursor: pointer;
+      transition: transform 0.2s, border-color 0.2s;
+      color: white;
+    }
+    .theme-card:hover {
+      transform: translateY(-5px);
+      border-color: #007bff;
+    }
+    .theme-card h3 {
+      margin-top: 0;
+      color: #007bff;
+    }
+    .difficulty-badge {
+      font-size: 0.8rem;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: #444;
+      margin-left: 10px;
+    }
+    .hidden {
+      display: none !important;
+    }
+    /* Ajustements pour le jeu existant */
+    body {
+      background-color: #121212;
+    }
+  </style>
 </head>
 <body>
 
-<header class="top">
-  <p class="eyebrow">Chasse aux trésors</p>
-  <h1>Pass-Card</h1>
-  <div class="progress-wrap">
-    <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
-    <div class="progress-label" id="progress-label">0 / 0</div>
-  </div>
-</header>
-
-<main>
-  <div class="grid" id="grid"></div>
-</main>
-
-<div class="entry-bar">
-  <p class="feedback" id="feedback">&nbsp;</p>
-  <div class="entry-inner" id="entry-inner">
-    <input id="pwd-input" type="text" placeholder="Entrer le mot de passe…" autocomplete="off" autocapitalize="off" spellcheck="false">
-    <button id="submit-btn">Valider</button>
+<!-- Écran de sélection -->
+<div id="selection-screen">
+  <h1 class="text-white mb-4">Choisissez votre Thème</h1>
+  <div id="themes-container" class="w-100 d-flex flex-column align-items-center">
+    <!-- Les thèmes seront insérés ici par JS -->
+    <div class="text-white">Chargement des thèmes...</div>
   </div>
 </div>
 
-<div class="overlay" id="overlay">
-  <div class="box">
-    <h2>Collection complète</h2>
-    <p>Bien jouer. Toutes les cartes ont été révélées. <br>Maintenant il faut mettre en applications chaque carte.</p>
-    <button id="overlay-close">Fermer</button>
+<!-- Contenu du jeu (caché par défaut) -->
+<div id="game-content" class="hidden">
+  <header class="top">
+    <div class="d-flex justify-content-between align-items-center px-3 pt-2">
+      <button id="back-to-selection" class="btn btn-outline-light btn-sm">
+        <i class="fas fa-arrow-left"></i> Retour
+      </button>
+      <p class="eyebrow mb-0">Chasse aux trésors</p>
+      <div style="width: 60px;"></div> <!-- Spacer -->
+    </div>
+    <h1 id="game-title">Pass-Card</h1>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label">0 / 0</div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="grid" id="grid"></div>
+  </main>
+  
+  <div class="entry-bar">
+    <p class="feedback" id="feedback">&nbsp;</p>
+    <div class="entry-inner" id="entry-inner">
+      <input id="pwd-input" type="text" placeholder="Entrer le mot de passe…" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button id="submit-btn">Valider</button>
+    </div>
+  </div>
+  
+  <div class="overlay" id="overlay">
+    <div class="box">
+      <h2>Collection complète</h2>
+      <p>Bien jouer. Toutes les cartes ont été révélées. <br>Maintenant il faut mettre en applications chaque carte.</p>
+      <button id="overlay-close">Fermer</button>
+    </div>
   </div>
 </div>
 
