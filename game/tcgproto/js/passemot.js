@@ -1,10 +1,54 @@
 /* ===========================================================================
-   JEU PASS-CARD — LOGIQUE DU PROTOTYPE (MODIFIÉ POUR LES THÈMES)
+   JEU PASS-CARD — LOGIQUE FUSIONNÉE (v1.0)
+   ---------------------------------------------------------------------------
+   Ce fichier remplace à la fois :
+     - game/tcg/js/passemot.js      (version "plate", une seule collection)
+     - game/tcgproto/js/passemot.js (version avec écran de sélection de thèmes)
+
+   Il détecte automatiquement le format de json/cartes.json et s'adapte :
+
+     1) Tableau de cartes  → mode "plat" (comme l'ancien tcg)
+        [ { id, passwordHash, hints, title, image, description, rarity }, ... ]
+
+     2) Objet avec thèmes  → mode "thèmes" (comme l'ancien tcgproto)
+        { "themes": [ { id, name, description, difficulty, cards: [...] }, ... ] }
+
+   Il s'adapte aussi au gabarit HTML utilisé :
+     - Si la page contient #selection-screen / #themes-container / #game-content
+       (gabarit tcgproto), l'écran de choix du thème est affiché normalement.
+     - Sinon (gabarit tcg, plus simple), l'écran de sélection est ignoré :
+       en mode "plat" le jeu démarre directement, et si jamais le JSON contient
+       des thèmes sans l'écran de sélection correspondant, le premier thème est
+       chargé automatiquement pour que le jeu reste jouable.
+
+   Bugs corrigés par rapport aux deux fichiers d'origine (voir README joint) :
+     - validation stricte et messages d'erreur clairs pour CHAQUE carte, y
+       compris dans le mode "thèmes" (l'ancienne version tcgproto plantait
+       silencieusement, ou avec un TypeError, si un champ était manquant) ;
+     - impossible d'avoir une carte sans indice (évite une division par 0
+       plus loin dans nettoyerIndicesReveles) ;
+     - identifiants de carte dupliqués détectés et rejetés (au sein d'un
+       même thème comme en mode plat) ;
+     - suppression des attributs onclick="" injectés dans le HTML généré
+       (thèmes et bouton Aide) au profit d'écouteurs d'événements avec
+       délégation : plus sûr, et n'échoue plus si un identifiant contient
+       un caractère spécial (apostrophe, etc.) ;
+     - toutes les recherches d'éléments DOM optionnels sont protégées, afin
+       que le même script fonctionne avec les deux gabarits HTML ;
+     - les clés de stockage local d'origine sont conservées telles quelles
+       (par mode) pour ne pas faire perdre la progression déjà enregistrée
+       par les joueurs.
    =========================================================================== */
 
 const CARTES_URL = "json/cartes.json";
-const BASE_STORAGE_KEY = "kinky_tcg_progress_v0.2";
-const BASE_HINTS_KEY = "kinky_tcg_hints_revealed";
+
+// Mode "plat" : mêmes clés que l'ancien tcg/js/passemot.js (progression conservée).
+const FLAT_STORAGE_KEY = "kinky_tcg_progress_v0.4.a.hints";
+const FLAT_HINTS_KEY = "kinky_tcg_hints_revealed";
+
+// Mode "thèmes" : mêmes préfixes que l'ancien tcgproto/js/passemot.js.
+const THEME_STORAGE_BASE = "kinky_tcg_progress_v0.2";
+const THEME_HINTS_BASE = "kinky_tcg_hints_revealed";
 
 const RARETES_AUTORISEES = new Set([
   "Commun",
@@ -14,9 +58,11 @@ const RARETES_AUTORISEES = new Set([
   "Mythique"
 ]);
 
-let THEMES = [];
-let CARTES = [];
+let MODE = null;           // "flat" | "themes"
+let THEMES = [];           // uniquement rempli en mode "themes"
+let CARTES = [];           // collection actuellement jouée
 let selectedThemeId = null;
+let sceauActuel = "✦";     // symbole affiché au dos des cartes, personnalisable par thème
 let debloquees = new Set();
 let indicesReveles = {};
 
@@ -24,6 +70,11 @@ let indicesReveles = {};
    UTILITAIRES
    =========================================================================== */
 
+function $(id){
+  return document.getElementById(id);
+}
+
+// Calcule le hash SHA-256 (hexadécimal) d'une chaîne, via l'API native du navigateur.
 async function sha256(message){
   const data = new TextEncoder().encode(message);
   const hashBuffer = await crypto.subtle.digest("SHA-256", data);
@@ -31,16 +82,17 @@ async function sha256(message){
   return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
 }
 
+// Normalise la saisie : minuscules + suppression des espaces superflus.
 function normaliser(texte){
   return texte.trim().toLowerCase();
 }
 
-function getStorageKey() {
-  return `${BASE_STORAGE_KEY}_${selectedThemeId}`;
+function getStorageKey(){
+  return selectedThemeId ? `${THEME_STORAGE_BASE}_${selectedThemeId}` : FLAT_STORAGE_KEY;
 }
 
-function getHintsKey() {
-  return `${BASE_HINTS_KEY}_${selectedThemeId}`;
+function getHintsKey(){
+  return selectedThemeId ? `${THEME_HINTS_BASE}_${selectedThemeId}` : FLAT_HINTS_KEY;
 }
 
 function chargerProgression(){
@@ -53,7 +105,11 @@ function chargerProgression(){
 }
 
 function sauverProgression(setDebloquees){
-  localStorage.setItem(getStorageKey(), JSON.stringify([...setDebloquees]));
+  try{
+    localStorage.setItem(getStorageKey(), JSON.stringify([...setDebloquees]));
+  }catch(e){
+    console.error("Impossible d'enregistrer la progression :", e);
+  }
 }
 
 function chargerIndicesReveles(){
@@ -67,7 +123,11 @@ function chargerIndicesReveles(){
 }
 
 function sauverIndicesReveles(indicesObj){
-  localStorage.setItem(getHintsKey(), JSON.stringify(indicesObj));
+  try{
+    localStorage.setItem(getHintsKey(), JSON.stringify(indicesObj));
+  }catch(e){
+    console.error("Impossible d'enregistrer les indices révélés :", e);
+  }
 }
 
 function echapperHTML(valeur){
@@ -84,46 +144,139 @@ function echapperUrlCSS(url){
   return String(url ?? "").replace(/["\\\n\r]/g, "\\$&");
 }
 
-function validerCartes(donnees){
-  if(!Array.isArray(donnees) || donnees.length === 0) return [];
+/* ===========================================================================
+   VALIDATION DES DONNÉES
+   ---------------------------------------------------------------------------
+   Reprend la validation stricte de l'ancien tcg/js/passemot.js et l'applique
+   aussi bien au mode "plat" qu'à chaque thème en mode "thèmes", pour que les
+   erreurs de contenu (indice manquant, hash mal formé, etc.) soient signalées
+   clairement au lieu de faire planter ou de fausser silencieusement le jeu.
+   =========================================================================== */
+
+function validerCartes(donnees, contexte){
+  if(!Array.isArray(donnees) || donnees.length === 0){
+    throw new Error(`${contexte} doit contenir au moins une carte.`);
+  }
+
   const ids = new Set();
+
   return donnees.map((carte, index) => {
+    const position = index + 1;
+
+    if(!carte || typeof carte !== "object" || Array.isArray(carte)){
+      throw new Error(`${contexte} : la carte n°${position} est invalide.`);
+    }
+
     const id = Number(carte.id);
+    if(!Number.isInteger(id) || id < 1 || ids.has(id)){
+      throw new Error(`${contexte} : l'identifiant de la carte n°${position} doit être un entier unique.`);
+    }
     ids.add(id);
+
+    if(typeof carte.passwordHash !== "string" || !/^[a-f0-9]{64}$/i.test(carte.passwordHash)){
+      throw new Error(`${contexte} : le passwordHash de la carte n°${id} doit être un hash SHA-256 valide.`);
+    }
+
+    if(!Array.isArray(carte.hints) || carte.hints.length === 0 || carte.hints.some(indice => typeof indice !== "string" || !indice.trim())){
+      throw new Error(`${contexte} : la carte n°${id} doit contenir au moins un indice valide dans « hints ».`);
+    }
+
+    for(const champ of ["title", "image", "description", "rarity"]){
+      if(typeof carte[champ] !== "string" || !carte[champ].trim()){
+        throw new Error(`${contexte} : le champ « ${champ} » de la carte n°${id} est obligatoire.`);
+      }
+    }
+
+    if(!RARETES_AUTORISEES.has(carte.rarity)){
+      throw new Error(`${contexte} : la rareté de la carte n°${id} n'est pas reconnue.`);
+    }
+
     return {
       id,
       passwordHash: carte.passwordHash.toLowerCase(),
-      hints: (carte.hints || []).map(indice => indice.trim()),
-      title: carte.title || "Sans titre",
-      image: carte.image || "",
-      description: carte.description || "",
-      rarity: carte.rarity || "Commun"
+      hints: carte.hints.map(indice => indice.trim()),
+      title: carte.title,
+      image: carte.image,
+      description: carte.description,
+      actions: (typeof carte.actions === "string" && carte.actions.trim()) ? carte.actions.trim() : "(aucune action définie)",
+      rarity: carte.rarity
+    };
+  });
+}
+
+function validerThemes(themesData){
+  if(!Array.isArray(themesData) || themesData.length === 0){
+    throw new Error("« themes » doit contenir au moins un thème.");
+  }
+
+  const idsThemes = new Set();
+
+  return themesData.map((theme, index) => {
+    const position = index + 1;
+
+    if(!theme || typeof theme !== "object" || Array.isArray(theme)){
+      throw new Error(`Le thème n°${position} est invalide.`);
+    }
+
+    const id = String(theme.id ?? "").trim();
+    if(!id || idsThemes.has(id)){
+      throw new Error(`Le thème n°${position} doit avoir un « id » unique et non vide.`);
+    }
+    idsThemes.add(id);
+
+    const name = (typeof theme.name === "string" && theme.name.trim()) ? theme.name.trim() : id;
+
+    return {
+      id,
+      name,
+      description: (typeof theme.description === "string") ? theme.description.trim() : "",
+      difficulty: (typeof theme.difficulty === "string" && theme.difficulty.trim()) ? theme.difficulty.trim() : "—",
+      // Symbole affiché au dos des cartes (dans .seal). Optionnel dans le JSON,
+      // par défaut "✦" si absent ou vide. Peut être un emoji ou un court symbole.
+      seal: (typeof theme.seal === "string" && theme.seal.trim()) ? theme.seal.trim() : "✦",
+      cards: validerCartes(theme.cards, `Le thème « ${name} »`)
     };
   });
 }
 
 async function chargerDonnees(){
   const reponse = await fetch(CARTES_URL, { cache: "no-store" });
-  if(!reponse.ok) throw new Error(`Impossible de charger ${CARTES_URL}`);
-  const data = await reponse.json();
-  THEMES = data.themes || [];
-  return THEMES;
+
+  if(!reponse.ok){
+    throw new Error(`Impossible de charger ${CARTES_URL} (${reponse.status}).`);
+  }
+
+  const donnees = await reponse.json();
+
+  if(Array.isArray(donnees)){
+    MODE = "flat";
+    CARTES = validerCartes(donnees, "json/cartes.json");
+  } else if(donnees && typeof donnees === "object" && Array.isArray(donnees.themes)){
+    MODE = "themes";
+    THEMES = validerThemes(donnees.themes);
+  } else {
+    throw new Error("Format de json/cartes.json non reconnu (tableau de cartes, ou objet { \"themes\": [...] } attendu).");
+  }
 }
 
 /* ===========================================================================
    GESTION DES THÈMES
    =========================================================================== */
 
-function afficherSelectionThemes() {
-  const container = document.getElementById("themes-container");
-  const selectionScreen = document.getElementById("selection-screen");
-  const gameContent = document.getElementById("game-content");
+function ecranSelectionDisponible(){
+  return Boolean($("selection-screen") && $("themes-container") && $("game-content"));
+}
+
+function afficherSelectionThemes(){
+  const container = $("themes-container");
+  const selectionScreen = $("selection-screen");
+  const gameContent = $("game-content");
 
   selectionScreen.classList.remove("hidden");
   gameContent.classList.add("hidden");
 
   container.innerHTML = THEMES.map(theme => `
-    <div class="theme-card" onclick="choisirTheme('${theme.id}')">
+    <div class="theme-card" data-theme-id="${echapperHTML(theme.id)}">
       <h3>${echapperHTML(theme.name)}</h3>
       <p>${echapperHTML(theme.description)}</p>
       <div class="theme-info">
@@ -134,32 +287,45 @@ function afficherSelectionThemes() {
   `).join("");
 }
 
-window.choisirTheme = function(themeId) {
+function choisirTheme(themeId){
   const theme = THEMES.find(t => t.id === themeId);
-  if (!theme) return;
+  if(!theme){ return; }
 
-  selectedThemeId = themeId;
-  CARTES = validerCartes(theme.cards);
-  
-  // Initialiser l'état pour ce thème
+  selectedThemeId = theme.id;
+  CARTES = theme.cards; // déjà validées par validerThemes()
+  sceauActuel = theme.seal;
+
   debloquees = chargerProgression();
   indicesReveles = chargerIndicesReveles();
-  
-  document.getElementById("game-title").textContent = theme.name;
-  document.getElementById("selection-screen").classList.add("hidden");
-  document.getElementById("game-content").classList.remove("hidden");
-  
+
+  const titre = $("game-title");
+  if(titre){ titre.textContent = theme.name; }
+
+  if(ecranSelectionDisponible()){
+    $("selection-screen").classList.add("hidden");
+    $("game-content").classList.remove("hidden");
+  }
+
   nettoyerProgression();
   nettoyerIndicesReveles();
   rendreGrille();
   rendreProgression();
-  
+
   input.disabled = false;
   btn.disabled = false;
   feedback.textContent = "";
-};
+}
 
-document.getElementById("back-to-selection").addEventListener("click", () => {
+// Délégation d'événements : fonctionne même si la grille de thèmes est
+// régénérée (au lieu d'un onclick="" par carte, fragile et peu sûr).
+$("themes-container")?.addEventListener("click", evenement => {
+  const carte = evenement.target.closest(".theme-card");
+  if(carte && carte.dataset.themeId){
+    choisirTheme(carte.dataset.themeId);
+  }
+});
+
+$("back-to-selection")?.addEventListener("click", () => {
   afficherSelectionThemes();
 });
 
@@ -176,13 +342,16 @@ function nettoyerProgression(){
 function nettoyerIndicesReveles(){
   const cartesParId = new Map(CARTES.map(carte => [carte.id, carte]));
   const indicesNettoyes = {};
+
   for(const [idTexte, indice] of Object.entries(indicesReveles)){
     const carte = cartesParId.get(Number(idTexte));
     const indiceNombre = Number(indice);
+
     if(carte && Number.isInteger(indiceNombre) && indiceNombre >= 0){
       indicesNettoyes[carte.id] = indiceNombre % carte.hints.length;
     }
   }
+
   indicesReveles = indicesNettoyes;
   sauverIndicesReveles(indicesReveles);
 }
@@ -203,10 +372,10 @@ function creerCarteHTML(carte){
     <div class="card-slot">
       <div class="card ${estDebloquee ? "unlocked" : ""}" data-id="${carte.id}">
         <div class="face back">
-          <div class="seal">✦</div>
+          <div class="seal">${echapperHTML(sceauActuel)}</div>
           <div class="num">Carte n°${String(carte.id).padStart(2, "0")}</div>
           <div class="hint">${echapperHTML(texteIndice)}</div>
-          ${aPlusieursIndices ? `<button class="hint-btn" type="button" onclick="event.stopPropagation(); afficherIndiceSupplementaire(${carte.id})">? Aide</button>` : ""}
+          ${aPlusieursIndices ? `<button class="hint-btn" type="button" data-card-id="${carte.id}">? Aide</button>` : ""}
         </div>
         <div class="face front ${holo}" data-rarity="${echapperHTML(carte.rarity)}">
           <div class="rarity-tag" data-r="${echapperHTML(carte.rarity)}">${echapperHTML(carte.rarity)}</div>
@@ -222,14 +391,23 @@ function creerCarteHTML(carte){
 }
 
 function rendreGrille(){
-  const grid = document.getElementById("grid");
+  const grid = $("grid");
   grid.innerHTML = CARTES.map(creerCarteHTML).join("");
+
+  grid.querySelectorAll(".hint-btn").forEach(bouton => {
+    bouton.addEventListener("click", evenement => {
+      evenement.stopPropagation();
+      afficherIndiceSupplementaire(Number(bouton.dataset.cardId));
+    });
+  });
 }
 
-window.afficherIndiceSupplementaire = function(carteId){
+function afficherIndiceSupplementaire(carteId){
   const carte = CARTES.find(element => element.id === carteId);
   if(!carte){ return; }
+
   const indiceActuel = obtenirIndiceActuel(carteId);
+  // Boucle sur les indices : passe au suivant ou revient au premier.
   indicesReveles[carteId] = (indiceActuel + 1) % carte.hints.length;
   sauverIndicesReveles(indicesReveles);
   rendreGrille();
@@ -238,10 +416,11 @@ window.afficherIndiceSupplementaire = function(carteId){
 function rendreProgression(){
   const total = CARTES.length;
   const n = debloquees.size;
-  document.getElementById("progress-label").textContent = `${n} / ${total}`;
-  document.getElementById("progress-fill").style.width = `${total ? (n / total) * 100 : 0}%`;
+  $("progress-label").textContent = `${n} / ${total}`;
+  $("progress-fill").style.width = `${total ? (n / total) * 100 : 0}%`;
+
   if(total > 0 && n === total){
-    document.getElementById("overlay").classList.add("show");
+    $("overlay").classList.add("show");
   }
 }
 
@@ -249,15 +428,17 @@ function rendreProgression(){
    LOGIQUE DE SAISIE DU MOT DE PASSE
    =========================================================================== */
 
-const input = document.getElementById("pwd-input");
-const btn = document.getElementById("submit-btn");
-const entryInner = document.getElementById("entry-inner");
-const feedback = document.getElementById("feedback");
+const input = $("pwd-input");
+const btn = $("submit-btn");
+const entryInner = $("entry-inner");
+const feedback = $("feedback");
 
 async function tenterDeverrouillage(){
   if(!CARTES.length){ return; }
+
   const saisie = normaliser(input.value);
   if(!saisie){ return; }
+
   const hash = await sha256(saisie);
   const carteTrouvee = CARTES.find(carte => carte.passwordHash === hash && !debloquees.has(carte.id));
 
@@ -267,9 +448,16 @@ async function tenterDeverrouillage(){
     input.value = "";
     feedback.textContent = `✦ « ${carteTrouvee.title} » révélée !`;
     feedback.className = "feedback ok";
+
     rendreGrille();
     rendreProgression();
-    if(window.notifierDiscord) window.notifierDiscord(carteTrouvee, saisie);
+
+    // Préserve la notification (Discord) du prototype lorsqu'elle est configurée.
+    if(window.notifierDiscord){
+      window.notifierDiscord(carteTrouvee, saisie);
+    }
+
+    // Relance l'animation de pop sur la carte concernée.
     requestAnimationFrame(() => {
       const element = document.querySelector(`.card[data-id="${carteTrouvee.id}"]`);
       if(element){
@@ -278,21 +466,24 @@ async function tenterDeverrouillage(){
       }
     });
   } else {
+    // Carte déjà débloquée avec ce mot de passe, ou mot de passe invalide.
     const dejaFait = CARTES.some(carte => carte.passwordHash === hash && debloquees.has(carte.id));
     feedback.textContent = dejaFait ? "Cette carte est déjà révélée." : "Mot de passe incorrect.";
     feedback.className = "feedback err";
     entryInner.classList.remove("shake");
-    void entryInner.offsetWidth;
+    void entryInner.offsetWidth; // Force le reflow pour rejouer l'animation.
     entryInner.classList.add("shake");
   }
 }
 
 btn.addEventListener("click", tenterDeverrouillage);
 input.addEventListener("keydown", evenement => {
-  if(evenement.key === "Enter") tenterDeverrouillage();
+  if(evenement.key === "Enter"){
+    tenterDeverrouillage();
+  }
 });
-document.getElementById("overlay-close").addEventListener("click", () => {
-  document.getElementById("overlay").classList.remove("show");
+$("overlay-close")?.addEventListener("click", () => {
+  $("overlay").classList.remove("show");
 });
 
 /* ===========================================================================
@@ -302,17 +493,50 @@ document.getElementById("overlay-close").addEventListener("click", () => {
 async function initialiserJeu(){
   input.disabled = true;
   btn.disabled = true;
-  
+  feedback.textContent = "Chargement des cartes…";
+  feedback.className = "feedback";
+
   try{
     await chargerDonnees();
-    afficherSelectionThemes();
+
+    if(MODE === "themes" && ecranSelectionDisponible()){
+      // Gabarit avec écran de choix du thème (tcgproto) : on laisse le joueur choisir.
+      feedback.textContent = "";
+      afficherSelectionThemes();
+      return;
+    }
+
+    if(MODE === "themes"){
+      // JSON avec thèmes mais gabarit HTML sans écran de sélection (tcg) :
+      // on démarre automatiquement sur le premier thème pour que le jeu
+      // reste jouable plutôt que d'afficher une page vide.
+      console.warn("[Pass-Card] JSON multi-thèmes détecté sans écran de sélection dans la page : chargement automatique du premier thème.");
+      choisirTheme(THEMES[0].id);
+      feedback.textContent = "";
+      return;
+    }
+
+    // Mode "plat" : une seule collection, comme l'ancien tcg.
+    selectedThemeId = null;
+    sceauActuel = "✦";
+    debloquees = chargerProgression();
+    indicesReveles = chargerIndicesReveles();
+    nettoyerProgression();
+    nettoyerIndicesReveles();
+    rendreGrille();
+    rendreProgression();
+    input.disabled = false;
+    btn.disabled = false;
+    feedback.textContent = "";
   }catch(erreur){
-    console.error("Erreur d'initialisation :", erreur);
-    document.getElementById("themes-container").innerHTML = `
-      <div class="alert alert-danger">
-        Impossible de charger les données du jeu. Vérifiez le fichier json/cartes.json.
-      </div>
-    `;
+    console.error("Erreur d'initialisation du jeu :", erreur);
+    feedback.textContent = "Impossible de charger les cartes. Vérifie le fichier json/cartes.json.";
+    feedback.className = "feedback err";
+
+    const container = $("themes-container");
+    if(container){
+      container.innerHTML = `<div class="alert alert-danger">Impossible de charger les données du jeu. Vérifiez le fichier json/cartes.json.</div>`;
+    }
   }
 }
 
