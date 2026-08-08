@@ -20,24 +20,6 @@
        en mode "plat" le jeu démarre directement, et si jamais le JSON contient
        des thèmes sans l'écran de sélection correspondant, le premier thème est
        chargé automatiquement pour que le jeu reste jouable.
-
-   Bugs corrigés par rapport aux deux fichiers d'origine (voir README joint) :
-     - validation stricte et messages d'erreur clairs pour CHAQUE carte, y
-       compris dans le mode "thèmes" (l'ancienne version tcgproto plantait
-       silencieusement, ou avec un TypeError, si un champ était manquant) ;
-     - impossible d'avoir une carte sans indice (évite une division par 0
-       plus loin dans nettoyerIndicesReveles) ;
-     - identifiants de carte dupliqués détectés et rejetés (au sein d'un
-       même thème comme en mode plat) ;
-     - suppression des attributs onclick="" injectés dans le HTML généré
-       (thèmes et bouton Aide) au profit d'écouteurs d'événements avec
-       délégation : plus sûr, et n'échoue plus si un identifiant contient
-       un caractère spécial (apostrophe, etc.) ;
-     - toutes les recherches d'éléments DOM optionnels sont protégées, afin
-       que le même script fonctionne avec les deux gabarits HTML ;
-     - les clés de stockage local d'origine sont conservées telles quelles
-       (par mode) pour ne pas faire perdre la progression déjà enregistrée
-       par les joueurs.
    =========================================================================== */
 
 const CARTES_URL = "json/cartes.json";
@@ -138,10 +120,6 @@ function echapperHTML(valeur){
     "\"": "&quot;",
     "'": "&#039;"
   })[caractere]);
-}
-
-function echapperUrlCSS(url){
-  return String(url ?? "").replace(/["\\\n\r]/g, "\\$&");
 }
 
 /* ===========================================================================
@@ -257,6 +235,52 @@ async function chargerDonnees(){
   } else {
     throw new Error("Format de json/cartes.json non reconnu (tableau de cartes, ou objet { \"themes\": [...] } attendu).");
   }
+}
+
+/* ===========================================================================
+   AGRANDISSEMENT DE L'IMAGE (LIGHTBOX)
+   ---------------------------------------------------------------------------
+   Clic sur l'illustration d'une carte débloquée → aperçu en grand, superposé
+   à toute la page. Fermeture au clic sur le fond, sur le bouton, ou touche
+   Échap. Créée dynamiquement (aucun ajout requis dans index.html).
+   =========================================================================== */
+
+function creerLightbox(){
+  if($("art-lightbox")){ return; } // déjà créée (ex: rendu répété)
+
+  const overlay = document.createElement("div");
+  overlay.id = "art-lightbox";
+  overlay.className = "art-lightbox";
+  overlay.innerHTML = `
+    <button type="button" class="art-lightbox-close" aria-label="Fermer l'aperçu">✕</button>
+    <img class="art-lightbox-img" alt="">
+  `;
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener("click", evenement => {
+    // Ferme si on clique sur le fond sombre ou sur le bouton (pas sur l'image).
+    if(evenement.target === overlay || evenement.target.closest(".art-lightbox-close")){
+      fermerLightbox();
+    }
+  });
+
+  document.addEventListener("keydown", evenement => {
+    if(evenement.key === "Escape"){
+      fermerLightbox();
+    }
+  });
+}
+
+function ouvrirLightbox(src, alt){
+  const overlay = $("art-lightbox");
+  if(!overlay){ return; }
+  overlay.querySelector(".art-lightbox-img").src = src;
+  overlay.querySelector(".art-lightbox-img").alt = alt || "";
+  overlay.classList.add("show");
+}
+
+function fermerLightbox(){
+  $("art-lightbox")?.classList.remove("show");
 }
 
 /* ===========================================================================
@@ -379,11 +403,7 @@ function creerCarteHTML(carte){
         </div>
         <div class="face front ${holo}" data-rarity="${echapperHTML(carte.rarity)}">
           <div class="rarity-tag" data-r="${echapperHTML(carte.rarity)}">${echapperHTML(carte.rarity)}</div>
-          <div class="art" style="background-image:url(&quot;${echapperHTML(echapperUrlCSS(carte.image))}&quot;)"></div>
-          <div class="info">
-            <p class="title">${echapperHTML(carte.title)}</p>
-            <p class="desc">${echapperHTML(carte.description)}</p>
-          </div>
+          <img class="art" src="${echapperHTML(carte.image)}" alt="${echapperHTML(carte.title)} — ${echapperHTML(carte.description)}" loading="lazy">
         </div>
       </div>
     </div>
@@ -398,6 +418,16 @@ function rendreGrille(){
     bouton.addEventListener("click", evenement => {
       evenement.stopPropagation();
       afficherIndiceSupplementaire(Number(bouton.dataset.cardId));
+    });
+  });
+
+  // Clic sur l'illustration d'une carte débloquée : ouvre l'aperçu en grand.
+  grid.querySelectorAll(".art").forEach(image => {
+    image.addEventListener("click", evenement => {
+      const carteElement = image.closest(".card");
+      if(!carteElement || !carteElement.classList.contains("unlocked")){ return; }
+      evenement.stopPropagation();
+      ouvrirLightbox(image.src, image.alt);
     });
   });
 }
@@ -491,6 +521,7 @@ $("overlay-close")?.addEventListener("click", () => {
    =========================================================================== */
 
 async function initialiserJeu(){
+  creerLightbox();
   input.disabled = true;
   btn.disabled = true;
   feedback.textContent = "Chargement des cartes…";
