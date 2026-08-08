@@ -194,6 +194,36 @@ main{ padding:6px 16px 20px; max-width:900px; margin:0 auto; }
   padding:3px 8px; border-radius:99px;
   color:var(--bg-void);
 }
+.card.unlocked .art{ cursor:zoom-in; }
+
+/* ---- AGRANDISSEMENT DE L'IMAGE (LIGHTBOX) ---- */
+.art-lightbox{
+  position:fixed; inset:0; z-index:100;
+  display:flex; align-items:center; justify-content:center;
+  background:rgba(8,3,6,0.92);
+  opacity:0; pointer-events:none;
+  transition:opacity .25s ease;
+  padding:24px;
+}
+.art-lightbox.show{
+  opacity:1; pointer-events:auto;
+}
+.art-lightbox-img{
+  max-width:min(90vw, 640px);
+  max-height:90vh;
+  object-fit:contain;
+  border-radius:var(--r-md);
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+.art-lightbox-close{
+  position:absolute; top:18px; right:22px;
+  width:40px; height:40px; border-radius:50%;
+  border:1px solid var(--line);
+  background:var(--bg-panel);
+  color:var(--ink);
+  font-size:18px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+}
 
 /* Bordures + halo selon rareté */
 .front[data-rarity="Commun"]     { border:1.5px solid #7b8a94; box-shadow:var(--shadow-deep); }
