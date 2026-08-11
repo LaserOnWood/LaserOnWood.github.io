@@ -106,6 +106,7 @@
       "cards": [
         {
           "id": 401,
+          "_comment": "Mot de passe : Lune",
           "passwordHash": "5c7f259c35a05f39074787588eeae82c2a277ce7c8111a9d3de4f2b2b2db37d1",
           "hints": ["Elle éclaire dans l'obscurité.", "On l'appercoit dans le ciel.", "Elle nous tourne autour"],
           "title": "La Lune",
@@ -123,10 +124,25 @@
             "Entre la bouche et l'estomac, je suis le passage étroit que tout doit franchir."
           ],
           "title": "L'Apné",
-          "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaXjLHduSLV84ofaNfb2HhCUoyyCk_mSb7Acwu4dGbtw&s=10",
+          "image": "../tcgproto/assets/cartes/Gorge_profonde.webp",
           "description": "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
           "actions": "Tu vas le prendre en gorge profonde, sans t'arrêter avant d'avoir tout gobé. Il impose le rythme, pas de pause.",
           "rarity": "Mythique"
+        },
+        {
+          "id": "403",
+          "_comment": "Mot de passe : Masque",
+          "passwordHash": "51bb0f998c8d9ac16f9ea044dba7d402d9b61b373ee69d7ba95b7643f437edf8",
+          "hints": [
+            "p",
+            "p",
+            "p"
+          ],
+          "title": "La vue",
+          "image": "../tcgproto/assets/cartes/SpecialAnniv/Milf_masque.webp",
+          "description": "La perte d'un sens permettra d'en savourer d'autre.",
+          "actions": "Deux possibilitées, soit tu prend la cagoule soit tu prend un bandeau pour les yeux et tu le porte pour te cacher la vue",
+          "rarity": "Épique"
         }
       ]
     }
