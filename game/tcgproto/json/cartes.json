@@ -170,6 +170,38 @@
           "description": "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
           "actions": "Tu vas le prendre en gorge profonde, sans t'arrêter avant d'avoir tout gobé. Il impose le rythme, pas de pause.",
           "rarity": "Mythique"
+        },
+        {
+          "id": 405,
+          "type": "Action",
+          "_comment": "Mot de passe : gorge profonde",
+          "passwordHash": "d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1",
+          "hints": [
+            "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents.",
+            "C'est la partie du corps que l'on sent se serrer quand on avale.",
+            "Entre la bouche et l'estomac, je suis le passage étroit que tout doit franchir."
+          ],
+          "title": "L'Apné",
+          "image": "../tcgproto/assets/cartes/Gorge_profonde.webp",
+          "description": "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
+          "actions": "Tu vas le prendre en gorge profonde, sans t'arrêter avant d'avoir tout gobé. Il impose le rythme, pas de pause.",
+          "rarity": "Mythique"
+        },
+        {
+          "id": 406,
+          "type": "Action",
+          "_comment": "Mot de passe : gorge profonde",
+          "passwordHash": "d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1",
+          "hints": [
+            "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents.",
+            "C'est la partie du corps que l'on sent se serrer quand on avale.",
+            "Entre la bouche et l'estomac, je suis le passage étroit que tout doit franchir."
+          ],
+          "title": "L'Apné",
+          "image": "../tcgproto/assets/cartes/Gorge_profonde.webp",
+          "description": "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
+          "actions": "Tu vas le prendre en gorge profonde, sans t'arrêter avant d'avoir tout gobé. Il impose le rythme, pas de pause.",
+          "rarity": "Mythique"
         }
       ]
     }
