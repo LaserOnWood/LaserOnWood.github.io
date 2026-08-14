@@ -159,7 +159,7 @@ function validerCartes(donnees, contexte){
       throw new Error(`${contexte} : la carte n°${id} doit contenir au moins un indice valide dans « hints ».`);
     }
 
-    for(const champ of ["title", "image", "description", "rarity"]){
+    for(const champ of ["type", "title", "image", "description", "rarity"]){
       if(typeof carte[champ] !== "string" || !carte[champ].trim()){
         throw new Error(`${contexte} : le champ « ${champ} » de la carte n°${id} est obligatoire.`);
       }
@@ -173,6 +173,7 @@ function validerCartes(donnees, contexte){
       id,
       passwordHash: carte.passwordHash.toLowerCase(),
       hints: carte.hints.map(indice => indice.trim()),
+      type: carte.type,
       title: carte.title,
       image: carte.image,
       description: carte.description,
@@ -397,7 +398,7 @@ function creerCarteHTML(carte){
       <div class="card ${estDebloquee ? "unlocked" : ""}" data-id="${carte.id}">
         <div class="face back">
           <div class="seal">${echapperHTML(sceauActuel)}</div>
-          <div class="num">Carte n°${String(carte.id).padStart(2, "0")}</div>
+          <div class="num">${echapperHTML(carte.type)}</div>
           <div class="hint">${echapperHTML(texteIndice)}</div>
           ${aPlusieursIndices ? `<button class="hint-btn" type="button" data-card-id="${carte.id}">? Aide</button>` : ""}
         </div>
