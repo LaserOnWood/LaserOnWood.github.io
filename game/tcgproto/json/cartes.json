@@ -121,7 +121,7 @@
           "title": "La Lune",
           "image": "../tcgproto/assets/cartes/SpecialAnniv/Tenue_de_charme.jpeg",
           "description": "Un gage à réaliser lumières éteintes uniquement.",
-          "rarity": "Épique"
+          "rarity": "Commun"
         },
         {
           "id": 402,
@@ -158,15 +158,15 @@
         {
           "id": 404,
           "type": "Action",
-          "_comment": "Mot de passe : gorge profonde",
-          "passwordHash": "d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1",
+          "_comment": "Mot de passe : Fellation",
+          "passwordHash": "12a0fd5cb657f5b93ff38fbfe47b6e17ea51b5fc3b3d99c59b31d28d32c7d0fa",
           "hints": [
             "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents.",
             "C'est la partie du corps que l'on sent se serrer quand on avale.",
             "Entre la bouche et l'estomac, je suis le passage étroit que tout doit franchir."
           ],
           "title": "L'Apné",
-          "image": "../tcgproto/assets/cartes/Gorge_profonde.webp",
+          "image": "../tcgproto/assets/cartes/Fellation_de_MILF.webp",
           "description": "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
           "actions": "Tu vas le prendre en gorge profonde, sans t'arrêter avant d'avoir tout gobé. Il impose le rythme, pas de pause.",
           "rarity": "Mythique"
@@ -189,18 +189,16 @@
         },
         {
           "id": 406,
-          "type": "Action",
-          "_comment": "Mot de passe : gorge profonde",
-          "passwordHash": "d8bbd72947b36d2ca6c6f95d96e27f9de1595820483ab973cd43977e4dc0e3e1",
+          "type": "Position",
+          "_comment": "Mot de passe : Levrette",
+          "passwordHash": "e607a49330276359019fa20274b3273c83e31a3488e8ed30a4a852ce797dc801",
           "hints": [
-            "L'art de la pipe où l'on va jusqu'au bout, sans jamais utiliser les dents.",
-            "C'est la partie du corps que l'on sent se serrer quand on avale.",
-            "Entre la bouche et l'estomac, je suis le passage étroit que tout doit franchir."
+            "Peux ce faire en douceur mais aussi de maniere sauvage.","Parfait pour prendre des fessées en pleine action.","."
           ],
-          "title": "L'Apné",
-          "image": "../tcgproto/assets/cartes/Gorge_profonde.webp",
+          "title": "Cambrure",
+          "image": "../tcgproto/assets/cartes/Levrette.webp",
           "description": "Goûter un bout, c'est une chose, mais il faut tout prendre en bouche.",
-          "actions": "Tu vas le prendre en gorge profonde, sans t'arrêter avant d'avoir tout gobé. Il impose le rythme, pas de pause.",
+          "actions": "Tu vas te mettre a quatre patte et te cambrer pour offrir ta chatte deja coulante. Il claquera ton cul autant qu'il le veux et baisera ta chatte en meme temps.",
           "rarity": "Mythique"
         }
       ]
