@@ -14,6 +14,12 @@ body.selection-v2 {
   overflow-x: hidden;
 }
 
+/* L’écran de jeu doit rester masqué tant qu’aucun thème n’est sélectionné. */
+.hidden,
+#game-content.hidden {
+  display: none !important;
+}
+
 #selection-screen {
   position: relative;
   width: 100%;
@@ -32,6 +38,24 @@ body.selection-v2 {
 #selection-screen h1 { margin: 0; font-family: var(--ff-display); font-size: clamp(42px, 8vw, 72px); line-height: .9; font-style: italic; background: linear-gradient(100deg, var(--ink) 20%, var(--gold-soft) 50%, var(--magenta) 80%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .selection-subtitle { max-width: 530px; margin: 18px auto 0; color: var(--ink-muted); font-size: 13px; line-height: 1.6; }
 .themes-stage { width: 100%; max-width: var(--selection-max); position: relative; }
+
+#back-to-selection {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--ink-muted);
+  border-radius: 99px;
+  padding: 4px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all .2s;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+}
+
+#back-to-selection:hover {
+  border-color: var(--gold);
+  color: var(--gold-soft);
+}
 
 #themes-container { display: flex; flex-direction: row; gap: 20px; width: 100%; max-width: none; padding: 14px 4px 26px; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
 #themes-container::-webkit-scrollbar { display: none; }
