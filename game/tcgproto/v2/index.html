@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  
+  <title>Pass-Card • Sélection des thèmes v2</title>
+  <base href="../">
+  
+  <!-- Polices originales si nécessaires (vérifiées dans style.css) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ 
+  <!--Icone ico-->
+  <link rel="icon" type="image/x-icon" href="../tcgproto/assets/ico/trading-card.png" />
+
+  <!-- Style Original -->
+  <link rel="stylesheet" href="css/style.css">
+  
+  <style>
+    /* Styles spécifiques pour l'écran de sélection (sans Bootstrap pour éviter les conflits) */
+    #selection-screen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: var(--bg-void);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      overflow-y: auto;
+      text-align: center;
+    }
+    #selection-screen h1 {
+      margin-bottom: 30px;
+      background: linear-gradient(100deg, var(--ink) 30%, var(--gold-soft) 55%, var(--ink) 75%);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      font-family: var(--ff-display);
+    }
+    .themes-list {
+      width: 100%;
+      max-width: 500px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .theme-card {
+      background: var(--bg-panel);
+      border: 1px solid var(--line);
+      border-radius: var(--r-md);
+      padding: 20px;
+      cursor: pointer;
+      transition: transform 0.3s cubic-bezier(.22,1,.36,1), border-color 0.3s;
+      position: relative;
+      text-align: left;
+    }
+    .theme-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .theme-card h3 {
+      margin: 0 0 8px;
+      color: var(--gold-soft);
+      font-family: var(--ff-display);
+      font-size: 24px;
+    }
+    .theme-card p {
+      margin: 0 0 12px;
+      color: var(--ink-muted);
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    .theme-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .diff-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 10px;
+      border-radius: 99px;
+      background: var(--bg-panel-2);
+      border: 1px solid var(--line);
+      color: var(--gold);
+    }
+    .card-count {
+      font-size: 11px;
+      color: var(--ink-muted);
+      opacity: 0.7;
+    }
+    .hidden { display: none !important; }
+
+    /* Bouton retour personnalisé pour s'intégrer au header original */
+    #back-to-selection {
+      background: transparent;
+      border: 1px solid var(--line);
+      color: var(--ink-muted);
+      border-radius: 99px;
+      padding: 4px 12px;
+      font-size: 11px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    #back-to-selection:hover {
+      border-color: var(--gold);
+      color: var(--gold-soft);
+    }
+    .header-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+  </style>
+  <style>
+    /* Version v2 : cartes de thèmes et carrousel tactile */
+    :root{--selection-max:1180px;--card-width:300px}
+    body.selection-v2{min-height:100vh;padding:0;overflow-x:hidden}
+    #selection-screen{position:relative;width:100%;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(28px,7vw,72px) 18px 42px;background:radial-gradient(circle at 50% 0%,rgba(255,47,126,.12),transparent 38%),radial-gradient(circle at 0% 100%,rgba(217,169,79,.08),transparent 35%);text-align:center}
+    .selection-intro{width:100%;max-width:var(--selection-max);margin-bottom:clamp(24px,5vw,48px)}
+    .selection-kicker{margin:0 0 10px;color:var(--gold);font-size:11px;font-weight:600;letter-spacing:.32em;text-transform:uppercase}
+    #selection-screen h1{margin:0;font-family:var(--ff-display);font-size:clamp(42px,8vw,72px);line-height:.9;font-style:italic;background:linear-gradient(100deg,var(--ink) 20%,var(--gold-soft) 50%,var(--magenta) 80%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .selection-subtitle{max-width:530px;margin:18px auto 0;color:var(--ink-muted);font-size:13px;line-height:1.6}
+    .themes-stage{width:100%;max-width:var(--selection-max);position:relative}
+    #themes-container{display:flex;flex-direction:row;gap:20px;width:100%;max-width:none;padding:14px 4px 26px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+    #themes-container::-webkit-scrollbar{display:none}
+    .theme-card{position:relative;isolation:isolate;flex:0 0 var(--card-width);min-height:360px;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;padding:26px 24px 22px;border:1px solid rgba(217,169,79,.28);border-radius:26px;background:linear-gradient(180deg,rgba(13,5,9,.05) 15%,rgba(13,5,9,.94) 86%),radial-gradient(circle at 70% 12%,rgba(255,47,126,.33),transparent 38%),linear-gradient(145deg,#421327,#1a0b14 68%);box-shadow:0 20px 45px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.08);cursor:pointer;scroll-snap-align:center;transition:transform .35s cubic-bezier(.22,1,.36,1),border-color .35s,box-shadow .35s}
+    .theme-card::before{content:"✦";position:absolute;z-index:-1;top:18px;right:24px;color:rgba(240,214,138,.35);font-family:var(--ff-display);font-size:100px;line-height:1;transform:rotate(14deg)}
+    .theme-card::after{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(135deg,transparent 35%,rgba(255,255,255,.08) 50%,transparent 65%);background-size:220% 220%;opacity:0;transition:opacity .35s,background-position .6s}
+    .theme-card:nth-child(2){background:linear-gradient(180deg,rgba(13,5,9,.05) 15%,rgba(13,5,9,.94) 86%),radial-gradient(circle at 30% 15%,rgba(79,179,217,.35),transparent 38%),linear-gradient(145deg,#123347,#1a0b14 68%)}
+    .theme-card:nth-child(3){background:linear-gradient(180deg,rgba(13,5,9,.05) 15%,rgba(13,5,9,.94) 86%),radial-gradient(circle at 72% 12%,rgba(217,169,79,.36),transparent 38%),linear-gradient(145deg,#573711,#1a0b14 68%)}
+    .theme-card:nth-child(4){background:linear-gradient(180deg,rgba(13,5,9,.05) 15%,rgba(13,5,9,.94) 86%),radial-gradient(circle at 28% 16%,rgba(229,228,226,.3),transparent 38%),linear-gradient(145deg,#403e47,#1a0b14 68%)}
+    .theme-card:hover,.theme-card:focus-visible{transform:translateY(-8px) scale(1.02);border-color:var(--gold);box-shadow:0 28px 55px rgba(0,0,0,.62),0 0 24px rgba(255,47,126,.18);outline:none}
+    .theme-card:hover::after,.theme-card:focus-visible::after{opacity:1;background-position:100% 100%}
+    .theme-card h3{margin:0 0 9px;color:var(--gold-soft);font-family:var(--ff-display);font-size:32px;line-height:1;text-shadow:0 3px 18px rgba(0,0,0,.5)}
+    .theme-card p{min-height:65px;margin:0 0 20px;color:var(--ink);opacity:.84;font-size:12px;line-height:1.55}
+    .theme-info{display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .diff-badge{padding:6px 11px;border:1px solid rgba(240,214,138,.35);border-radius:99px;background:rgba(13,5,9,.45);color:var(--gold-soft);font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+    .card-count{color:var(--ink-muted);font-size:10px}
+    .carousel-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:4px}
+    .carousel-button{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:50%;background:var(--bg-panel);color:var(--gold-soft);cursor:pointer;transition:transform .2s,border-color .2s,background .2s}
+    .carousel-button:hover{border-color:var(--gold);background:var(--bg-panel-2)}
+    .carousel-button:active{transform:scale(.92)}
+    .carousel-dots{display:flex;align-items:center;gap:7px;min-width:52px;justify-content:center}
+    .carousel-dot{width:7px;height:7px;padding:0;border:0;border-radius:50%;background:var(--ink-muted);opacity:.4;cursor:pointer;transition:width .25s,opacity .25s,background .25s}
+    .carousel-dot.active{width:22px;border-radius:99px;background:var(--magenta);opacity:1}
+    .swipe-hint{margin:18px 0 0;color:var(--ink-muted);font-size:10px;letter-spacing:.08em;text-align:center;opacity:.8}
+    @media (min-width:900px){#themes-container{justify-content:center;overflow-x:visible}.theme-card{flex:1 1 0;max-width:var(--card-width)}.carousel-button,.carousel-dots,.swipe-hint{display:none}}
+    @media (max-width:899px){#themes-container{margin-inline:-4px;padding-inline:calc((100% - min(84vw,var(--card-width))) / 2)}.theme-card{flex-basis:min(84vw,var(--card-width))}}
+    @media (max-width:560px){#selection-screen{justify-content:flex-start;padding-top:56px}.selection-intro{margin-bottom:20px}.selection-subtitle{font-size:12px;padding-inline:12px}.theme-card{min-height:350px}}
+    @media (prefers-reduced-motion:reduce){.theme-card,.theme-card::after,.carousel-dot{transition:none!important}}
+  </style>
+</head>
+<body class="selection-v2">
+
+<!-- Écran de sélection v2 -->
+<div id="selection-screen">
+  <div class="selection-intro">
+    <p class="selection-kicker">Kinky TCG · édition v2</p>
+    <h1>Choisissez votre thème</h1>
+    <p class="selection-subtitle">Chaque univers propose une ambiance différente. Faites défiler les cartes sur mobile, puis sélectionnez celle qui vous inspire.</p>
+  </div>
+  <div class="themes-stage">
+    <div id="themes-container" class="themes-list" aria-label="Thèmes disponibles">
+      <div style="width:100%; color:var(--ink-muted); text-align:center;">Chargement des thèmes…</div>
+    </div>
+    <div class="carousel-controls" aria-label="Navigation des thèmes">
+      <button class="carousel-button" id="theme-prev" type="button" aria-label="Thème précédent"><i class="fas fa-chevron-left"></i></button>
+      <div class="carousel-dots" id="theme-dots" aria-hidden="true"></div>
+      <button class="carousel-button" id="theme-next" type="button" aria-label="Thème suivant"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <p class="swipe-hint"><i class="fas fa-arrows-left-right"></i> Faites glisser pour découvrir les thèmes</p>
+  </div>
+</div>
+
+<!-- Contenu du jeu -->
+<div id="game-content" class="hidden">
+  <header class="top">
+    <div class="header-controls">
+      <button id="back-to-selection">
+        <i class="fas fa-chevron-left"></i> Retour
+      </button>
+      <p class="eyebrow">Chasse aux trésors</p>
+      <div style="width: 60px;"></div>
+    </div>
+    <h1 id="game-title">Pass-Card</h1>
+    <div class="progress-wrap">
+      <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+      <div class="progress-label" id="progress-label">0 / 0</div>
+    </div>
+  </header>
+  
+  <main>
+    <div class="grid" id="grid"></div>
+  </main>
+  
+  <div class="entry-bar">
+    <p class="feedback" id="feedback">&nbsp;</p>
+    <div class="entry-inner" id="entry-inner">
+      <input id="pwd-input" type="text" placeholder="Entrer le mot de passe…" autocomplete="off" autocapitalize="off" spellcheck="false">
+      <button id="submit-btn">Valider</button>
+    </div>
+  </div>
+  
+  <div class="overlay" id="overlay">
+    <div class="box">
+      <h2>Collection complète</h2>
+      <p>Bien jouer. Toutes les cartes ont été révélées. <br>Maintenant il faut mettre en applications chaque carte.</p>
+      <button id="overlay-close">Fermer</button>
+    </div>
+  </div>
+</div>
+
+    <script src="js/notification.js"></script>
+    <script src="js/passemot.js"></script>
+    <script src="js/hasheur.js"></script>
+    <script>
+      (() => {
+        const container = document.getElementById("themes-container");
+        const dots = document.getElementById("theme-dots");
+        const previous = document.getElementById("theme-prev");
+        const next = document.getElementById("theme-next");
+        if (!container || !dots) return;
+        let activeIndex = 0;
+        const getCards = () => [...container.querySelectorAll(".theme-card")];
+        function updateDots(){
+          const cards = getCards();
+          dots.innerHTML = cards.map((_, index) => `<button class="carousel-dot${index === activeIndex ? " active" : ""}" type="button" aria-label="Afficher le thème ${index + 1}"></button>`).join("");
+          dots.querySelectorAll(".carousel-dot").forEach((dot, index) => dot.addEventListener("click", () => scrollToCard(index)));
+        }
+        function scrollToCard(index){
+          const cards = getCards();
+          if (!cards.length) return;
+          activeIndex = Math.max(0, Math.min(index, cards.length - 1));
+          cards[activeIndex].scrollIntoView({behavior:"smooth",block:"nearest",inline:"center"});
+          dots.querySelectorAll(".carousel-dot").forEach((dot, dotIndex) => dot.classList.toggle("active", dotIndex === activeIndex));
+        }
+        previous?.addEventListener("click", () => scrollToCard(activeIndex - 1));
+        next?.addEventListener("click", () => scrollToCard(activeIndex + 1));
+        container.addEventListener("scroll", () => {
+          const cards = getCards();
+          if (!cards.length) return;
+          const center = container.scrollLeft + container.clientWidth / 2;
+          activeIndex = cards.reduce((best, card, index) => Math.abs(card.offsetLeft + card.offsetWidth / 2 - center) < Math.abs(cards[best].offsetLeft + cards[best].offsetWidth / 2 - center) ? index : best, 0);
+          dots.querySelectorAll(".carousel-dot").forEach((dot, dotIndex) => dot.classList.toggle("active", dotIndex === activeIndex));
+        }, {passive:true});
+        new MutationObserver(updateDots).observe(container, {childList:true});
+        updateDots();
+      })();
+    </script>
+</body>
+</html>
