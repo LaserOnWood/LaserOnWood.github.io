@@ -21,7 +21,9 @@ body.selection-v2 {
 }
 
 #selection-screen {
-  position: relative;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
   width: 100%;
   min-height: 100vh;
   display: flex;
@@ -31,6 +33,11 @@ body.selection-v2 {
   padding: clamp(28px, 7vw, 72px) 18px 42px;
   background: radial-gradient(circle at 50% 0%, rgba(255,47,126,.12), transparent 38%), radial-gradient(circle at 0% 100%, rgba(217,169,79,.08), transparent 35%);
   text-align: center;
+  overflow-y: auto;
+}
+
+#game-content {
+  min-height: 100vh;
 }
 
 .selection-intro { width: 100%; max-width: var(--selection-max); margin-bottom: clamp(24px, 5vw, 48px); }

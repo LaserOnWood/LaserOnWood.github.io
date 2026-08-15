@@ -59,5 +59,18 @@
   }, { passive: true });
 
   new MutationObserver(updateDots).observe(container, { childList: true });
+
+  // Le gestionnaire du jeu masque/affiche les écrans ; on replace ensuite
+  // la fenêtre en haut pour éviter de conserver la position du carrousel.
+  container.addEventListener("click", event => {
+    if (event.target.closest(".theme-card")) {
+      requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+    }
+  });
+
+  document.getElementById("back-to-selection")?.addEventListener("click", () => {
+    requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: "auto" }));
+  });
+
   updateDots();
 })();
