@@ -1,0 +1,25 @@
+{
+  "name": "KinkList",
+  "short_name": "KinkList",
+  "description": "Liste locale et interactive de préférences.",
+  "lang": "fr",
+  "dir": "auto",
+  "display": "standalone",
+  "start_url": "./",
+  "scope": "./",
+  "orientation": "any",
+  "theme_color": "#8936FF",
+  "background_color": "#2EC6FE",
+  "icons": [
+    {
+      "src": "favicon/android-icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "favicon/ms-icon-310x310.png",
+      "sizes": "310x310",
+      "type": "image/png"
+    }
+  ]
+}

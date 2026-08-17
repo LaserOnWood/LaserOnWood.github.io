@@ -1,0 +1,33 @@
+name: Vérifier le prototype KinkList
+
+on:
+  pull_request:
+    paths:
+      - 'prototype/**'
+  push:
+    branches: [main]
+    paths:
+      - 'prototype/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Syntaxe, données et tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: prototype
+    steps:
+      - name: Récupérer le dépôt
+        uses: actions/checkout@v4
+      - name: Installer Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: prototype/package.json
+      - name: Exécuter les vérifications
+        run: npm run verify
