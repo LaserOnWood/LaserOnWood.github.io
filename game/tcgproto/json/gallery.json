@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-04T14:21:22.546Z",
-  "count": 91,
+  "generatedAt": "2026-10-04T14:23:25.423Z",
+  "count": 90,
   "images": [
     {
       "id": "assets-cartes-accessoires-bandeau-webp",
@@ -300,26 +300,15 @@
       "checksum": "1ac325839507efdd6774496f2fd272c893b2891e3032ab95d008abfa859032b4"
     },
     {
-      "id": "assets-cartes-actions-controle-de-police-png",
+      "id": "assets-cartes-actions-controle-de-police-webp",
       "name": "Controle de Police",
-      "path": "assets/cartes/Actions/Controle_de_Police.png",
-      "src": "assets/cartes/Actions/Controle_de_Police.png",
-      "category": "Actions",
-      "extension": "PNG",
-      "size": 2117774,
-      "sizeLabel": "2.0 Mo",
-      "checksum": "a6a5a293d827f9fb02b93f696c9a73bf19d81a7678d6fc3269ef9649efb41282"
-    },
-    {
-      "id": "assets-cartes-actions-contr-le-de-police-webp",
-      "name": "Contrôle de police",
-      "path": "assets/cartes/Actions/Contrôle_de_police.webp",
-      "src": "assets/cartes/Actions/Contr%C3%B4le_de_police.webp",
+      "path": "assets/cartes/Actions/Controle_de_Police.webp",
+      "src": "assets/cartes/Actions/Controle_de_Police.webp",
       "category": "Actions",
       "extension": "WEBP",
-      "size": 65890,
-      "sizeLabel": "64.3 Ko",
-      "checksum": "99af8cfd1a379721f352ced6582dcfc81d74733c868d08befbae3548e6b7d35c"
+      "size": 76496,
+      "sizeLabel": "74.7 Ko",
+      "checksum": "d9a410590b8dad3b556692e02ca3238d0a245827435b06285eadf3234dcf0ecf"
     },
     {
       "id": "assets-cartes-actions-coulante-webp",
