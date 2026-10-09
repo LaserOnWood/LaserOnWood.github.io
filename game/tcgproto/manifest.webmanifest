@@ -16,16 +16,24 @@
       "purpose": "any"
     },
     {
-      "src": "assets/ico/trading-card-192x192.maskable.webp",
+      "src": "assets/ico/trading-card-192x192.webp",
       "sizes": "192x192",
       "type": "image/webp",
-      "purpose": "maskable"
+      "purpose": "any"
     },
     {
       "src": "assets/ico/trading-card.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
+    }
+  ],
+  "screenshots" : [
+    {
+      "src": "docs/screenshots/01-selection-themes.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide"
     }
   ],
   "orientation": "portrait",
