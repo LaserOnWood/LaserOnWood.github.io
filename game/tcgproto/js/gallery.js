@@ -18,7 +18,6 @@
   const state = { inventory: { images: [] }, search: "", category: "Toutes" };
 
   const dateLabel = (value) => value ? new Intl.DateTimeFormat("fr-FR", { dateStyle: "medium", timeStyle: "short" }).format(new Date(value)) : "indisponible";
-  const escapeHtml = (value) => String(value).replace(/[&<>'"]/g, (character) => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", "'":"&#39;", "\"":"&quot;" })[character]);
 
   function visibleImages() {
     const needle = state.search.trim().toLocaleLowerCase("fr-FR");
@@ -31,21 +30,21 @@
 
   function renderFilters() {
     const categories = ["Toutes", ...new Set(state.inventory.images.map((image) => image.category))];
-    elements.filters.innerHTML = categories.map((category) => `<button class="filter-button ${category === state.category ? "is-active" : ""}" type="button" data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>`).join("");
+    elements.filters.innerHTML = categories.map((category) => `<button class="filter-button ${category === state.category ? "is-active" : ""}" type="button" data-category="${echapperHTML(category)}">${echapperHTML(category)}</button>`).join("");
     elements.filters.querySelectorAll("button").forEach((button) => button.addEventListener("click", () => { state.category = button.dataset.category; render(); }));
   }
 
   function renderGrid(images) {
     elements.grid.innerHTML = images.map((image, index) => `
       <article class="gallery-card">
-        <button type="button" class="gallery-card-button" data-id="${escapeHtml(image.id)}" aria-label="Ouvrir ${escapeHtml(image.name)}">
-          <img src="${escapeHtml(image.src)}" alt="${escapeHtml(image.name)}" loading="${index < 8 ? "eager" : "lazy"}">
+        <button type="button" class="gallery-card-button" data-id="${echapperHTML(image.id)}" aria-label="Ouvrir ${echapperHTML(image.name)}">
+          <img src="${echapperHTML(image.src)}" alt="${echapperHTML(image.name)}" loading="${index < 8 ? "eager" : "lazy"}">
           <span class="gallery-card-index">${String(index + 1).padStart(2, "0")}</span>
           <span class="gallery-card-open"><i class="fa-solid fa-expand" aria-hidden="true"></i></span>
         </button>
-        <div class="gallery-card-info"><h3 title="${escapeHtml(image.name)}">${escapeHtml(image.name)}</h3><span class="gallery-card-format">${escapeHtml(image.extension)}</span></div>
+        <div class="gallery-card-info"><h3 title="${echapperHTML(image.name)}">${echapperHTML(image.name)}</h3><span class="gallery-card-format">${echapperHTML(image.extension)}</span></div>
       </article>`).join("");
-    elements.grid.querySelectorAll(".gallery-card-button").forEach((button) => button.addEventListener("click", () => openLightbox(state.inventory.images.find((image) => image.id === button.dataset.id))));
+    elements.grid.querySelectorAll(".gallery-card-button").forEach((button) => button.addEventListener("click", () => openLightbox(state.inventory.images.find((image) => image.id === button.dataset.id), button)));
   }
 
   function render() {
@@ -57,21 +56,27 @@
     elements.grid.hidden = images.length === 0;
   }
 
-  function openLightbox(image) {
+  // Comportement commun des modales (Échap, focus, arrière-plan inactif) : voir utils.js.
+  const lightbox = creerModale(elements.lightbox, {
+    focusInitial: elements.close,
+    apresFermeture: () => { elements.lightboxImage.src = ""; }
+  });
+
+  function openLightbox(image, trigger) {
     if (!image) return;
     elements.lightboxImage.src = image.src;
     elements.lightboxImage.alt = image.name;
     elements.lightboxTitle.textContent = image.name;
     elements.lightboxMeta.textContent = image.extension;
-    elements.lightbox.hidden = false;
-    elements.close.focus();
+    lightbox.ouvrir(trigger);
   }
 
-  function closeLightbox() { elements.lightbox.hidden = true; elements.lightboxImage.src = ""; }
+  function closeLightbox() { lightbox.fermer(); }
 
   async function loadGallery() {
     try {
-      const response = await fetch(`json/gallery.json?updated=${Date.now()}`, { cache: "no-store" });
+      // URL stable : le service worker conserve une seule entrée de cache pour l'inventaire.
+      const response = await fetch("json/gallery.json", { cache: "no-store" });
       if (!response.ok) throw new Error("Inventaire indisponible");
       state.inventory = await response.json();
       elements.heroCount.textContent = String(state.inventory.count || 0).padStart(2, "0");
@@ -91,6 +96,5 @@
   elements.search.addEventListener("input", (event) => { state.search = event.target.value; render(); });
   elements.close.addEventListener("click", closeLightbox);
   elements.lightbox.addEventListener("click", (event) => { if (event.target === elements.lightbox) closeLightbox(); });
-  document.addEventListener("keydown", (event) => { if (event.key === "Escape") closeLightbox(); });
   void loadGallery();
 })();

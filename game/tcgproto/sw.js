@@ -2,85 +2,133 @@
  * ============================================================================
  * SERVICE WORKER — Kinky TCG (mode hors ligne)
  * ============================================================================
- * - Fichiers du jeu (HTML/CSS/JS/JSON) : « réseau d'abord », le cache sert de
- *   secours hors ligne. Tes mises à jour s'affichent donc dès qu'il y a du réseau.
- * - Images, polices, Bootstrap… : « cache d'abord » (lourds, ne changent pas).
- * - Illustrations des cartes : téléchargées automatiquement dans le cache d'après
- *   json/cartes.json (les nouvelles cartes sont prises en compte toutes seules).
+ * - Fichiers du jeu (HTML/CSS/JS/JSON) : « réseau d'abord ». Le cache sert de
+ *   secours hors ligne, mais aussi quand le réseau met plus de DELAI_RESEAU_MS à
+ *   répondre (réseau capricieux en extérieur) ou renvoie une erreur serveur.
+ *   Tes mises à jour s'affichent dès que le réseau répond.
+ * - Images, polices, fichiers tiers de css/vendor (Bootstrap, versionné par ?v=) :
+ *   « cache d'abord » (lourds, ne changent pas).
+ * - Illustrations des cartes : mises en cache au fil des affichages, et à l'avance
+ *   pour le thème choisi (le jeu envoie un message PRECACHE_IMAGES quand on ouvre
+ *   un thème). Aucune image n'est téléchargée pour un thème qu'on n'ouvre jamais.
+ * - Sons (.mp3) : jamais interceptés (voir le gestionnaire « fetch » plus bas).
  *
  * Change VERSION quand tu ajoutes/renommes un fichier dans FICHIERS_APP.
  * ============================================================================
  */
 
-const VERSION = "v2.0.2.4"; // change à chaque mise à jour du jeu
+const VERSION = "v2.0.2.10"; // change à chaque mise à jour du jeu
 const CACHE_APP = "kinky-app-" + VERSION;
 const CACHE_MEDIA = "kinky-media";
 const URL_CARTES = "json/cartes.json";
 const URL_CATALOGUE_HASARD = "assets/cartes/index.json";
 
-// Fichiers copiés dès la 1re visite
+const DELAI_RESEAU_MS = 4000;     // au-delà, on sert la copie en cache (si elle existe)
+const MAX_IMAGES_PAR_MESSAGE = 200;
+const IMAGES_EN_PARALLELE = 3;    // téléchargements simultanés (ménage la connexion mobile)
+const MAX_ENTREES_CACHE_MEDIA = 300; // borne le stockage des images, polices et ressources externes
+const DELAI_ECOULE = Symbol("delai");
+
+// Fichiers copiés dès la 1re visite.
+// Chemins RELATIFS uniquement (jamais « /fichier.html ») : un chemin qui commence
+// par « / » viserait la racine du domaine au lieu du dossier du jeu (par exemple
+// /game/tcgproto/) et ferait échouer toute l'installation du service worker.
 const FICHIERS_APP = [
-  "./", "index.html", "feedback.html", "manifest.webmanifest", "css/main.css?v=20261013-1", "css/feedback.css", "css/feedback-page.css", "js/feedback.js", "js/notification.js", "js/audio.js", "js/hasard.js?v=20261011-1914", "js/passemot.js?v=20261011-1914", "js/hasheur.js", "js/carousel.js", "json/gallery.json", "/gallery.html", "/level-builder.html", URL_CARTES, URL_CATALOGUE_HASARD
+  "./",
+  "index.html",
+  "feedback.html",
+  "gallery.html",
+  "level-builder.html",
+  "manifest.webmanifest",
+  "css/main.css?v=20261013-2",
+  "css/vendor/bootstrap.min.css?v=5.3.8",
+  "css/feedback.css",
+  "css/feedback-page.css",
+  "js/utils.js",
+  "js/feedback.js",
+  "js/notification.js",
+  "js/audio.js",
+  "js/hasard.js?v=20261014-1",
+  "js/passemot.js?v=20261014-2",
+  "js/hasheur.js",
+  "js/carousel.js",
+  "json/gallery.json",
+  URL_CARTES,
+  URL_CATALOGUE_HASARD
 ];
 
 /**
- * Lit json/cartes.json et met en cache les illustrations locales pas encore
- * stockées. Ne lève jamais d'erreur : une image manquante ne bloque rien.
- * Les images hébergées ailleurs (https://…) sont ignorées.
+ * Ne garde que les images locales : même origine, dans le dossier du jeu, avec une
+ * extension d'image. Les images hébergées ailleurs (https://…) sont ignorées.
  */
-async function precacherImages(reponseCartes) {
-  try {
-    const donnees = await reponseCartes.json();
-    const cartes = Array.isArray(donnees)
-      ? donnees
-      : (donnees.themes || []).flatMap((theme) => theme.cards || []);
+function nettoyerUrlsImages(urlsBrutes) {
+  const scope = self.registration.scope;
+  const urls = new Set();
 
-    // Les cartes du thème Hasard viennent du catalogue des dossiers d'images,
-    // plutôt que de json/cartes.json. On les met aussi en cache hors ligne.
+  for (const brute of urlsBrutes.slice(0, MAX_IMAGES_PAR_MESSAGE)) {
+    if (typeof brute !== "string" || !brute) continue;
     try {
-      const reponseCatalogue = await fetch(URL_CATALOGUE_HASARD, { cache: "no-store" });
-      if (reponseCatalogue.ok) {
-        const catalogue = await reponseCatalogue.json();
-        if (Array.isArray(catalogue)) {
-          cartes.push(...catalogue
-            .filter((image) => typeof image?.path === "string")
-            .map((image) => ({ image: image.path })));
-        }
+      const url = new URL(brute, scope);
+      if (
+        url.origin === self.location.origin &&
+        url.href.startsWith(scope) &&
+        /\.(webp|png|jpe?g|gif|avif)$/i.test(url.pathname)
+      ) {
+        urls.add(url.href);
       }
-    } catch (erreur) {
-      console.warn("[sw] Catalogue Hasard non préchargé :", erreur);
+    } catch {
+      // URL invalide : ignorée
+    }
+  }
+  return [...urls];
+}
+
+// Évite une croissance sans limite du cache média. Les entrées les plus anciennes
+// sont supprimées ; on relance aussi ce ménage après chaque mise en cache.
+async function limiterCacheMedia(cache) {
+  try {
+    const entrees = await cache.keys();
+    const excedent = entrees.length - MAX_ENTREES_CACHE_MEDIA;
+    if (excedent > 0) {
+      await Promise.all(entrees.slice(0, excedent).map(requete => cache.delete(requete)));
+    }
+  } catch (erreur) {
+    console.warn("[sw] Nettoyage du cache média ignoré :", erreur);
+  }
+}
+
+/**
+ * Met en cache les images pas encore stockées, 3 à la fois.
+ * Ne lève jamais d'erreur : une image manquante ne bloque rien.
+ */
+async function precacherImages(urlsBrutes) {
+  try {
+    const cache = await caches.open(CACHE_MEDIA);
+    const aTelecharger = [];
+    for (const url of nettoyerUrlsImages(urlsBrutes)) {
+      if (!(await cache.match(url))) aTelecharger.push(url);
     }
 
-    const urls = [...new Set(
-      cartes
-        .map((carte) => carte.image)
-        .filter((image) => typeof image === "string" && image && !/^([a-z][a-z0-9+.-]*:|\/\/)/i.test(image))
-        .map((image) => new URL(image, self.registration.scope).href)
-    )];
-
-    const cache = await caches.open(CACHE_MEDIA);
-    await Promise.allSettled(urls.map(async (url) => {
-      if (await cache.match(url)) return; // déjà en cache
-      await cache.add(url);
-    }));
+    let suivant = 0;
+    const travailleur = async () => {
+      while (suivant < aTelecharger.length) {
+        const url = aTelecharger[suivant++];
+        try {
+          await cache.add(url);
+        } catch (erreur) {
+          console.warn("[sw] Image non mise en cache :", url, erreur);
+        }
+      }
+    };
+    await Promise.all(Array.from({ length: IMAGES_EN_PARALLELE }, travailleur));
+    await limiterCacheMedia(cache);
   } catch (erreur) {
     console.warn("[sw] Préchargement des images ignoré :", erreur);
   }
 }
 
 self.addEventListener("install", (e) => {
-  e.waitUntil((async () => {
-    const cache = await caches.open(CACHE_APP);
-    await cache.addAll(FICHIERS_APP);
-
-    // Images : ne fait jamais échouer l'installation.
-    try {
-      const reponse = await fetch(URL_CARTES, { cache: "no-store" });
-      if (reponse.ok) await precacherImages(reponse);
-    } catch (erreur) {
-      console.warn("[sw] Images non préchargées à l'installation :", erreur);
-    }
-  })());
+  e.waitUntil(caches.open(CACHE_APP).then((cache) => cache.addAll(FICHIERS_APP)));
   self.skipWaiting();
 });
 
@@ -92,25 +140,55 @@ self.addEventListener("activate", (e) => {
         noms.filter((n) => n.startsWith("kinky-app-") && n !== CACHE_APP)
             .map((n) => caches.delete(n))
       ))
+      .then(() => caches.open(CACHE_MEDIA))
+      .then((cache) => limiterCacheMedia(cache))
       .then(() => self.clients.claim())
   );
 });
 
+// Le jeu demande de mettre en cache les illustrations du thème qu'on vient d'ouvrir.
+self.addEventListener("message", (e) => {
+  const message = e.data;
+  if (message?.type !== "PRECACHE_IMAGES" || !Array.isArray(message.urls)) return;
+  e.waitUntil(precacherImages(message.urls));
+});
+
 // Réseau d'abord : tes mises à jour s'affichent, le cache sert de secours
 async function reseauPuisCache(req, evenement) {
-  try {
-    const rep = await fetch(req);
-    if (rep.ok) {
-      (await caches.open(CACHE_APP)).put(req, rep.clone());
-      // Chaque chargement de cartes.json vérifie que toutes les images sont en cache.
-      if (new URL(req.url).pathname.endsWith("/" + URL_CARTES)) {
-        evenement.waitUntil(precacherImages(rep.clone()));
-      }
-    }
+  const cache = await caches.open(CACHE_APP);
+
+  // La requête réseau continue même si on répond avec le cache (réseau lent) :
+  // elle met alors le cache à jour pour la prochaine fois.
+  let copie = null;
+  const reseau = fetch(req).then((rep) => {
+    if (rep.ok) copie = rep.clone();
     return rep;
+  });
+  evenement.waitUntil(
+    reseau.then(() => copie && cache.put(req, copie)).catch(() => {})
+  );
+
+  let minuteur;
+  const delai = new Promise((resolve) => {
+    minuteur = setTimeout(resolve, DELAI_RESEAU_MS, DELAI_ECOULE);
+  });
+
+  try {
+    const premier = await Promise.race([reseau, delai]);
+    clearTimeout(minuteur);
+
+    if (premier === DELAI_ECOULE) {
+      // Réseau lent : on sert la copie en cache si elle existe, sinon on attend le réseau.
+      return (await caches.match(req)) || await reseau;
+    }
+    // Erreur serveur passagère (5xx) : on préfère la copie en cache si on en a une.
+    if (premier.status >= 500) return (await caches.match(req)) || premier;
+    return premier;
   } catch {
+    clearTimeout(minuteur);
     return (await caches.match(req))
-      || (req.mode === "navigate" ? caches.match("index.html") : Response.error());
+      || (req.mode === "navigate" ? await caches.match("index.html") : null)
+      || Response.error();
   }
 }
 
@@ -120,16 +198,24 @@ async function cachePuisReseau(req) {
   if (enCache) return enCache;
   const rep = await fetch(req);
   if (rep.status === 200 || rep.type === "opaque") {
-    (await caches.open(CACHE_MEDIA)).put(req, rep.clone());
+    const cache = await caches.open(CACHE_MEDIA);
+    await cache.put(req, rep.clone());
+    await limiterCacheMedia(cache);
   }
   return rep;
 }
 
 self.addEventListener("fetch", (e) => {
   const req = e.request;
-  if (req.method !== "GET" || req.url.endsWith(".mp3")) return; // sons : voir remarque
+  // Sons (.mp3) : on laisse le navigateur gérer. Safari lit les médias par requêtes
+  // partielles (Range) que le cache du service worker ne sait pas servir tel quel :
+  // les sons demandent donc le réseau (ils ne sont pas disponibles hors ligne).
+  if (req.method !== "GET" || req.url.endsWith(".mp3")) return;
   const url = new URL(req.url);
+  // css/vendor : fichiers tiers versionnés (?v=), donc servis par le cache d'abord, comme les images.
+  const estVendor = url.pathname.includes("/css/vendor/");
   const estApp = url.origin === self.location.origin
+    && !estVendor
     && (req.mode === "navigate" || /\.(html|css|js|json|webmanifest)$/.test(url.pathname));
   e.respondWith(estApp ? reseauPuisCache(req, e) : cachePuisReseau(req));
 });

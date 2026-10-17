@@ -15,12 +15,12 @@
   <title>Kinky TCG • Sélection des thèmes</title>
 
   <!-- Bibliothèques communes du projet : Bootstrap 5.3.8 , Font Awesome et Google Fonts. -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="css/vendor/bootstrap.min.css?v=5.3.8" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   
   <!-- Style  du jeu. -->
-  <link rel="stylesheet" href="css/main.css?v=20261013-1">
+  <link rel="stylesheet" href="css/main.css?v=20261013-2">
   <link rel="stylesheet" href="css/feedback.css">
   
 </head>
@@ -186,11 +186,20 @@
     </div>
   </div>
 
+  <!-- Voile « portrait obligatoire » : affiché uniquement par le CSS (voir ORIENTATION dans main.css)
+       quand un téléphone est tenu en paysage. -->
+  <div id="orientation-lock" class="orientation-lock" role="alert">
+    <i class="fa-solid fa-mobile-screen-button orientation-lock-icon" aria-hidden="true"></i>
+    <p class="orientation-lock-title">Tournez votre téléphone</p>
+    <p class="orientation-lock-text">Kinky TCG se joue en mode portrait.</p>
+  </div>
+
+  <script src="js/utils.js"></script>
   <script src="js/feedback.js"></script>
   <script src="js/notification.js"></script>
   <script src="js/audio.js"></script>
-  <script src="js/hasard.js?v=20261011-1914"></script>
-  <script src="js/passemot.js?v=20261011-1914"></script>
+  <script src="js/hasard.js?v=20261014-1"></script>
+  <script src="js/passemot.js?v=20261014-2"></script>
   <script src="js/hasheur.js"></script>
   <script src="js/carousel.js"></script>
 

@@ -25,7 +25,7 @@
 const CARTES_URL = "json/cartes.json";
 
 // Mode "plat" : mêmes clés que l'ancien tcg/js/passemot.js (progression conservée).
-const FLAT_STORAGE_KEY = "kinky_tcg_progress_v0.4.a.hints";
+const FLAT_STORAGE_KEY = "kinky_tcg_progress_v0.5";
 const FLAT_HINTS_KEY = "kinky_tcg_hints_revealed";
 
 // Mode "thèmes" : mêmes préfixes que l'ancien tcgproto/js/passemot.js.
@@ -33,11 +33,13 @@ const THEME_STORAGE_BASE = "kinky_tcg_progress_v0.2";
 const THEME_HINTS_BASE = "kinky_tcg_hints_revealed";
 const IMPORTED_THEMES_KEY = "kinky_tcg_imported_themes_v1";
 
-// Mot de passe organisateur : « toutleniveau » révèle toutes les cartes du
-// thème actuellement ouvert. Seul le hash SHA-256 est conservé dans le code.
+// Mot de passe organisateur : il révèle toutes les cartes du thème actuellement
+// ouvert. Seul son hash SHA-256 est conservé dans le code.
+// NE JAMAIS écrire le mot lui-même ici ni ailleurs dans le dépôt : il est public.
 // Pour le remplacer, calculez le hash du nouveau mot avec hasheur.js ou la
-// console du navigateur, puis remplacez la valeur ci-dessous.
-const MASTER_PASSWORD_HASH = "3e72c11089eb7a46190fde584e7cac86b8b3b9b573d6d681c7720a633bdd9076";
+// console du navigateur (await genererHash("nouveau-mot")), puis remplacez la
+// valeur ci-dessous. Choisissez un mot long et aléatoire : le hash est visible.
+const MASTER_PASSWORD_HASH = "ed1ad9078abfda284e4fc26ba542410df0d705ca9e7cf63120306dcfdde11abf";
 
 const RARETES_AUTORISEES = new Set([
   "Coquine",
@@ -67,22 +69,7 @@ function $(id){
   return document.getElementById(id);
 }
 
-// Calcule le hash SHA-256 (hexadécimal) d'une chaîne, via l'API native du navigateur.
-async function sha256(message){
-  const data = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, "0")).join("");
-}
-
-// Normalise la saisie : espaces, casse et accents sont ignorés.
-function normaliser(texte){
-  return texte
-    .trim()
-    .toLowerCase()
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "");
-}
+// sha256(), normaliserMotDePasse() et echapperHTML() viennent de js/utils.js.
 
 function getStorageKey(){
   return selectedThemeId ? `${THEME_STORAGE_BASE}_${selectedThemeId}` : FLAT_STORAGE_KEY;
@@ -96,7 +83,7 @@ function chargerProgression(){
   try{
     const brut = localStorage.getItem(getStorageKey());
     return brut ? new Set(JSON.parse(brut)) : new Set();
-  }catch(e){
+  }catch{
     return new Set();
   }
 }
@@ -114,7 +101,7 @@ function chargerIndicesReveles(){
     const brut = localStorage.getItem(getHintsKey());
     const donnees = brut ? JSON.parse(brut) : {};
     return donnees && typeof donnees === "object" && !Array.isArray(donnees) ? donnees : {};
-  }catch(e){
+  }catch{
     return {};
   }
 }
@@ -127,21 +114,11 @@ function sauverIndicesReveles(indicesObj){
   }
 }
 
-function echapperHTML(valeur){
-  return String(valeur ?? "").replace(/[&<>"']/g, caractere => ({
-    "&": "&amp;",
-    "<": "&lt;",
-    ">": "&gt;",
-    "\"": "&quot;",
-    "'": "&#039;"
-  })[caractere]);
-}
-
 function chargerThemesImportes(){
   try{
     const brut = localStorage.getItem(IMPORTED_THEMES_KEY);
     if(!brut){ return []; }
-    const themes = validerThemes(JSON.parse(brut), "Niveaux importés");
+    const themes = validerThemes(JSON.parse(brut));
     return themes.map(theme => ({ ...theme, __importe: true }));
   }catch(erreur){
     console.warn("Niveaux importés ignorés :", erreur);
@@ -250,7 +227,7 @@ function validerThemes(themesData){
       difficulty: (typeof theme.difficulty === "string" && theme.difficulty.trim()) ? theme.difficulty.trim() : "—",
       mode,
       // Symbole affiché au dos des cartes (dans .seal). Optionnel dans le JSON,
-      // par défaut "✦" si absent ou vide. Peut être un emoji ou un court symbole.
+      // par défaut "♥️" si absent ou vide. Peut être un emoji ou un court symbole.
       seal: (typeof theme.seal === "string" && theme.seal.trim()) ? theme.seal.trim() : "♥️",
       cards: mode === "hasard" ? [] : validerCartes(theme.cards, `Le thème « ${name} »`)
     };
@@ -286,12 +263,17 @@ async function chargerDonnees(){
    Échap. Créée dynamiquement (aucun ajout requis dans index.html).
    =========================================================================== */
 
+let modaleLightbox = null; // comportement commun des modales : voir creerModale() dans utils.js
+
 function creerLightbox(){
   if($("art-lightbox")){ return; } // déjà créée (ex: rendu répété)
 
   const overlay = document.createElement("div");
   overlay.id = "art-lightbox";
   overlay.className = "art-lightbox";
+  overlay.setAttribute("role", "dialog");
+  overlay.setAttribute("aria-modal", "true");
+  overlay.setAttribute("aria-label", "Aperçu de l'illustration");
   overlay.innerHTML = `
     <button type="button" class="art-lightbox-close" aria-label="Fermer l'aperçu">✕</button>
     <img class="art-lightbox-img" alt="">
@@ -305,23 +287,23 @@ function creerLightbox(){
     }
   });
 
-  document.addEventListener("keydown", evenement => {
-    if(evenement.key === "Escape"){
-      fermerLightbox();
-    }
+  modaleLightbox = creerModale(overlay, {
+    afficher: () => overlay.classList.add("show"),
+    masquer: () => overlay.classList.remove("show"),
+    focusInitial: () => overlay.querySelector(".art-lightbox-close")
   });
 }
 
 function ouvrirLightbox(src, alt){
   const overlay = $("art-lightbox");
-  if(!overlay){ return; }
+  if(!overlay || !modaleLightbox){ return; }
   overlay.querySelector(".art-lightbox-img").src = src;
   overlay.querySelector(".art-lightbox-img").alt = alt || "";
-  overlay.classList.add("show");
+  modaleLightbox.ouvrir(null); // null : pas de focus rendu (évite d'ouvrir le clavier sur téléphone)
 }
 
 function fermerLightbox(){
-  $("art-lightbox")?.classList.remove("show");
+  modaleLightbox?.fermer();
 }
 
 /* ===========================================================================
@@ -351,6 +333,20 @@ function afficherSelectionThemes(){
       </div>
     </div>
   `).join("");
+}
+
+// Demande au service worker de mettre en cache les illustrations du thème choisi, pour
+// jouer hors ligne ou avec un réseau capricieux. Rien n'est téléchargé pour les thèmes
+// qu'on n'ouvre pas, ni si l'économiseur de données du téléphone est activé.
+function precacherImagesTheme(theme){
+  if(navigator.connection?.saveData || !navigator.serviceWorker?.ready){ return; }
+
+  const urls = theme.cards.map(carte => carte.image).filter(Boolean);
+  if(!urls.length){ return; } // thème Hasard : ses images se mettent en cache à l'affichage
+
+  navigator.serviceWorker.ready
+    .then(registration => registration.active?.postMessage({ type: "PRECACHE_IMAGES", urls }))
+    .catch(() => {});
 }
 
 async function choisirTheme(themeId){
@@ -421,7 +417,7 @@ async function choisirTheme(themeId){
       : '<i class="fa-solid fa-hand-pointer" aria-hidden="true"></i> Glissez horizontalement pour parcourir les cartes';
   }
   document.querySelector(".progress-wrap")?.classList.toggle("d-none", modeHasardActif);
-  $("overlay")?.classList.remove("show");
+  modaleFin?.fermer({ restaurerFocus: false });
 
   if(ecranSelectionDisponible()){
     $("selection-screen").classList.add("hidden");
@@ -434,6 +430,7 @@ async function choisirTheme(themeId){
   }
   rendreGrille();
   rendreProgression();
+  precacherImagesTheme(theme);
 
   input.disabled = modeHasardActif;
   btn.disabled = modeHasardActif;
@@ -500,7 +497,7 @@ $("import-level-file")?.addEventListener("change", async evenement => {
       throw new Error("Le fichier doit contenir un objet { themes: [...] }.");
     }
 
-    const themesValides = validerThemes(themesAImporter, "Fichier importé").map(theme => ({
+    const themesValides = validerThemes(themesAImporter).map(theme => ({
       ...theme,
       id: `imported-${theme.id}`,
       __importe: true
@@ -576,12 +573,12 @@ function creerCarteHTML(carte){
         <div class="face front holo" data-rarity="${echapperHTML(carte.rarity)}">
           <div class="rarity-tag" data-r="${echapperHTML(carte.rarity)}">${echapperHTML(carte.rarity)}</div>
           ${estDebloquee ? creerImageHTML(carte) : ""}
-          </div>
-      </div>
+        </div>
       </div>
     </div>
   `;
 }
+
 function rendreGrille(){
   const grid = $("grid");
   if(window.HasardMode.estActif()){
@@ -592,18 +589,19 @@ function rendreGrille(){
 
   grid.classList.remove("hasard-grid");
   grid.innerHTML = CARTES.map(creerCarteHTML).join("");
-
-  grid.querySelectorAll(".hint-btn").forEach(bouton => {
-    bouton.addEventListener("click", evenement => {
-      evenement.stopPropagation();
-      afficherIndiceSupplementaire(Number(bouton.dataset.cardId));
-    });
-  });
 }
 
 // Clic sur l'illustration d'une carte débloquée : ouvre l'aperçu en grand.
 // Délégation d'événements : fonctionne aussi pour les images ajoutées lors d'un déblocage.
 $("grid")?.addEventListener("click", evenement => {
+  // Bouton « ? Aide » : un seul écouteur pour toute la grille (pas un par bouton).
+  const boutonAide = evenement.target.closest(".hint-btn");
+  if(boutonAide){
+    evenement.stopPropagation();
+    afficherIndiceSupplementaire(Number(boutonAide.dataset.cardId));
+    return;
+  }
+
   if(window.HasardMode.gererClicGrille(evenement, {
     grille: $("grid"),
     rendre: rendreGrille,
@@ -683,7 +681,15 @@ function afficherIndiceSupplementaire(carteId){
   // Boucle sur les indices : passe au suivant ou revient au premier.
   indicesReveles[carteId] = (indiceActuel + 1) % carte.hints.length;
   sauverIndicesReveles(indicesReveles);
-  rendreGrille();
+
+  // On ne change que le texte de l'indice de cette carte. Reconstruire toute la
+  // grille rechargeait les images et pouvait ramener le carrousel à la première carte.
+  const zoneIndice = $("grid").querySelector(`.card[data-id="${carteId}"] .hint`);
+  if(zoneIndice){
+    zoneIndice.textContent = carte.hints[indicesReveles[carteId]];
+  }else{
+    rendreGrille();
+  }
 }
 
 // « revelation » (optionnel) : promesse de revelerCarte(). L'écran de fin
@@ -696,7 +702,11 @@ function rendreProgression(revelation = null){
   $("progress-fill").style.width = `${total ? (n / total) * 100 : 0}%`;
 
   if(total > 0 && n === total){
-    const afficherFin = () => $("overlay").classList.add("show");
+    const afficherFin = () => {
+      // On ne l'ouvre que si l'écran de jeu est encore affiché (on a pu le quitter entre-temps).
+      if($("game-content")?.classList.contains("hidden")){ return; }
+      modaleFin?.ouvrir(null); // null : pas de focus rendu (évite d'ouvrir le clavier)
+    };
     if(revelation){
       revelation.then(() => setTimeout(afficherFin, 500));
     }else{
@@ -723,10 +733,30 @@ const btn = $("submit-btn");
 const entryInner = $("entry-inner");
 const feedback = $("feedback");
 
+// Verrou : un second appui sur « Valider » pendant le calcul du hash est ignoré
+// (sinon la carte déjà débloquée par le premier appui affichait une erreur).
+let saisieEnCours = false;
+
 async function tenterDeverrouillage(){
+  if(saisieEnCours){ return; }
+  saisieEnCours = true;
+  try{
+    await traiterSaisie();
+  }catch(erreur){
+    console.error("Validation du mot de passe impossible :", erreur);
+    feedback.textContent = erreur?.message === "CRYPTO_INDISPONIBLE"
+      ? "Ce navigateur bloque le chiffrement hors HTTPS : ouvrez le jeu en https:// (ou via localhost)."
+      : "Une erreur est survenue, réessayez.";
+    feedback.className = "feedback err";
+  }finally{
+    saisieEnCours = false;
+  }
+}
+
+async function traiterSaisie(){
   if(!CARTES.length){ return; }
 
-  const saisie = normaliser(input.value);
+  const saisie = normaliserMotDePasse(input.value);
   if(!saisie){ return; }
 
   // Les mots secrets déclenchent leur son sans bloquer la validation normale.
@@ -774,8 +804,9 @@ async function tenterDeverrouillage(){
 
     // La notification est optionnelle et ne bloque jamais le déverrouillage.
     if (window.notifierDiscord) {
-      const niveauChoisi = $("game-level-text")?.textContent?.trim() || "Niveau";
-      window.notifierDiscord(carteTrouvee, saisie, niveauChoisi);
+      const difficulte = $("game-level-text")?.textContent?.trim() || "Niveau";
+      const themeChoisi = $("game-title")?.textContent?.trim() || "Thème";
+      window.notifierDiscord(carteTrouvee, saisie, difficulte, themeChoisi);
     }
 
   } else {
@@ -798,9 +829,15 @@ input.addEventListener("keydown", evenement => {
     tenterDeverrouillage();
   }
 });
-$("overlay-close")?.addEventListener("click", () => {
-  $("overlay").classList.remove("show");
-});
+// Fenêtre « Collection complète » : même comportement que les autres modales (Échap, focus, arrière-plan inactif).
+const modaleFin = $("overlay")
+  ? creerModale($("overlay"), {
+      afficher: () => $("overlay").classList.add("show"),
+      masquer: () => $("overlay").classList.remove("show"),
+      focusInitial: $("overlay-close")
+    })
+  : null;
+$("overlay-close")?.addEventListener("click", () => modaleFin?.fermer({ restaurerFocus: false }));
 
 /* ===========================================================================
    INITIALISATION
@@ -906,22 +943,17 @@ initialiserJeu();
     }
   };
 
-  let lastTrigger = null;
+  const fenetre = creerModale(modal, { focusInitial: close }); // utils.js : Échap, focus, arrière-plan inactif
 
   function open(type, trigger) {
     const selected = help[type] || help.difficulty;
-    lastTrigger = trigger;
     title.textContent = selected.title;
     content.innerHTML = selected.html;
-    modal.hidden = false;
-    document.body.classList.add("info-modal-open");
-    close.focus();
+    fenetre.ouvrir(trigger);
   }
 
   function hide() {
-    modal.hidden = true;
-    document.body.classList.remove("info-modal-open");
-    lastTrigger?.focus();
+    fenetre.fermer();
   }
 
   document.querySelectorAll("[data-info-type]").forEach((button) => {
@@ -929,7 +961,4 @@ initialiserJeu();
   });
   close.addEventListener("click", hide);
   modal.querySelector("[data-info-close]")?.addEventListener("click", hide);
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && !modal.hidden) hide();
-  });
 })();
