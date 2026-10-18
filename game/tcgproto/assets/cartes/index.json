@@ -20,6 +20,11 @@
     "category": "Accessoires"
   },
   {
+    "path": "assets/cartes/Accessoires/Chaines.webp",
+    "name": "Chaines",
+    "category": "Accessoires"
+  },
+  {
     "path": "assets/cartes/Accessoires/Couteau.webp",
     "name": "Couteau",
     "category": "Accessoires"
@@ -37,6 +42,11 @@
   {
     "path": "assets/cartes/Accessoires/Gamelle.webp",
     "name": "Gamelle",
+    "category": "Accessoires"
+  },
+  {
+    "path": "assets/cartes/Accessoires/Glaçon.webp",
+    "name": "Glaçon",
     "category": "Accessoires"
   },
   {
