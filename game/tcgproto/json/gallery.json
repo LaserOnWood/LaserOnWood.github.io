@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-10-26T11:19:17.772Z",
-  "count": 111,
+  "generatedAt": "2026-10-26T16:03:20.926Z",
+  "count": 112,
   "images": [
     {
       "id": "assets-cartes-accessoires-bandeau-webp",
@@ -947,6 +947,17 @@
       "size": 68662,
       "sizeLabel": "67.1 Ko",
       "checksum": "aa19a07ea85268a2da63bebd7f0aff0f52641e1aff4c1b0fb93f07efb7d4e16d"
+    },
+    {
+      "id": "assets-cartes-rituel-collar-me-webp",
+      "name": "Collar Me",
+      "path": "assets/cartes/Rituel/Collar_Me.webp",
+      "src": "assets/cartes/Rituel/Collar_Me.webp",
+      "category": "Rituel",
+      "extension": "WEBP",
+      "size": 71914,
+      "sizeLabel": "70.2 Ko",
+      "checksum": "7ec8c029a9736dab886e38aff04365c7f2f6d586755b7e6fba524702624c3987"
     },
     {
       "id": "assets-cartes-rituel-dominatrice-webp",
